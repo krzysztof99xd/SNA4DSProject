@@ -1,0 +1,293 @@
+---
+title             : "The title"
+shorttitle        : "Title"
+
+author: 
+  - name          : "First Author"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - Conceptualization
+      - Writing - Original Draft Preparation
+      - Writing - Review & Editing
+  - name          : "Ernst-August Doelle"
+    affiliation   : "1,2"
+    role:
+      - Writing - Review & Editing
+
+affiliation:
+  - id            : "1"
+    institution   : "Wilhelm-Wundt-University"
+  - id            : "2"
+    institution   : "Konstanz Business School"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib"]
+
+toc               : yes
+toc_float         : yes
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : no
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : word_document
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences, include = FALSE}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+
+
+# Citations in papaja, detele appropriately later
+
+Add the bibtex entry in the .bib file. You can find the entries in Google scholar, 
+but double check since it is not always correct. 
+
+Call the citations in the text:
+
+Citation within parentheses	[@R-papaja]
+
+Multiple citations	[@R-papaja; @R-base]
+
+In-text citations	@R-papaja
+
+Year only	[-@R-base]
+
+Only if your citation appears in the text it will also show up in the Reference 
+list. Don't manually modify the Reference list.
+
+## Executive Summary 
+
+(150 words) – 0.3 POINTS
+Summarize the report. Write this as the very last thing.
+
+What is the main topic you are addressing?
+
+what are your research questions and hypotheses?  
+
+what are your results and the main conclusion?
+
+
+
+## Introduction 
+(about 1000 words) – 0.5 POINTS
+Place your topic of choice within the existing literature and explain what you 
+are going to address in this report and why.
+
+*	What is the main topic that is going to be studied in this paper?
+
+*	Why is it important?
+
+*	What are the existing studies that address it already?
+
+*	What are your questions and hypotheses? Why are they important? How are they 
+connected to previous work or to a problem you raised?
+
+*	Which methods are you using? Why?
+
+*	How is your work going to contribute to the field/or to whom (e.g., industry)?
+
+*	What does the rest of the report look like? In one short paragraph, list the 
+topics of the following sections.
+
+## Methodology
+
+### Dataset 
+(about 500 words) 1 POINT (+ BONUS)
+*	Which data set are you going to use? Three options:
+
+o	Use readily/easily available data (0 bonus points)
+
+o	Combine two or more existing datasets (max 0.5 bonus points)
+
+o	Scrape or collect your own data (max. 1 bonus point)
+
+*	Clearly explain where the data is coming from:
+
+o	Who collected the data?
+
+o	What is the source?
+
+o	When was the data produced?
+
+o	How was the data collected?
+
+*	Provide descriptive measures of your data (tables, plots, etc.)
+
+*	Why is this data useful to study your topic and answer your research questions?
+
+*	What is the potential bias in the data? How does this affect your results?
+
+### Data analysis (Research Rationale)
+(about 500 words) – 1 POINTS
+*	Why are these two methods suitable for your data?
+
+*	Why are these two methods suitable for your research questions?
+
+*	Are there other methods to address these questions? If yes, why are the 
+methods you chose better for this case?
+
+
+
+## Results
+(about 2000 words)
+
+### Model 1
+(about 1000 words) – 2.5 POINTS
+
+*	Present your results appropriately (plots, tables…) and discuss your findings 
+in plain English
+
+*	Discuss the meaning of your findings in relation to your hypothesis. (half of
+the points evaluated in this other part)
+
+
+```{r echo = FALSE, results = 'asis'}
+# table example
+cn <- c("age", "gender", "eyes_col")
+one <- c(7, "M", "BLUE")
+two <- c(8, "F", "BROWN")
+three <- c(8, "M", "GREEN")
+four <- c(7, "F", "PINK")
+
+tab <- rbind(cn, one, two, three, four)
+rownames(tab) <- NULL
+knitr::kable(tab)
+```
+
+
+### ERGM 
+(about 1000) – 2.5 POINTS
+
+
+* Present your results appropriately (plots, tables…) and discuss your findings 
+in plain English
+
+* Discuss the meaning of your findings in relation to your hypothesis. (half of 
+the points evaluated in this other part)
+
+Option 1: 
+
+```{r model 1, echo = FALSE}
+# model results display example
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
+weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
+lm.D90 <- lm(weight ~ group - 1)
+
+# install.packages("texreg")
+
+knitr::kable(texreg::matrixreg(lm.D9))
+
+
+```
+
+Option 2
+
+```{r model 2, echo = FALSE, results = 'asis'}
+# model results display example
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
+weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
+lm.D90 <- lm(weight ~ group - 1)
+
+# install.packages("texreg")
+
+knitr::kable(texreg::matrixreg(list(lm.D9, lm.D90)))
+
+
+```
+
+
+Option 3
+
+```{r model 3, echo = FALSE}
+# model results display example
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
+weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
+lm.D90 <- lm(weight ~ group - 1)
+
+# install.packages("texreg")
+
+
+texreg::plotreg(lm.D9)
+
+
+```
+
+
+Option 4
+
+```{r model 4, echo = FALSE}
+# model results display example
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
+weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
+lm.D90 <- lm(weight ~ group - 1)
+
+# install.packages("texreg")
+
+texreg::plotreg(list(lm.D9, lm.D90))
+
+```
+
+
+## Conclusion
+
+(about 350 words) – 0.7 POINTS
+What were your topic and research questions again? (1 sentence)
+
+What did you learn from the two analysis you run? *** most important point to 
+address 0.5 POINTS here
+
+Who benefits from your findings?
+
+What does remain an open problem?
+
+Can you give suggestions for future work in this area?
+
+
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
