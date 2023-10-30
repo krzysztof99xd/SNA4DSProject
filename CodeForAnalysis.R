@@ -1,6 +1,6 @@
 install.packages("readxl")
 library(readxl)
-
+print (hello)
 print(getwd())
 
 # Set the working directory to the script's directory
