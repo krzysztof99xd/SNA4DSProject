@@ -1,15 +1,35 @@
 install.packages("readxl")
 library(readxl)
 
+# Set the working directory to the directory where the project is located
+setwd("your_path_to_project")
 print(getwd())
 
-# Set the working directory to the script's directory
-setwd("your_path_to_data")
+# Create a relative path to the "data" folder in your project directory
+data_folder <- file.path("data")
+print(data_folder)
+
+# Extract the absolute path from the relative path
+absolute_path_to_data_folder <- normalizePath(data_folder)
+print(absolute_path_to_data_folder)
+
+file_name_node_list <- 'Node_List_Eurovision_public.xlsx'
+file_name_edge_list<- 'name_eurovision_edge_list.xlsx'
+
+# Combine the data folder path and file name to create the full path
+full_path_to_node_list <- file.path(data_folder, file_name_node_list)
+print(full_path_to_node_list)
 
 ## read data from csv file
-eurovision_public_data_node_list <- read_excel("your_path_to_data")
+eurovision_public_data_node_list <- read_excel(full_path_to_node_list)
+print(eurovision_public_data_node_list)
 
-eurovision_public_data_edge_list <- read_excel("your_path_to_data")
+# Combine the data folder path and file name to create the full path
+full_path_to_edge_list <- file.path(data_folder, file_name_edge_list)
+print(full_path_to_edge_list)
+
+eurovision_public_data_edge_list <- read_excel(full_path_to_edge_list)
+print(eurovision_public_data_edge_list)
 
 (NodeList_euro <- unique(c(eurovision_public_data_node_list$Node_country)))
 NodeList_euro <- na.omit(NodeList_euro) # always remove NAs
