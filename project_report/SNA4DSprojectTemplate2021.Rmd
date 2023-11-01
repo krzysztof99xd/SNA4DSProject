@@ -54,34 +54,11 @@ set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
-# Citations in papaja, detele appropriately later
 
-Add the bibtex entry in the .bib file. You can find the entries in
-Google scholar, but double check since it is not always correct.
-
-Call the citations in the text:
-
-Citation within parentheses [@R-papaja]
-
-Multiple citations [@R-papaja; @R-base]
-
-In-text citations @R-papaja
-
-Year only [-@R-base]
-
-Only if your citation appears in the text it will also show up in the
-Reference list. Don't manually modify the Reference list.
 
 ## Executive Summary
 
-(150 words) -- 0.3 POINTS Summarize the report. Write this as the very
-last thing.
-
-What is the main topic you are addressing?
-
-what are your research questions and hypotheses?
-
-what are your results and the main conclusion?
+<Still in progress>
 
 ## Introduction
 
@@ -117,23 +94,24 @@ Eurovision experience.
 
 In the field of social networks there has been already done research
 regarding voting patterns which as a consequence leads to creating
-communities within the Eurovision participants. Dekker A. (2007) [@dekker2007eurovision] has
-already conducted the research using Eurovision cast from 2005 where he
-analysed the friendship network using techniques previously developed
-for valued networks (Dekker, 2005), which combine network-analysis
-methods with statistical methods. His analysis revealed a set of
-friendship blocs.
+communities within the Eurovision participants. Dekker A. (2007)
+[@dekker2007eurovision] has already conducted the research using
+Eurovision cast from 2005 where he analysed the friendship network using
+techniques previously developed for valued networks (Dekker, 2005) [@dekker2005] ,
+which combine network-analysis methods with statistical methods. His
+analysis revealed a set of friendship blocs.
 
-In 2019, Angelo S.D. et al. [@D’Angelo_Murphy_Alfò_2019] introduced the concept of modeling
-latent spaces in multidimensional networks, specifically focusing on its
-application to the exchange of votes within the Eurovision Song Contest.
-The model was put into practice to analyze voting patterns in the
-Eurovision Song Contest, spanning from 1998 to 2015. This analysis
-incorporated cultural and geographical factors. It was discovered that
-the only significant factor in explaining observed voting patterns was
-the presence of a shared border between two countries. Interestingly,
-the similarities among participants during the 1998-2015 period only
-partially correlated with their respective geographical locations.
+In 2019, Angelo S.D. et al. [@D'Angelo_Murphy_Alfò_2019] introduced the
+concept of modeling latent spaces in multidimensional networks,
+specifically focusing on its application to the exchange of votes within
+the Eurovision Song Contest. The model was put into practice to analyze
+voting patterns in the Eurovision Song Contest, spanning from 1998 to
+2015. This analysis incorporated cultural and geographical factors. It
+was discovered that the only significant factor in explaining observed
+voting patterns was the presence of a shared border between two
+countries. Interestingly, the similarities among participants during the
+1998-2015 period only partially correlated with their respective
+geographical locations.
 
 Sentiment analysis has been also used to predict audience voting.
 Kumpulainen I. et al.in 2020
@@ -192,52 +170,81 @@ test.
 
 In the rest of the report we will carefully describe the datasets which
 are going to be used to conduct the research. Data cleaning and if
-necessary data preprocessing is going to be run before any
-analysis. Descriptive analysis is going to be performed to better
-understand the data. Then research rationale is going to be discussed to
-provide the reasoning why CUG and ERGM have been chosen as the suitable
-models for answering research questions and testing hypotheses.
+necessary data preprocessing is going to be run before any analysis.
+Descriptive analysis is going to be performed to better understand the
+data. Then research rationale is going to be discussed to provide the
+reasoning why CUG and ERGM have been chosen as the suitable models for
+answering research questions and testing hypotheses.
 
 ## Methodology
 
 ### Dataset
 
-(about 500 words) 1 POINT (+ BONUS) \* Which data set are you going to
-use? Three options:
+For this project the data has been collected from several sources [list
+of the sources: <https://eurovisionworld.com/eurovision/2023>.]. Using
+several sources allowed us to enrich the dataset and run more
+comprehensive analysis.
 
-o Use readily/easily available data (0 bonus points)
+On the eurovision website
+[<https://eurovisionworld.com/eurovision/2023>] the data is presented in
+a table which by switching the tab on the top of the page can be easily
+filtered by Jury or Public votes. Data is presented in a matrix where
+columns are created by countries who were giving the points and rows are
+represented by countries who were receiving the points. Each entry of
+the matrix is represented by the amount of points were given/received.
+This data was produced 13th of May 2023 when the final of the tournament
+has taken place.
 
-o Combine two or more existing datasets (max 0.5 bonus points)
+To enrich the data we also collected the information about each
+country's language family [the source to language family], country
+population [source to country population] and country political system.
+This data was manually inserted into csv files which eventually allowed
+to transform it to the network object.
 
-o Scrape or collect your own data (max. 1 bonus point)
+As the result, the whole dataset contains of 3 csv files. The first csv
+file contains the information about the countries which in this paper
+are also going to be referred as nodes, population, country language
+family, and country political system. This file is used to create a list
+of nodes which is used to create a network object.
 
--   Clearly explain where the data is coming from:
+The second csv file contains the information about the votes of jurys
+from the countries. There are 3 columns in this file sender, receiver
+and score which represents the amount of points given from the sender to
+receiver. This file is used to create an edge list which is used to
+create a first network object.
 
-o Who collected the data?
+The third csv file contains the information about the votes from public
+from the countries. There are 3 columns in this file sender, receiver
+and score which represents the amount of points given from the sender to
+receiver. This file is used to create an edge list which is used to
+create a second network object.
 
-o What is the source?
+In this paper 2 networks objects are created and analyzed. The first
+network object is created using Node List which comes from the first csv
+file and an edge list which represents jurys votes and is created from
+the second csv file. The second network object is created using the same
+Node List and an edge list which represents public votes and is created
+from the third csv file.
 
-o When was the data produced?
+The selection of node attributes has been done after doing the research
+and discovering research gaps. Furthermore, 3 csv files allowed to
+create 2 network objects which as a consequence allows to perform deeper
+analysis and reveal potential differences in voting patterns between
+jury and public.
 
-o How was the data collected?
+#### Potential bias in the dataset
 
--   Provide descriptive measures of your data (tables, plots, etc.)
+All data is publicly available online in English thus anyone with the
+access to the internet can access it. Naturally language barrier can be
+a limitation, however, nowadays a lot of online dictionaries are
+available to translate the websites immediately. Thus no major biases in
+the data have been identified.
 
--   Why is this data useful to study your topic and answer your research
-    questions?
-
--   What is the potential bias in the data? How does this affect your
-    results?
+<Plots yet to be added>
 
 ### Data analysis (Research Rationale)
 
-(about 500 words) -- 1 POINTS \* Why are these two methods suitable for
-your data?
-
--   Why are these two methods suitable for your research questions?
-
--   Are there other methods to address these questions? If yes, why are
-    the methods you chose better for this case?
+<still in progress>
 
 ## Results
 
@@ -245,13 +252,7 @@ your data?
 
 ### Model 1
 
-(about 1000 words) -- 2.5 POINTS
-
--   Present your results appropriately (plots, tables...) and discuss
-    your findings in plain English
-
--   Discuss the meaning of your findings in relation to your hypothesis.
-    (half of the points evaluated in this other part)
+<still in progress>
 
 ```{r echo = FALSE, results = 'asis'}
 # table example
@@ -268,15 +269,7 @@ knitr::kable(tab)
 
 ### ERGM
 
-(about 1000) -- 2.5 POINTS
-
--   Present your results appropriately (plots, tables...) and discuss
-    your findings in plain English
-
--   Discuss the meaning of your findings in relation to your hypothesis.
-    (half of the points evaluated in this other part)
-
-Option 1:
+<still in progress>
 
 ```{r model 1, echo = FALSE}
 # model results display example
@@ -350,17 +343,7 @@ texreg::plotreg(list(lm.D9, lm.D90))
 
 ## Conclusion
 
-(about 350 words) -- 0.7 POINTS What were your topic and research
-questions again? (1 sentence)
-
-What did you learn from the two analysis you run? \*\*\* most important
-point to address 0.5 POINTS here
-
-Who benefits from your findings?
-
-What does remain an open problem?
-
-Can you give suggestions for future work in this area?
+<still in progress>
 
 \newpage
 
@@ -377,3 +360,6 @@ Can you give suggestions for future work in this area?
 ```{=tex}
 \endgroup
 ```
+\newpage
+
+# Appendix
