@@ -1,6 +1,12 @@
 install.packages("readxl")
 library(readxl)
 
+
+tinytex::install_tinytex()
+# to uninstall TinyTeX, run
+# tinytex::uninstall_tinytex()
+
+
 # Set the working directory to the directory where the project is located
 setwd("your_path_to_project")
 print(getwd())

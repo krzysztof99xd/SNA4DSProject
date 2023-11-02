@@ -1,45 +1,46 @@
 ---
-title             : "Social Network Analysis in Eurovision Context"
-shorttitle        : "SNA Eurovision"
-author: 
-  - name          : "Krzysztof Wiesniakowski"
-    affiliation   : "1"
-    corresponding : yes    # Define only one corresponding author
-    address       : "Postal address"
-    email         : "my@email.com"
-    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
-      - Conceptualization
-      - Writing - Original Draft Preparation
-      - Writing - Review & Editing
-  - name          : "Ernst-August Doelle"
-    affiliation   : "1,2"
-    role:
-      - Writing - Review & Editing
-affiliation:
-  - id            : "1"
-    institution   : "Wilhelm-Wundt-University"
-  - id            : "2"
-    institution   : "Konstanz Business School"
+title: "Social Network Analysis in Eurovision Context"
+author:
+- name: Krzysztof Wiesniakowski
+  affiliation: '1'
+  corresponding: yes
+  address: Postal address
+  email: my@email.com
+  role:
+  - Conceptualization
+  - "Writing - Original Draft Preparation"
+  - "Writing - Review & Editing"
+- name: "Ernst-August Doelle"
+  affiliation: '1,2'
+  role: "Writing - Review & Editing"
+shorttitle: SNA Eurovision
+output:
+  pdf_document: default
+  word_document: default
 authornote: |
   Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
   Enter author note here.
-keywords          : "keywords"
-wordcount         : "X"
-bibliography      : ["r-references.bib"]
-toc               : yes
-toc_float         : yes
-floatsintext      : no
-figurelist        : no
-tablelist         : no
-footnotelist      : no
-linenumbers       : no
-mask              : no
-draft             : no
-documentclass     : "apa6"
-classoption       : "man"
-output            : word_document
-editor_options: 
-  markdown: 
+keywords: keywords
+wordcount: X
+bibliography: "r-references.bib"
+toc: yes
+toc_float: yes
+floatsintext: no
+figurelist: no
+tablelist: no
+footnotelist: no
+linenumbers: no
+mask: no
+draft: no
+documentclass: apa6
+classoption: man
+affiliation:
+- id: '1'
+  institution: "Wilhelm-Wundt-University"
+- id: '2'
+  institution: Konstanz Business School
+editor_options:
+  markdown:
     wrap: 72
 ---
 
@@ -58,7 +59,7 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 
 ## Executive Summary
 
-<Still in progress>
+Still in progress
 
 ## Introduction
 
@@ -101,7 +102,7 @@ techniques previously developed for valued networks (Dekker, 2005) [@dekker2005]
 which combine network-analysis methods with statistical methods. His
 analysis revealed a set of friendship blocs.
 
-In 2019, Angelo S.D. et al. [@D'Angelo_Murphy_Alfò_2019] introduced the
+In 2019, Angelo S.D. et al. [@D_Angelo_Murphy_Alfò_2019] introduced the
 concept of modeling latent spaces in multidimensional networks,
 specifically focusing on its application to the exchange of votes within
 the Eurovision Song Contest. The model was put into practice to analyze
@@ -244,7 +245,7 @@ the data have been identified.
 
 ### Data analysis (Research Rationale)
 
-<still in progress>
+still in progress
 
 ## Results
 
@@ -252,114 +253,21 @@ the data have been identified.
 
 ### Model 1
 
-<still in progress>
-
-```{r echo = FALSE, results = 'asis'}
-# table example
-cn <- c("age", "gender", "eyes_col")
-one <- c(7, "M", "BLUE")
-two <- c(8, "F", "BROWN")
-three <- c(8, "M", "GREEN")
-four <- c(7, "F", "PINK")
-
-tab <- rbind(cn, one, two, three, four)
-rownames(tab) <- NULL
-knitr::kable(tab)
-```
+still in progress
 
 ### ERGM
 
-<still in progress>
+still in progress
 
-```{r model 1, echo = FALSE}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
-
-# install.packages("texreg")
-
-knitr::kable(texreg::matrixreg(lm.D9))
-
-
-```
-
-Option 2
-
-```{r model 2, echo = FALSE, results = 'asis'}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
-
-# install.packages("texreg")
-
-knitr::kable(texreg::matrixreg(list(lm.D9, lm.D90)))
-
-
-```
-
-Option 3
-
-```{r model 3, echo = FALSE}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
-
-# install.packages("texreg")
-
-
-texreg::plotreg(lm.D9)
-
-
-```
-
-Option 4
-
-```{r model 4, echo = FALSE}
-# model results display example
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
-weight <- c(ctl, trt)
-lm.D9 <- lm(weight ~ group)
-lm.D90 <- lm(weight ~ group - 1)
-
-# install.packages("texreg")
-
-texreg::plotreg(list(lm.D9, lm.D90))
-
-```
 
 ## Conclusion
 
-<still in progress>
+still in progress
 
-\newpage
-
-# References
-
-```{=tex}
-\begingroup
-\setlength{\parindent}{-0.5in}
-\setlength{\leftskip}{0.5in}
-```
-::: {#refs custom-style="Bibliography"}
-:::
-
-```{=tex}
-\endgroup
-```
 \newpage
 
 # Appendix
+
+\newpage
+
+# Referenes
