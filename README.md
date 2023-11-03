@@ -7,7 +7,7 @@ Data used for this project is taken from official eurovision website which can b
 
 Necessary packages to be installed:
 
-install.packages("readxl") (necessary to read excel files)
+install.packages("readxl") (necessary to read excel files, in case you you want to use csv file, use "readcsv" package)
 
 tinytex::install_tinytex() (necessary to convert from rmd to pdf format)
 
