@@ -8,7 +8,7 @@ library(readxl)
 library(tinytex)
 
 # Set the working directory to the directory where the project is located
-setwd("your_path_to_data")
+setwd("C:/Users/48504/Desktop/JADSMaster/SNA4DS/SNA4DSProjectGroup12")
 print(getwd())
 
 # Create a relative path to the "data" folder in your project directory
@@ -72,10 +72,30 @@ eurovisionnet <- igraph::graph_from_data_frame(EdgeList, NodeList, directed = TR
 
 snafun::plot_centralities(eurovisionnet)
 
-snafun::extract_vertex_attribute(eurovisionnet)
-snafun::extract_edge_attribute(eurovisionnet)
+## snafun::extract_vertex_attribute(eurovisionnet)
+## snafun::extract_edge_attribute(eurovisionnet)
 
-## GRAPH 2
+## number of vertices
+snafun::count_vertices(eurovisionnet)
+## number_of_edges
+snafun::count_edges(eurovisionnet)
+## density 
+snafun::g_density(eurovisionnet)
+## reciprocity
+snafun::g_reciprocity(eurovisionnet)
+## transitivity
+snafun::g_transitivity(eurovisionnet)
+## mean_distance
+snafun::g_mean_distance(eurovisionnet)
+## number_of_isolates
+snafun::find_isolates(eurovisionnet)
+## dyad_census
+snafun::count_dyads(eurovisionnet)
+## triad_census
+snafun::count_triads(eurovisionnet)
+
+
+## GRAPH 1
 
 # Calculate in-degrees
 in_degrees <- igraph::degree(eurovisionnet, mode = "in")

@@ -5,7 +5,7 @@ author:
   affiliation: '1'
   corresponding: yes
   address: Postal address
-  email: my@email.com
+  email: k.wiesniakowski@tilburguniversity.edu
   role:
   - Conceptualization
   - "Writing - Original Draft Preparation"
@@ -15,8 +15,8 @@ author:
   role: "Writing - Review & Editing"
 shorttitle: SNA Eurovision
 output:
-  pdf_document: default
   word_document: default
+  pdf_document: default
 authornote: |
   Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
   Enter author note here.
@@ -38,7 +38,7 @@ affiliation:
 - id: '1'
   institution: "Wilhelm-Wundt-University"
 - id: '2'
-  institution: Konstanz Business School
+  institution: 'Jheronimus Academy of Data Science'
 editor_options:
   markdown:
     wrap: 72
@@ -191,7 +191,7 @@ test. It offers a robust and flexible approach to examine the effects of
 exogenous attributes on network structure while considering the complex
 dependencies and configurations within the network itself.
 
-In the rest of the report we will carefully describe the datasets which
+In the rest of the report, we will carefully describe the datasets which
 are going to be used to conduct the research. Data cleaning and if
 necessary data preprocessing are going to be run before any analysis.
 Descriptive analysis is going to be performed to understand the data
@@ -218,8 +218,8 @@ has taken place.
 
 To enrich the data we also collected information about each country's
 language family [the source to language family], country population
-[@Worldometer], and country political system [the source to langugage
-family]. This data was manually inserted into CSV files which eventually
+[@Worldometer], and country political system [the source to governmental
+system]. This data was manually inserted into CSV files which eventually
 allowed to transform it to the network object.
 
 As a result, the whole dataset contains of 3 CSV files. The first CSV
@@ -240,7 +240,7 @@ and score which represent the amount of points given from the sender to
 receiver. This file is used to create an edge list which is used to
 create a second network object.
 
-In this paper, 2 networks objects are created and analyzed. The first
+In this paper, 2 network objects are created and analyzed. The first
 network object is created using Node List which comes from the first csv
 file and an edge list which represents jurys votes and is created from
 the second csv file. The second network object is created using the same
@@ -253,7 +253,7 @@ creation of 2 network objects which as a consequence allowed to perform
 deeper analysis and reveal potential differences in voting patterns
 between jury and public.
 
-#### Potential bias in the dataset
+### Potential bias in the datasets
 
 All data is publicly available online in English thus anyone with the
 access to the internet can access it. Language barrier can be a
@@ -265,11 +265,20 @@ have been identified.
 
 #### Public votes Eurovision
 
-Looking at [Appendix A] we can see the plot centralities
+## Descriptive analysis
+
+-   isloates?
+-   types of triad census?
+-   graphs of a network Looking at [Appendix A] we can see the plot
+    centralities
 
 #### Jury votes Eurovision
 
-Plots yet to be added
+-   isloates?
+
+-   types of triad census?
+
+-   graphs of a network Plots yet to be added
 
 ### Data analysis (Research Rationale)
 
@@ -319,7 +328,9 @@ still in progress
 # Appendix A
 
 ![FIgure 1: Plot Centralities Eurovision
-Public](images/PlotCentralitiesEurovisionPublic-02.png) \# Appendix B
+Public](images/PlotCentralitiesEurovisionPublic.png)
+
+# Appendix B
 
 # Appendix C
 
@@ -328,3 +339,10 @@ Public](images/PlotCentralitiesEurovisionPublic-02.png) \# Appendix B
 \newpage
 
 # References
+
+```         
+## $number of vertices
+## [1] 37 
+## number_of_edges 
+## [1] 112
+```
