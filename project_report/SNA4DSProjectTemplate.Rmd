@@ -191,7 +191,7 @@ test. It offers a robust and flexible approach to examine the effects of
 exogenous attributes on network structure while considering the complex
 dependencies and configurations within the network itself.
 
-In the rest of the report, we will carefully describe the datasets which
+In the rest of the report, we will carefully describe the datasets that
 are going to be used to conduct the research. Data cleaning and if
 necessary data preprocessing are going to be run before any analysis.
 Descriptive analysis is going to be performed to understand the data
@@ -204,17 +204,20 @@ answering research questions and testing hypotheses.
 ### Dataset
 
 For this project, the data has been collected from several sources.
-Using multiple origins of daat allowed us to enrich the dataset and run
+Using multiple origins of data allowed us to enrich the dataset and run
 a more comprehensive analysis.
 
-On the eurovision website [@Eurovisionworld] the data is presented in a
+On the Eurovision website [@Eurovisionworld] the data is presented in a
 table which by switching the tab on the top of the page can be easily
 filtered by Jury or Public votes. Data is presented in a matrix where
 columns are created by countries who were giving the points and rows are
 represented by countries who were receiving scores. Each entry of the
-matrix is represented by the amount of points that were given/received.
-This data was produced 13th of May 2023 when the final of the tournament
-has taken place.
+matrix is represented by the number of points that were given/received.
+Due to the time constraint of this project, for each country only the
+top 3 votes were taken into consideration thus possible edge attributes
+are represented in the set {8,10,12} which corresponds to the top 3
+votes given by the country. This data was produced 13th of May 2023 when
+the final of the tournament took place.
 
 To enrich the data we also collected information about each country's
 language family [the source to language family], country population
@@ -222,11 +225,11 @@ language family [the source to language family], country population
 system]. This data was manually inserted into CSV files which eventually
 allowed to transform it to the network object.
 
-As a result, the whole dataset contains of 3 CSV files. The first CSV
-file contains the information about the countries which in this paper
-are also going to be referred to as nodes, population, country language
-family, and country political system. This file is used to create a list
-of nodes which is used to create a network object.
+As a result, the whole dataset contains 3 CSV files. The first CSV file
+contains information about the countries which in this paper are also
+going to be referred to as nodes, population, country language family,
+and country political system. This file is used to create a list of
+nodes which is used to create a network object.
 
 The second CSV file contains information about the votes of jurys from
 the countries. There are 3 columns in this file sender, receiver, and
@@ -248,53 +251,66 @@ Node List and an edge list which represents public votes and is created
 from the third csv file.
 
 The selection of node attributes has been done after doing the research
-and discovering research gaps. Furthermore, 3 CSV files allowed the
-creation of 2 network objects which as a consequence allowed to perform
-deeper analysis and reveal potential differences in voting patterns
-between jury and public.
+and discovering research gaps. That led nodes to have the following
+attributes:
+
+-   country_name
+-   country_population
+-   country_language_family
+-   country_government_system
+
+Furthermore, 3 CSV files allowed the creation of 2 network objects which
+as a consequence allowed to perform deeper analysis and reveal potential
+differences in voting patterns between jury and public.
 
 ### Potential bias in the datasets
 
-All data is publicly available online in English thus anyone with the
-access to the internet can access it. Language barrier can be a
-limitation, however, nowadays a lot of online dictionaries are available
-to translate the websites immediately. Thus no major biases in the data
+All data is publicly available online in English thus anyone with access
+to the internet can view it. Language barrier can be a limitation,
+however, nowadays a lot of online dictionaries are available to
+translate the websites immediately. Thus no major biases in the data
 have been identified.
 
 ### Exploration of the dataset
 
+Data exploration in social network analysis is essential as it reveals
+network structures, identifies influential nodes, and uncovers patterns
+of interaction. This initial step is pivotal for understanding,
+interpreting, and drawing meaningful insights from the complex web of
+relationships within social networks.
+
+## Descriptive analysis  \<yet in progress\>
+
 #### Public votes Eurovision
 
-## Descriptive analysis
+-   Looking at [Appendix A] we can see the plot of the network
 
--   isloates?
--   types of triad census?
--   graphs of a network Looking at [Appendix A] we can see the plot
-    centralities
+```{=html}
+<!-- -->
+```
+-    Looking at [Appendix B] we can see the plot centralities
+-   Looking at [Appendix C] we can see descriptive statistics of the
+    network
 
 #### Jury votes Eurovision
 
--   isloates?
+-   Looking at [Appendix D] we can see the plot of the network
 
--   types of triad census?
+```{=html}
+<!-- -->
+```
+-    Looking at [Appendix E] we can see the plot centralities
+-   Looking at [Appendix F] we can see descriptive statistics of the
+    network
 
--   graphs of a network Plots yet to be added
-
-### Data analysis (Research Rationale)
-
--   Why are these two methods suitable for your data?
-
--   Why are these two methods suitable for your research questions?
-
--   Are there other methods to address these questions? If yes, why are
-    the methods you chose better for this case?
+### Data analysis (Research Rationale) \<yet in progress\>
 
 It is important to understand why CUG and ERGM tests are suitable for
 this data and how they are going to help us answer research questions.
 As it has been already described [Research questions and hypothesis] to
-answer the first research question, CUG test is going to be conducted
-and to answer the second research question ERGM model is going to be
-developed.
+answer the first research question, the CUG test is going to be
+conducted, and to answer the second research question ERGM model is
+going to be developed.
 
 #### Conditional Uniform Graph
 
@@ -327,22 +343,74 @@ still in progress
 
 # Appendix A
 
-![FIgure 1: Plot Centralities Eurovision
-Public](images/PlotCentralitiesEurovisionPublic.png)
+![Eurovision Public](images/EurovisionPublicPlot.png)
 
 # Appendix B
 
+![Eurovision Public Plot
+Centralities](images/EurovisionPublicPlotCentralities.png)
+
 # Appendix C
 
+``` r
+## Eurovision public 
+## $number of vertices
+## [1] 37
+## $number_of_edges
+## [1] 112
+## density 
+## [1] 0.08408408
+## reciprocity
+## [1] 0.125
+## transitivity
+## [1] 0.2097902
+## mean_distance
+## [1] 2.50487
+## number_of_isolates
+## character(0)
+## dyad_census
+## Mutual Asymmetric Null
+##      7         98  561
+## triad_census
+##  003  012 102 021D 021U 021C 111D 111U 030T 030C 201 120D 120U 120C 210 300
+## 5026 1776 107   31  541  104  104    8   48    3   3   11    4    3   1   0
+```
+
 # Appendix D
+
+![Eurovision Jury Plot](images/EuriovisionJuryPlot.png)
+
+# Appendix E
+
+![Eurovision Jury Plot
+Centralities](images/EurovisionJurysPlotCentralities.png)
+
+# Appendix F
+
+``` r
+## Eurovision jury 
+## $number of vertices
+## [1] 37
+## $number_of_edges
+## [1] 112
+## density 
+## [1] 0.08333333
+## reciprocity
+## [1] 0.05357143
+## transitivity
+## [1] 0.2084691
+## mean_distance
+## [1] 2.619632
+## number_of_isolates
+## character(0)
+## dyad_census
+## Mutual Asymmetric Null
+##      7         105  558
+## triad_census
+##  003  012 102 021D 021U 021C 111D 111U 030T 030C 201 120D 120U 120C 210 300
+## 4847 2070  60   43  449  184   47    6   46    3   0   11    0    3   1   0
+```
 
 \newpage
 
 # References
-
-```         
-## $number of vertices
-## [1] 37 
-## number_of_edges 
-## [1] 112
-```

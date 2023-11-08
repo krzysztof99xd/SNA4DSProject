@@ -20,7 +20,7 @@ absolute_path_to_data_folder <- normalizePath(data_folder)
 print(absolute_path_to_data_folder)
 
 file_name_node_list <- 'Node_List_Eurovision_public.xlsx'
-file_name_edge_list<- 'Eurovision_public.xlsx'
+file_name_edge_list<- 'Eurovision_Jury.xlsx'
 
 
 # Combine the data folder path and file name to create the full path
@@ -67,12 +67,7 @@ class(NodeList)
 print(NodeList)
 print(EdgeList)
 
-# turn it into a network (is necessary for walktrap community)
 eurovisionnet <- igraph::graph_from_data_frame(EdgeList, NodeList, directed = TRUE)
-print(class(eurovisionnet))
-net_eurovision <- snafun::to_network(eurovisionnet)
-print(class(net_eurovision))
-
 
 ## number of vertices
 snafun::count_vertices(eurovisionnet)
@@ -93,14 +88,6 @@ snafun::count_dyads(eurovisionnet)
 ## triad_census
 snafun::count_triads(eurovisionnet)
 
-walktrap_num_f <- function(x, directed = TRUE) { 
-  x <- snafun::fix_cug_input(x, directed = directed)
-  snafun::extract_comm_walktrap(x) |> length()
-}
-eurovision_coms <- sna::cug.test(net_eurovision, FUN = walktrap_num_f, mode = "graph",
-                                 diag = FALSE, cmode = "dyad.census", reps = 1000)
-print(eurovision_coms)
-
 ## GRAPH 1
 
 # Calculate in-degrees
@@ -111,13 +98,29 @@ vertex_size <- in_degrees * 1.2
 
 plot(
   eurovisionnet,
-  edge.arrow.size = 0.2,
+  edge.arrow.size = 0.05,
   edge.color = "gray80",
   vertex.frame.color = "#ffffff",
   vertex.label.cex = 0.6,
   vertex.label.color = "black",
-  vertex.size = vertex_size
-)  
+  vertex.size = 20
+)
+
+snafun::plot_centralities(eurovisionnet)
+
+# turn it into a network (is necessary for walktrap community)
+print(class(eurovisionnet))
+net_eurovision <- snafun::to_network(eurovisionnet)
+print(class(net_eurovision))
+
+## CUG test for detecting communities
+walktrap_num_f <- function(x, directed = TRUE) { 
+  x <- snafun::fix_cug_input(x, directed = directed)
+  snafun::extract_comm_walktrap(x) |> length()
+}
+eurovision_coms <- sna::cug.test(net_eurovision, FUN = walktrap_num_f, mode = "graph",
+                                 diag = FALSE, cmode = "dyad.census", reps = 1000)
+print(eurovision_coms)
 
 ## GRAPH 2
 
