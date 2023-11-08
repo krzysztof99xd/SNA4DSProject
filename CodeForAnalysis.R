@@ -6,6 +6,7 @@ tinytex::install_tinytex()
 
 library(readxl)
 library(tinytex)
+print("hello")
 
 # Set the working directory to the directory where the project is located
 setwd("your_path_to_data")
