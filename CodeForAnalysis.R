@@ -1,8 +1,14 @@
 install.packages("readxl")
+
+tinytex::install_tinytex()
+# to uninstall TinyTeX, run
+# tinytex::uninstall_tinytex()
+
 library(readxl)
+library(tinytex)
 
 # Set the working directory to the directory where the project is located
-setwd("your_path_to_project")
+setwd("your_path_to_data")
 print(getwd())
 
 # Create a relative path to the "data" folder in your project directory
@@ -14,7 +20,8 @@ absolute_path_to_data_folder <- normalizePath(data_folder)
 print(absolute_path_to_data_folder)
 
 file_name_node_list <- 'Node_List_Eurovision_public.xlsx'
-file_name_edge_list<- 'name_eurovision_edge_list.xlsx'
+file_name_edge_list<- 'Eurovision_public.xlsx'
+
 
 # Combine the data folder path and file name to create the full path
 full_path_to_node_list <- file.path(data_folder, file_name_node_list)
@@ -60,13 +67,41 @@ class(NodeList)
 print(NodeList)
 print(EdgeList)
 
-# turn it into a network
+# turn it into a network (is necessary for walktrap community)
 eurovisionnet <- igraph::graph_from_data_frame(EdgeList, NodeList, directed = TRUE)
+print(class(eurovisionnet))
+net_eurovision <- snafun::to_network(eurovisionnet)
+print(class(net_eurovision))
 
-snafun::extract_vertex_attribute(eurovisionnet)
-snafun::extract_edge_attribute(eurovisionnet)
 
-## GRAPH 2
+## number of vertices
+snafun::count_vertices(eurovisionnet)
+## number_of_edges
+snafun::count_edges(eurovisionnet)
+## density 
+snafun::g_density(eurovisionnet)
+## reciprocity
+snafun::g_reciprocity(eurovisionnet)
+## transitivity
+snafun::g_transitivity(eurovisionnet)
+## mean_distance
+snafun::g_mean_distance(eurovisionnet)
+## number_of_isolates
+snafun::find_isolates(eurovisionnet)
+## dyad_census
+snafun::count_dyads(eurovisionnet)
+## triad_census
+snafun::count_triads(eurovisionnet)
+
+walktrap_num_f <- function(x, directed = TRUE) { 
+  x <- snafun::fix_cug_input(x, directed = directed)
+  snafun::extract_comm_walktrap(x) |> length()
+}
+eurovision_coms <- sna::cug.test(net_eurovision, FUN = walktrap_num_f, mode = "graph",
+                                 diag = FALSE, cmode = "dyad.census", reps = 1000)
+print(eurovision_coms)
+
+## GRAPH 1
 
 # Calculate in-degrees
 in_degrees <- igraph::degree(eurovisionnet, mode = "in")
@@ -103,8 +138,6 @@ plot(
   vertex.label.color = "black",
   vertex.size = vertex_size
 )  
-
-
 
 ## GRAPH 3
 
@@ -143,8 +176,6 @@ plot(
 legend("topright", legend = c("8 points", "10 points", "12 points"), fill = color_palette, title = "Edge Weights")
 
 
-
-
 ## GRPAH 4
 
 # Calculate the summary values for each vertex
@@ -165,6 +196,7 @@ vertex_labels <- sapply(igraph::V(eurovisionnet), function(vertex) {
   label <- paste("Name:", name, "\nScore:", summary, sep = " ")
   return(label)
 })
+
 # Add the summary values as a new vertex attribute
 igraph::V(eurovisionnet)$summary_weight <- summary_values
 snafun::extract_vertex_attribute(eurovisionnet)
