@@ -8,7 +8,7 @@ library(readxl)
 library(tinytex)
 
 # Set the working directory to the directory where the project is located
-setwd("C:/Users/48504/Desktop/JADSMaster/SNA4DS/SNA4DSProjectGroup12")
+setwd("your_path_to_data")
 print(getwd())
 
 # Create a relative path to the "data" folder in your project directory
@@ -67,13 +67,12 @@ class(NodeList)
 print(NodeList)
 print(EdgeList)
 
-# turn it into a network
+# turn it into a network (is necessary for walktrap community)
 eurovisionnet <- igraph::graph_from_data_frame(EdgeList, NodeList, directed = TRUE)
+print(class(eurovisionnet))
+net_eurovision <- snafun::to_network(eurovisionnet)
+print(class(net_eurovision))
 
-snafun::plot_centralities(eurovisionnet)
-
-## snafun::extract_vertex_attribute(eurovisionnet)
-## snafun::extract_edge_attribute(eurovisionnet)
 
 ## number of vertices
 snafun::count_vertices(eurovisionnet)
@@ -94,6 +93,13 @@ snafun::count_dyads(eurovisionnet)
 ## triad_census
 snafun::count_triads(eurovisionnet)
 
+walktrap_num_f <- function(x, directed = TRUE) { 
+  x <- snafun::fix_cug_input(x, directed = directed)
+  snafun::extract_comm_walktrap(x) |> length()
+}
+eurovision_coms <- sna::cug.test(net_eurovision, FUN = walktrap_num_f, mode = "graph",
+                                 diag = FALSE, cmode = "dyad.census", reps = 1000)
+print(eurovision_coms)
 
 ## GRAPH 1
 
