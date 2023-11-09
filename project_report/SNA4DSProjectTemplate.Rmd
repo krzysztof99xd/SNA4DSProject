@@ -271,7 +271,7 @@ however, nowadays a lot of online dictionaries are available to
 translate the websites immediately. Thus no major biases in the data
 have been identified.
 
-### Exploration of the dataset
+## Exploration of the dataset
 
 Data exploration in social network analysis is essential as it reveals
 network structures, identifies influential nodes, and uncovers patterns
@@ -279,29 +279,87 @@ of interaction. This initial step is pivotal for understanding,
 interpreting, and drawing meaningful insights from the complex web of
 relationships within social networks.
 
-## Descriptive analysis  \<yet in progress\>
+### Descriptive analysis \<yet in progress\>
 
-#### Public votes Eurovision
+Firstly descriptive analysis needs to be conducted to establish a
+foundational understanding crucial for informed decision-making and
+insightful conclusions. Since both networks show similar descriptive
+statistics they are going to be both described under one paragraph. In
+the paragraph below first network is considered as a network created
+from votes from jury and the second one as the network created from
+votes from public.
 
--   Looking at [Appendix A] we can see the plot of the network
+From the descriptive analysis for both networks, it can be observed that
+there are 37 vertices and 112 edges. Density is 0.084 and 0.083 for the
+first and second network respectively which is really low and the
+networks can be considered sparse with few connections between nodes in
+total. Reciprocity is equal to 0.125 and 0.053 which indicates that
+12.5% of the edges in the network involve mutual connections in the
+first network and 5.3% in the second network. Transitivity is equal to
+0.209 and 0.208 which shows that there is very low likelihood of "a
+friend of my friend is my friend" phenomenon. The mean distance in both
+network is just slightly between 2.5 and 2.65 which means that on
+average the shortest path is around 2.5 steps long which means that
+nodes are relatively close to each other and the networks are compact.
+There are no isolates present in either network. There are all types of
+triad census present in the first network except *300* and the absence
+of *120U* and *300* in the second one. It indicates a diverse and
+comprehensive set of structural configurations among triplets of nodes
+in both networks.
 
-```{=html}
+-   Looking at [Appendix A] we can see the plot of the network of Jury
+    votes Eurovision
+
 <!-- -->
-```
--    Looking at [Appendix B] we can see the plot centralities
+
+-   Looking at [Appendix B] we can see the plot centralities of Jury
+    votes Eurovision
+
+    ***Betweenness centrality*** of i is the proportion of all shortest
+    paths in the network that pass through i. It shows which nodes have
+    information access advantage and are important to the network's
+    efficiency. It also shows the relative stress on nodes.
+    Mathematically is defined as follows:
+
+    $B(x) = \sum_{s \neq x \neq t} \frac{\sigma_{st}(x)}{\sigma_{st}}$
+
+    ***Closeness*** measures how much effort it takes to reach all other
+    nodes in the network. Sum the distances from i to all other
+    vertices, this is it's fairness. Then, invert this sum.
+
+    Mathematically is defined as follows::
+    $C(x) = \frac{1}{\sum_{y} d(x, y)}$ where d(v, i) equal to the path
+    length between i and v.
+
+    ***Degree*** measures a node's extraversion/outgoingness
+    ("out-degree"), popularity ("in-degree"), or involvement ("total
+    degree").
+
+    $\text{In-Degree}(v) = \text{Number of incoming edges to node } v \\\text{Out-Degree}(v) = \text{Number of outgoing edges from node } v \\\text{Total Degree}(v) = \text{In-Degree}(v) + \text{Out-Degree}(v)$
+
+    ***Eccentrity*** measures the maximum distance or shortest path
+    length from a specific node to any other node in the network. In
+    other words, it quantifies how far a node is, on average, from all
+    other nodes in the network.
+
+    Mathematically is defined as follows: $E(x) = \max_{y} d(x, y)$where
+    *E(X)* represents the eccentricity of node *x*, and *d(x,y)* is the
+    shortest path distance between nodes *x* and *y*.
+
 -   Looking at [Appendix C] we can see descriptive statistics of the
-    network
+    network of Jury votes Eurovision
 
 #### Jury votes Eurovision
 
--   Looking at [Appendix D] we can see the plot of the network
+-   Looking at [Appendix D] we can see the plot of the network of Jury
+    votes Eurovision
 
-```{=html}
 <!-- -->
-```
--    Looking at [Appendix E] we can see the plot centralities
+
+-   Looking at [Appendix E] we can see the plot centralities of Jury
+    votes Eurovision
 -   Looking at [Appendix F] we can see descriptive statistics of the
-    network
+    network of Jury votes Eurovision
 
 ### Data analysis (Research Rationale) \<yet in progress\>
 
