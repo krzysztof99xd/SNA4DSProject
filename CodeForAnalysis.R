@@ -57,17 +57,48 @@ EdgeList <- snafun::make_edgelist(net_edge, eAttr)
 EdgeList <- na.omit(EdgeList)
 
 nAttr <- eurovision_public_data_node_list$country_population
-class(nAttr)
+nAttr2 <- eurovision_public_data_node_list$country_language_family 
+nAttr3 <- eurovision_public_data_node_list$country_government_system
 
-# Make the node list
+class(nAttr)
+print(nAttr)
+
+# Make the node list for 1st attribute
 NodeList <- snafun::make_nodelist(net_node, nAttr)
 NodeList <- na.omit(NodeList)
-class(NodeList)
 
-print(NodeList)
-print(EdgeList)
+# Make the node list for 2nd attribute
+NodeList2 <- snafun::make_nodelist(net_node, nAttr2)
+NodeList2 <- na.omit(NodeList2)
 
-eurovisionnet <- igraph::graph_from_data_frame(EdgeList, NodeList, directed = TRUE)
+# Make the node list for 3rd attribute
+NodeList3 <- snafun::make_nodelist(net_node, nAttr3)
+NodeList3 <- na.omit(NodeList3)
+
+# Convert matrices to data frames
+df1 <- as.data.frame(NodeList)
+df2 <- as.data.frame(NodeList2)
+df3 <- as.data.frame(NodeList3)
+
+# name columns
+colnames(df1) <- c("node_country", "country_population")
+colnames(df2) <- c("node_country", "country_language_family")  
+colnames(df3) <- c("node_country", "country_government_system")
+
+# Merge df1 and df2 based on the first column
+merged_df <- merge(df1, df2, by = "node_country", all = TRUE)
+print(merged_df)
+
+# Merge the result with df3 based on the first column
+merged_NodeList <- merge(merged_df, df3, by = "node_country", all = TRUE)
+
+# Print the result
+print(merged_NodeList)
+
+eurovisionnet <- igraph::graph_from_data_frame(EdgeList, merged_NodeList, directed = TRUE)
+plot(eurovisionnet)
+
+snafun::extract_all_vertex_attributes(eurovisionnet)
 
 ## number of vertices
 snafun::count_vertices(eurovisionnet)
@@ -98,7 +129,7 @@ vertex_size <- in_degrees * 1.2
 
 plot(
   eurovisionnet,
-  edge.arrow.size = 0.55,
+  edge.arrow.size = 0.15,
   edge.color = "gray80",
   vertex.frame.color = "#ffffff",
   vertex.label.cex = 0.6,
@@ -122,8 +153,72 @@ eurovision_coms <- sna::cug.test(net_eurovision, FUN = walktrap_num_f, mode = "g
                                  diag = FALSE, cmode = "dyad.census", reps = 1000)
 print(eurovision_coms)
 
-## GRAPH 2
+## Baseline ERGM model (prerequisities, must be a network object)
+baseline_model_0.1 <- ergm::ergm(net_eurovision ~ edges)  
+(s1 <- summary(baseline_model_0.1))
 
+## Second model where we include reciprocity and we want to check whether the votes are reciprocated
+baseline_model_0.2 <- ergm::ergm(net_eurovision ~ edges + mutual,
+                                 control = ergm::control.ergm(MCMC.burnin = 5000,
+                                           MCMC.samplesize = 10000,
+                                           seed = 123456,
+                                           MCMLE.maxit = 5))  
+(s2 <- summary(baseline_model_0.2))
+
+ergm::mcmc.diagnostics(baseline_model_0.2)
+
+## looks actually good, 
+baseline_model_0.3 <- ergm::ergm(net_eurovision ~ edges + mutual + nodematch("country_language_family"),
+                                 control = ergm::control.ergm(MCMC.burnin = 5000,
+                                                              MCMC.samplesize = 10000,
+                                                              seed = 123457,
+                                                              MCMLE.maxit = 5))  
+(s3 <- summary(baseline_model_0.3))
+
+ergm::mcmc.diagnostics(baseline_model_0.3)
+
+
+### that doesnt look that good :/ 
+baseline_model_0.3_GOF <- ergm::gof(baseline_model_0.3)
+
+snafun::stat_plot_gof(baseline_model_0.3_GOF)
+
+
+
+## looks actually good, 
+baseline_model_0.4 <- ergm::ergm(net_eurovision ~ edges + mutual + nodematch("country_government_system"),
+                                 control = ergm::control.ergm(MCMC.burnin = 5000,
+                                                              MCMC.samplesize = 10000,
+                                                              seed = 123458,
+                                                              MCMLE.maxit = 5))  
+(s4 <- summary(baseline_model_0.4))
+
+ergm::mcmc.diagnostics(baseline_model_0.4)
+
+
+### that doesnt look that good :/ 
+baseline_model_0.4_GOF <- ergm::gof(baseline_model_0.4)
+
+snafun::stat_plot_gof(baseline_model_0.4_GOF)
+
+
+## looks actually good, 
+baseline_model_0.5 <- ergm::ergm(net_eurovision ~ edges + mutual + nodematch("country_language_family") + nodematch("country_government_system"),
+                                 control = ergm::control.ergm(MCMC.burnin = 5000,
+                                                              MCMC.samplesize = 10000,
+                                                              seed = 123451,
+                                                              MCMLE.maxit = 5))  
+(s5 <- summary(baseline_model_0.5))
+
+ergm::mcmc.diagnostics(baseline_model_0.5)
+
+
+### that doesnt look that good :/ 
+baseline_model_0.5_GOF <- ergm::gof(baseline_model_0.5)
+
+snafun::stat_plot_gof(baseline_model_0.5_GOF)
+
+## GRAPH 2
 # Calculate total incoming weight for each vertex
 in_weights <- sapply(igraph::V(eurovisionnet), function(v) {
   sum(igraph::E(eurovisionnet)[to(v)]$attribute)

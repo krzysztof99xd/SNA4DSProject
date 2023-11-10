@@ -340,15 +340,16 @@ characteristics. Since both networks are relatively small and they are
 characterized by short-range interactions which can be observed by
 looking at the mean distance, walktrap community detection has been
 chosen as the suitable algorithm to detect communities within the
-networks. 
+networks.
 
-The walktrap community detection algorithm was introduced in
-the paper by Pascal Pons and Matthieu Latapy in 2005 [@newman2006finding]. The paper was presented at the International Workshop on Computer Science and its Applications
-(CSA) in 2005. The primary focus of the algorithm is on detecting community structures
-in networks by leveraging the concept of random walks. It aims to
-identify groups of nodes that are likely to be part of the same
-community based on the tendency of nodes to be frequently visited
-together in random walks.
+The walktrap community detection algorithm was introduced in the paper
+by Pascal Pons and Matthieu Latapy in 2005 [@newman2006finding]. The
+paper was presented at the International Workshop on Computer Science
+and its Applications (CSA) in 2005. The primary focus of the algorithm
+is on detecting community structures in networks by leveraging the
+concept of random walks. It aims to identify groups of nodes that are
+likely to be part of the same community based on the tendency of nodes
+to be frequently visited together in random walks.
 
 There are also other possible algorithms to detect communities such as
 fast-greedy, Girvan-Newman and Louvain. However, after analyzing the
@@ -366,7 +367,7 @@ it is possible to specify which algorithm is going to be used to detect
 communities and as it has been described above walktrap community
 detection algorithm is going to be applied.
 
-#### Exponential Random Graph Models \<yet in progress\> 
+#### Exponential Random Graph Models \<yet in progress\>
 
 The second research question analyzes to what extent language family or
 governmental political system influences voting patterns during the
@@ -377,15 +378,26 @@ the network. ERGMs provide a basis for statistical inference, allowing
 assessing the significance of the effects of governmental systems and
 language families on the network.
 
-## Results
+## Results \<still in progress\>
 
 (about 2000 words)
 
-### Model 1
+### Model 1 \<still in progress\>
+
+``` r
+## CUG test for detecting communities
+walktrap_num_f <- function(x, directed = TRUE) { 
+  x <- snafun::fix_cug_input(x, directed = directed)
+  snafun::extract_comm_walktrap(x) |> length()
+}
+eurovision_coms <- sna::cug.test(net_eurovision, FUN = walktrap_num_f, mode = "graph", diag = FALSE, cmode = "dyad.census", reps = 1000)
+
+print(eurovision_coms)
+```
 
 still in progress
 
-### ERGM
+### ERGM \<still in progress\>
 
 edges are dyadic independent model (In ERGMs, the "edges" term models
 the presence or absence of edges between pairs of nodes (dyads) in the
@@ -394,10 +406,21 @@ edge between any pair of nodes is considered independent of the presence
 or absence of edges in other dyads.)
 
 1.  Baseline model (Claudia said it should be just with edges)
+
+    ``` R
+    ## Baseline ERGM model (prerequisities: must be a network object)
+    baseline_model_0.1 <- ergm::ergm(net_eurovision ~ edges)  
+    (s1 <- summary(baseline_model_0.1))
+    ```
+
 2.  Exploratory models
+
 3.  Final model
+
 4.  MCMC diagnostics for the best selected model
+
 5.  Goodness of fit (GOF)
+
 6.  Interpret results
 
 still in progress
