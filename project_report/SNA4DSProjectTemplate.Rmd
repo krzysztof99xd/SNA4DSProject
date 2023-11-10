@@ -149,9 +149,9 @@ led to the following research questions:
 -   ***RQ1: To what extent do countries formulate small communities
     between each other in the Eurovision competition?***
 
--   ***RQ2: To what extent governmental system influence how the
-    countries distribute their votes during the Eurovision
-    competition?***
+-   ***RQ2: To what extent governmental system and language family
+    influence how the countries distribute their votes during the
+    Eurovision competition?***
 
 The aforementioned research questions lead to the following hypothesis
 regarding first research question:
@@ -166,9 +166,9 @@ The aforementioned research questions lead to the following hypothesis
 regarding second research question:
 
 -   H0: Governmental system and language family do not have an influence
-    how countries distribute their votes Eurovision competition
+    on how countries distribute their votes Eurovision competition
 
--   H1: Governmental system and language family have an effect how
+-   H1: Governmental system and language family have an effect on how
     countries distribute their votes during Eurovision competition
 
 Answering the aforementioned research questions and testing hypotheses
@@ -182,8 +182,10 @@ The CUG allows detecting communities within a network firstly by
 generating a null model and randomizing the network while preserving
 certain structural properties, such as node degrees. Then it applies a
 detection algorithm to identify potential groups of nodes in the
-original network. How excatly the CUG model is used in this project is
-going to be described in the CUG model section.
+original network. How exactly the CUG model is going to be used and
+which community detection algorithms is chosen in this project is
+described in the [Conditional Uniform Graph using walktrap community
+detection] section.
 
 To answer the second research question and to validate the second
 hypothesis we are going to run Exponential Random Graph Model (ERGM)
@@ -286,8 +288,8 @@ foundational understanding crucial for informed decision-making and
 insightful conclusions. Since both networks show similar descriptive
 statistics they are going to be both described under one paragraph. In
 the paragraph below first network is considered as a network created
-from votes from jury and the second one as the network created from
-votes from public.
+from votes from the jury and the second one as the network created from
+votes from the public.
 
 From the descriptive analysis for both networks, it can be observed that
 there are 37 vertices and 112 edges. Density is 0.084 and 0.083 for the
@@ -307,79 +309,75 @@ of *120U* and *300* in the second one. It indicates a diverse and
 comprehensive set of structural configurations among triplets of nodes
 in both networks.
 
--   Looking at [Appendix A] we can see the plot of the network of Jury
+-   [Appendix A] shows the plot of the network of Jury votes Eurovision
+    can be found.
+-   [Appendix B] shows the plot centralities of Jury votes Eurovision.
+    An explanation of the centralities terms can be found in [Appendix
+    G].
+-   [Appendix C] shows descriptive statistics of the network of Jury
+    votes Eurovision
+-   [Appendix D] shows the plot of the network of Jury votes Eurovision
+-   [Appendix E] shows the plot centralities of Jury votes Eurovision
+-   [Appendix F] shows the descriptive statistics of the network of Jury
     votes Eurovision
 
-<!-- -->
-
--   Looking at [Appendix B] we can see the plot centralities of Jury
-    votes Eurovision
-
-    ***Betweenness centrality*** of i is the proportion of all shortest
-    paths in the network that pass through i. It shows which nodes have
-    information access advantage and are important to the network's
-    efficiency. It also shows the relative stress on nodes.
-    Mathematically is defined as follows:
-
-    $B(x) = \sum_{s \neq x \neq t} \frac{\sigma_{st}(x)}{\sigma_{st}}$
-
-    ***Closeness*** measures how much effort it takes to reach all other
-    nodes in the network. Sum the distances from i to all other
-    vertices, this is it's fairness. Then, invert this sum.
-
-    Mathematically is defined as follows::
-    $C(x) = \frac{1}{\sum_{y} d(x, y)}$ where d(v, i) equal to the path
-    length between i and v.
-
-    ***Degree*** measures a node's extraversion/outgoingness
-    ("out-degree"), popularity ("in-degree"), or involvement ("total
-    degree").
-
-    $\text{In-Degree}(v) = \text{Number of incoming edges to node } v \\\text{Out-Degree}(v) = \text{Number of outgoing edges from node } v \\\text{Total Degree}(v) = \text{In-Degree}(v) + \text{Out-Degree}(v)$
-
-    ***Eccentrity*** measures the maximum distance or shortest path
-    length from a specific node to any other node in the network. In
-    other words, it quantifies how far a node is, on average, from all
-    other nodes in the network.
-
-    Mathematically is defined as follows: $E(x) = \max_{y} d(x, y)$where
-    *E(X)* represents the eccentricity of node *x*, and *d(x,y)* is the
-    shortest path distance between nodes *x* and *y*.
-
--   Looking at [Appendix C] we can see descriptive statistics of the
-    network of Jury votes Eurovision
-
-#### Jury votes Eurovision
-
--   Looking at [Appendix D] we can see the plot of the network of Jury
-    votes Eurovision
-
-<!-- -->
-
--   Looking at [Appendix E] we can see the plot centralities of Jury
-    votes Eurovision
--   Looking at [Appendix F] we can see descriptive statistics of the
-    network of Jury votes Eurovision
-
-### Data analysis (Research Rationale) \<yet in progress\>
+### Data analysis (Research Rationale)
 
 It is important to understand why CUG and ERGM tests are suitable for
-this data and how they are going to help us answer research questions.
-As it has been already described [Research questions and hypothesis] to
-answer the first research question, the CUG test is going to be
-conducted, and to answer the second research question ERGM model is
-going to be developed.
+this data and how they are going to help to answer the research question
+and what are the potential alternatives for them. As it has been already
+described [Research questions and hypothesis] to answer the first
+research question, the CUG test is going to be conducted, and to answer
+the second research question ERGM model is going to be developed.
 
-#### Conditional Uniform Graph
+#### Conditional Uniform Graph using walktrap community detection
 
-This can be achieved by a `sna::cugtest` function that does the graph
-generation and computes the network measure. Using a Conditional Uniform
-Graph is a valuable approach to assess the number of communities within
-a network because it provides a rigorous and controlled framework for
-community detection, helps identify meaningful structures, and allows
-for statistical analysis and algorithm validation.
+To answer first research question and to test the first hypothesis it
+will be checked to what extent small communities are formed within the
+Eurovision contest. Firstly, it needs to be decided which algorithm is
+suitable for detecting the communities within this network
+characteristics. Since both networks are relatively small and they are
+characterized by short-range interactions which can be observed by
+looking at the mean distance, walktrap community detection has been
+chosen as the suitable algorithm to detect communities within the
+networks. The walktrap community detection algorithm was introduced in
+the paper titled "Finding community structure in networks using the
+eigenvectors of matrices" by Pascal Pons and Matthieu Latapy. The paper
+was presented at the International Workshop on Computer Science and its
+Applications (CSA) in 2005. \<- reference!
 
-#### Exponential Random Graph Models
+The primary focus of the algorithm is on detecting community structures
+in networks by leveraging the concept of random walks. It aims to
+identify groups of nodes that are likely to be part of the same
+community based on the tendency of nodes to be frequently visited
+together in random walks.
+
+There are also other possible algorithms to detect communities such as
+fast-greedy, Girvan-Newman and Louvain. However, after analyzing the
+network structure, it has been decided that the walktrap community suits
+the best data characteristics.
+
+##### Understanding CUG test
+
+The Conditional Uniform Graph (CUG) facilitates community detection in a
+network by initially creating a null model and randomizing the network
+while maintaining specific structural characteristics, such as node
+degrees. Subsequently, it employs a detection algorithm to pinpoint
+potential clusters of nodes in the original network. Within this test,
+it is possible to specify which algorithm is going to be used to detect
+communities and as it has been described above walktrap community
+detection algorithm is going to be applied.
+
+#### Exponential Random Graph Models \<yet in progress\> 
+
+The second research question analyzes to what extent language family or
+governmental political system influences voting patterns during the
+Eurovision contest. These are both exogeneous terms and their effect can
+be measured by ERGM models. This model allows dyadic dependent as well
+as dyadic interdependent terms which allow capturing the structure of
+the network. ERGMs provide a basis for statistical inference, allowing
+assessing the significance of the effects of governmental systems and
+language families on the network.
 
 ## Results
 
@@ -390,6 +388,19 @@ for statistical analysis and algorithm validation.
 still in progress
 
 ### ERGM
+
+edges are dyadic independent model (In ERGMs, the "edges" term models
+the presence or absence of edges between pairs of nodes (dyads) in the
+network. Dyadic independence implies that the presence or absence of an
+edge between any pair of nodes is considered independent of the presence
+or absence of edges in other dyads.)
+
+1.  Baseline model (Claudia said it should be just with edges)
+2.  Exploratory models
+3.  Final model
+4.  MCMC diagnostics for the best selected model
+5.  Goodness of fit (GOF)
+6.  Interpret results
 
 still in progress
 
@@ -436,7 +447,7 @@ Centralities](images/EurovisionPublicPlotCentralities.png)
 
 # Appendix D
 
-![Eurovision Jury Plot](images/EuriovisionJuryPlot.png)
+![Eurovision Jury Plot](images/EurovisionJuryPlot-01.png)
 
 # Appendix E
 
@@ -468,6 +479,38 @@ Centralities](images/EurovisionJurysPlotCentralities.png)
 ##  003  012 102 021D 021U 021C 111D 111U 030T 030C 201 120D 120U 120C 210 300
 ## 4847 2070  60   43  449  184   47    6   46    3   0   11    0    3   1   0
 ```
+
+# Appendix G
+
+***Betweenness centrality*** of *i* is the proportion of all shortest
+paths in the network that pass through *i*. It shows which nodes have
+information access advantage and which are important to the network's
+efficiency. It also shows the relative stress on nodes. Mathematically,
+it is defined as follows:
+
+$B(x) = \sum_{s \neq x \neq t} \frac{\sigma_{st}(x)}{\sigma_{st}}$
+
+***Closeness*** measures how much effort it takes to reach all other
+nodes in the network. Sum the distances from *i* to all other vertices,
+this is it's fairness. Then, the sum is inverted. Mathematically is
+defined as follows:
+
+$C(x) = \frac{1}{\sum_{y} d(x, y)}$ where *d(v, i)* equal to the path
+length between *i* and *v*.
+
+***Degree*** measures a node's extraversion/outgoingness ("out-degree"),
+popularity ("in-degree"), or involvement ("total degree").
+
+$\text{In-Degree}(v) = \text{Number of incoming edges to node } v \\\text{Out-Degree}(v) = \text{Number of outgoing edges from node } v \\\text{Total Degree}(v) = \text{In-Degree}(v) + \text{Out-Degree}(v)$
+
+***Eccentricity*** measures the maximum distance or shortest path length
+from a specific node to any other node in the network. In other words,
+it quantifies how far a node is, on average, from all other nodes in the
+network. Mathematically, it is defined as follows:
+
+-   $E(x) = \max_{y} d(x, y)$ where *E(X)* represents the eccentricity
+    of node *x*, and *d(x,y)* is the shortest path distance between
+    nodes *x* and *y*.
 
 \newpage
 

@@ -8,7 +8,7 @@ library(readxl)
 library(tinytex)
 
 # Set the working directory to the directory where the project is located
-setwd("your_path_to_data")
+setwd("your_path_to_project")
 print(getwd())
 
 # Create a relative path to the "data" folder in your project directory
@@ -20,7 +20,7 @@ absolute_path_to_data_folder <- normalizePath(data_folder)
 print(absolute_path_to_data_folder)
 
 file_name_node_list <- 'Node_List_Eurovision_public.xlsx'
-file_name_edge_list<- 'Eurovision_Jury.xlsx'
+file_name_edge_list<- 'Eurovision_Public.xlsx'
 
 
 # Combine the data folder path and file name to create the full path
@@ -98,7 +98,7 @@ vertex_size <- in_degrees * 1.2
 
 plot(
   eurovisionnet,
-  edge.arrow.size = 0.05,
+  edge.arrow.size = 0.55,
   edge.color = "gray80",
   vertex.frame.color = "#ffffff",
   vertex.label.cex = 0.6,
