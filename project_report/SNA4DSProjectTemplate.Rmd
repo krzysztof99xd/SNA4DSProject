@@ -340,13 +340,11 @@ characteristics. Since both networks are relatively small and they are
 characterized by short-range interactions which can be observed by
 looking at the mean distance, walktrap community detection has been
 chosen as the suitable algorithm to detect communities within the
-networks. The walktrap community detection algorithm was introduced in
-the paper titled "Finding community structure in networks using the
-eigenvectors of matrices" by Pascal Pons and Matthieu Latapy. The paper
-was presented at the International Workshop on Computer Science and its
-Applications (CSA) in 2005. \<- reference!
+networks. 
 
-The primary focus of the algorithm is on detecting community structures
+The walktrap community detection algorithm was introduced in
+the paper by Pascal Pons and Matthieu Latapy in 2005 [@newman2006finding]. The paper was presented at the International Workshop on Computer Science and its Applications
+(CSA) in 2005. The primary focus of the algorithm is on detecting community structures
 in networks by leveraging the concept of random walks. It aims to
 identify groups of nodes that are likely to be part of the same
 community based on the tendency of nodes to be frequently visited
