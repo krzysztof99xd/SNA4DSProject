@@ -8,7 +8,7 @@ library(readxl)
 library(tinytex)
 
 # Set the working directory to the directory where the project is located
-setwd("your_path_to_data")
+setwd("your_path_to_project")
 print(getwd())
 
 # Create a relative path to the "data" folder in your project directory
@@ -17,26 +17,20 @@ print(data_folder)
 
 # Extract the absolute path from the relative path
 absolute_path_to_data_folder <- normalizePath(data_folder)
-print(absolute_path_to_data_folder)
 
-file_name_node_list <- 'Node_List_Eurovision_public.xlsx'
-file_name_edge_list<- 'Eurovision_Public.xlsx'
-
+file_name_node_list <- 'Node_List_Eurovision.xlsx'
+file_name_edge_list<- 'Eurovision_Jury.xlsx'
 
 # Combine the data folder path and file name to create the full path
 full_path_to_node_list <- file.path(data_folder, file_name_node_list)
-print(full_path_to_node_list)
 
 ## read data from csv file
 eurovision_public_data_node_list <- read_excel(full_path_to_node_list)
-print(eurovision_public_data_node_list)
 
 # Combine the data folder path and file name to create the full path
 full_path_to_edge_list <- file.path(data_folder, file_name_edge_list)
-print(full_path_to_edge_list)
 
 eurovision_public_data_edge_list <- read_excel(full_path_to_edge_list)
-print(eurovision_public_data_edge_list)
 
 (NodeList_euro <- unique(c(eurovision_public_data_node_list$Node_country)))
 NodeList_euro <- na.omit(NodeList_euro) # always remove NAs
@@ -59,9 +53,6 @@ EdgeList <- na.omit(EdgeList)
 nAttr <- eurovision_public_data_node_list$country_population
 nAttr2 <- eurovision_public_data_node_list$country_language_family 
 nAttr3 <- eurovision_public_data_node_list$country_government_system
-
-class(nAttr)
-print(nAttr)
 
 # Make the node list for 1st attribute
 NodeList <- snafun::make_nodelist(net_node, nAttr)
@@ -87,13 +78,20 @@ colnames(df3) <- c("node_country", "country_government_system")
 
 # Merge df1 and df2 based on the first column
 merged_df <- merge(df1, df2, by = "node_country", all = TRUE)
-print(merged_df)
 
 # Merge the result with df3 based on the first column
 merged_NodeList <- merge(merged_df, df3, by = "node_country", all = TRUE)
 
-# Print the result
-print(merged_NodeList)
+# Identify countries that are not consistent
+inconsistent_countries <- union(setdiff(countries_unique, voters_unique), setdiff(voters_unique, countries_unique))
+
+# Compare the unique elements and print the results
+if (length(inconsistent_countries) == 0) {
+  print("Unique elements are consistent between data frames.")
+} else {
+  cat("Warning: The following countries are not consistent between data frames:\n")
+  print(inconsistent_countries)
+}
 
 eurovisionnet <- igraph::graph_from_data_frame(EdgeList, merged_NodeList, directed = TRUE)
 plot(eurovisionnet)
@@ -158,11 +156,13 @@ baseline_model_0.1 <- ergm::ergm(net_eurovision ~ edges)
 (s1 <- summary(baseline_model_0.1))
 
 ## Second model where we include reciprocity and we want to check whether the votes are reciprocated
-baseline_model_0.2 <- ergm::ergm(net_eurovision ~ edges + mutual,
+baseline_model_0.2 <- ergm::ergm(net_eurovision ~ edges + mutual + odegree(3),
                                  control = ergm::control.ergm(MCMC.burnin = 5000,
-                                           MCMC.samplesize = 10000,
+                                           MCMC.samplesize = 15000,
                                            seed = 123456,
-                                           MCMLE.maxit = 5))  
+                                           MCMLE.maxit = 5,
+                                           parallel = 2,
+                                           parallel.type = "PSOCK"))
 (s2 <- summary(baseline_model_0.2))
 
 ergm::mcmc.diagnostics(baseline_model_0.2)
@@ -173,13 +173,16 @@ baseline_model_0.2_GOF <- ergm::gof(baseline_model_0.2)
 ## I inserted a burn-in of 1000 and simulated 5000 networks. I used this set up to speed up computation within the tutorial. 
 ## You will need to increase these numbers to something like 10k and 40k (or more) when you will use these models for real!
 
+class(net_eurovision)
 
-## looks actually good, 
-baseline_model_0.4 <- ergm::ergm(net_eurovision ~ edges + mutual + nodematch("country_government_system"),
-                                 control = ergm::control.ergm(MCMC.burnin = 50000,
-                                                              MCMC.samplesize = 100000,
-                                                              seed = 123458,
-                                                              MCMLE.maxit = 5))  
+## model works, good MCMC improvement on GOF when it comes edge-wise shared partner
+baseline_model_0.4 <- ergm::ergm(net_eurovision ~ edges + mutual + gwesp(decay=0.25, fixed=FALSE) + nodematch("country_language_family"),
+                                 control = ergm::control.ergm(MCMC.burnin = 5000,
+                                                              MCMC.samplesize = 15000,
+                                                              seed = 123459,
+                                                              MCMLE.maxit = 5,
+                                                              parallel = 2,
+                                                              parallel.type = "PSOCK"))
 (s4 <- summary(baseline_model_0.4))
 
 ergm::mcmc.diagnostics(baseline_model_0.4)
@@ -189,20 +192,20 @@ snafun::stat_ef_int(baseline_model_0.4, type = "odds")
 snafun::stat_ef_int(baseline_model_0.4, type = "prob")
 
 
-
-
 ### that doesnt look that good :/ 
 baseline_model_0.4_GOF <- ergm::gof(baseline_model_0.4)
 
 snafun::stat_plot_gof(baseline_model_0.4_GOF)
 
 
-## looks actually good, 
-baseline_model_0.5 <- ergm::ergm(net_eurovision ~ edges + mutual + nodematch("country_language_family") + nodematch("country_government_system"),
+## model works, good MCMC improvement on GOF 
+baseline_model_0.5 <- ergm::ergm(net_eurovision ~ edges + cycle(2) + istar(3) + nodematch("country_language_family") + nodematch("country_government_system"),
                                  control = ergm::control.ergm(MCMC.burnin = 5000,
-                                                              MCMC.samplesize = 10000,
+                                                              MCMC.samplesize = 15000,
                                                               seed = 123451,
-                                                              MCMLE.maxit = 5))  
+                                                              MCMLE.maxit = 5,
+                                                              parallel = 2,
+                                                              parallel.type = "PSOCK"))
 (s5 <- summary(baseline_model_0.5))
 
 ergm::mcmc.diagnostics(baseline_model_0.5)
@@ -212,6 +215,25 @@ ergm::mcmc.diagnostics(baseline_model_0.5)
 baseline_model_0.5_GOF <- ergm::gof(baseline_model_0.5)
 
 snafun::stat_plot_gof(baseline_model_0.5_GOF)
+
+## yet working on it
+baseline_model_0.6 <- ergm::ergm(net_eurovision ~ edges + mutual + odegree(3) + gwesp(decay=0.25, fixed=FALSE) + nodematch("country_language_family"),
+                                 control = ergm::control.ergm(MCMC.burnin = 5000,
+                                                              MCMC.samplesize = 15000,
+                                                              seed = 123451,
+                                                              MCMLE.maxit = 5,
+                                                              parallel = 3,
+                                                              parallel.type = "PSOCK"))
+(s6 <- summary(baseline_model_0.6))
+
+ergm::mcmc.diagnostics(baseline_model_0.6)
+
+
+### that doesnt look that good :/ 
+baseline_model_0.6_GOF <- ergm::gof(baseline_model_0.6)
+
+snafun::stat_plot_gof(baseline_model_0.6_GOF)
+
 
 ## GRAPH 2
 # Calculate total incoming weight for each vertex
