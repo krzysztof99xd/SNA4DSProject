@@ -63,14 +63,17 @@ Still in progress
 
 ### Concept of Eurovision
 
-The Eurovision Song Contest, which has taken place every year since
-1956, is organized by the European Broadcasting Union. It is televised
-live throughout Europe and is also broadcast internationally with a
-delay. The primary goal of the Eurovision Song Contest is to discover
-the most beloved song in Europe. One of the most iconic champions of
-this competition is Abba, the Swedish representatives in 1974, who
-performed the song "Waterloo." This paper examines the votes cast in the
-European song contest in 2023.
+
+Eurovision, the big singing contest with countries from all over,
+is not just about who sings the best. It's like a colorful puzzle of
+different nations trying to win. But, if you pay attention, you'll 
+see that winning isn't just about singing really well. There is this
+interesting thing where countries tend to vote for their friends.
+It's not about the song alone; it's like a secret voting club based on
+things like being neighbors or having a history together. So, in
+Eurovision, it's not only about hitting the high notes but also about
+who your buddies are behind the scenes. The competition becomes a mix
+of music and a kind of international friendship dance.
 
 Studying social networks within the Eurovision context is of paramount
 importance for various reasons. First, it provides invaluable cultural
