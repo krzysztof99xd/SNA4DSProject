@@ -61,29 +61,30 @@ Still in progress
 
 ## Introduction
 
-Eurovision, the big singing contest with countries from all over,
-is not just about who sings the best. It resembles a vibrant
-puzzle where diverse nations vie for victory, with winning extending
-beyond exceptional singing. The intriguing phenomenon of countries
-voting for their friends underscores the importance of analyzing
-Eurovision's voting network. It's not about the song alone; it's
-like a secret voting club based on things like being neighbors or
-having a history together. So, in Eurovision, it's not only about hitting
-the high notes but also about who your buddies are behind the scenes.
-The competition becomes a mix of music and a kind of international friendship dance.
+Eurovision, the big singing contest with countries from all over, is not
+just about who sings the best. It resembles a vibrant puzzle where
+diverse nations vie for victory, with winning extending beyond
+exceptional singing. The intriguing phenomenon of countries voting for
+their friends underscores the importance of analyzing Eurovision's
+voting network. It's not about the song alone; it's like a secret voting
+club based on things like being neighbors or having a history together.
+So, in Eurovision, it's not only about hitting the high notes but also
+about who your buddies are behind the scenes. The competition becomes a
+mix of music and a kind of international friendship dance.
 
 Previous studies analysed the the basis on these friendship patterns
 within the Eurovison voting network. Research has already been conducted
 in the field of social networks regarding voting patterns which as a
-consequence leads to creating communities within the Eurovision participants.
-Dekker A. (2007) [@dekker2007eurovision] has already conducted the research using
-Eurovision cast from 2005 where he analysed the friendship network using
-techniques previously developed for valued networks (Dekker, 2005)
-[@dekker2005], which combine network-analysis methods with statistical
-methods. Dekker's analysis on the votes cast in the 2005 Eurovision Song Contest
-revealed that friendship between countries is largely determined by
-geographical proximity, with a visible five-bloc structure: Western,
-Eastern, Nordic, Balkan, and Eastern Mediterranean.
+consequence leads to creating communities within the Eurovision
+participants. Dekker A. (2007) [@dekker2007eurovision] has already
+conducted the research using Eurovision cast from 2005 where he analysed
+the friendship network using techniques previously developed for valued
+networks (Dekker, 2005) [@dekker2005], which combine network-analysis
+methods with statistical methods. Dekker's analysis on the votes cast in
+the 2005 Eurovision Song Contest revealed that friendship between
+countries is largely determined by geographical proximity, with a
+visible five-bloc structure: Western, Eastern, Nordic, Balkan, and
+Eastern Mediterranean.
 
 In 2019, Angelo S.D. et al. [@D_Angelo_Murphy_Alfò_2019] introduced the
 concept of modeling latent spaces in multidimensional networks,
@@ -97,16 +98,33 @@ countries. Interestingly, the similarities among participants during the
 1998-2015 period only partially correlated with their respective
 geographical locations.
 
-In 2022, Ginsbrugh V et al. suggested [@Ginsburgh_Moreno-Ternero_2022] that
-the findings from the 2021 edition indicated a higher tendency for reciprocity
-among geographically proximate nations. Notable examples included Greece and
-Cyprus, Bulgaria and Moldova, Moldova and Russia, Russia and Azerbaijan, and
-Bulgaria and Greece. The analysis also explored the concept of group reciprocity,
-uncovering voting clusters among countries. An illustrative instance was the
-Scandinavian nations, including Denmark, Finland, Iceland, Norway, and Sweden,
-with noteworthy outcomes in the context of the 2021 competition.
+In 2022, Ginsbrugh V et al. suggested [@Ginsburgh_Moreno-Ternero_2022]
+that the findings from the 2021 edition indicated a higher tendency for
+reciprocity among geographically proximate nations. Notable examples
+included Greece and Cyprus, Bulgaria and Moldova, Moldova and Russia,
+Russia and Azerbaijan, and Bulgaria and Greece. The analysis also
+explored the concept of group reciprocity, uncovering voting clusters
+among countries. An illustrative instance was the Scandinavian nations,
+including Denmark, Finland, Iceland, Norway, and Sweden, with noteworthy
+outcomes in the context of the 2021 competition.
 
-YET TO BE CORRECTED 
+YET TO BE CORRECTED
+
+Countries with internal structures resembling democracies are often more
+prone to cooperation with one another. Research done by
+[@Mattes_Rodríguez_2014] suggests that autocracies displaying
+institutional characteristics akin to democracies---such as enhanced
+leader accountability, restricted policy flexibility, and increased
+transparency---are more likely to succeed in cooperation. Consequently,
+these autocracies are more prone to collaborate not only with each other
+but also with democracies. The expectation is that single-party and
+military regimes hold an advantage in international cooperation when
+contrasted with personalist systems. The study examines the cooperative
+behavior between pairs of states through analysis of the 10 Million
+International Dyadic Events data from 1990 to 2004 (King and Lowe 2003).
+The findings are consistent with the core theoretical argument.
+Single-party regimes, posited to have an advantage in international
+cooperation, are, indeed, more likely to be actively sought as partners.
 
 Hence, it is evident that extensive research has already been undertaken
 concerning Eurovision voting patterns in the domain of social networks.
@@ -136,8 +154,6 @@ promotion effectiveness through social networks aids in reaching a
 broader audience. Finally, it's crucial for optimizing the digital
 experience and gathering audience feedback to enhance the overall
 Eurovision experience.
-
-
 
 ### Research questions and hypothesis
 
@@ -405,7 +421,7 @@ or absence of edges in other dyads.)
 
 1.  Baseline model (Claudia said it should be just with edges)
 
-    ``` R
+    ``` r
     ## Baseline ERGM model (prerequisities: must be a network object)
     baseline_model_0.1 <- ergm::ergm(net_eurovision ~ edges)  
     (s1 <- summary(baseline_model_0.1))
