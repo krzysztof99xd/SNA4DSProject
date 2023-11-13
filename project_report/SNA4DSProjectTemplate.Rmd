@@ -304,10 +304,12 @@ network is just slightly between 2.5 and 2.65 which means that on
 average the shortest path is around 2.5 steps long which means that
 nodes are relatively close to each other and the networks are compact.
 There are no isolates present in either network. There are all types of
-triad census present in the first network except *300* and the absence
-of *120U* and *300* in the second one. It indicates a diverse and
-comprehensive set of structural configurations among triplets of nodes
-in both networks.
+triad census Extent to which the sixteen categories in the
+categorization of Davis and Leinhardt (1972) \<- find REFERENCE! are
+observed in the network and are not generated at random present in the
+first network except *300* and the absence of *120U* and *300* in the
+second one. It indicates a diverse and comprehensive set of structural
+configurations among triplets of nodes in both networks.
 
 -   [Appendix A] shows the plot of the network of Jury votes Eurovision
     can be found.
@@ -365,7 +367,8 @@ degrees. Subsequently, it employs a detection algorithm to pinpoint
 potential clusters of nodes in the original network. Within this test,
 it is possible to specify which algorithm is going to be used to detect
 communities and as it has been described above walktrap community
-detection algorithm is going to be applied.
+detection algorithm is going to be applied. \<Maybe we can specify that
+it is possible to run diagnostic and check how well the model fits ?\>
 
 #### Exponential Random Graph Models \<yet in progress\>
 
@@ -407,7 +410,7 @@ or absence of edges in other dyads.)
 
 1.  Baseline model (Claudia said it should be just with edges)
 
-    ``` R
+    ``` r
     ## Baseline ERGM model (prerequisities: must be a network object)
     baseline_model_0.1 <- ergm::ergm(net_eurovision ~ edges)  
     (s1 <- summary(baseline_model_0.1))

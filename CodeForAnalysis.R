@@ -8,7 +8,7 @@ library(readxl)
 library(tinytex)
 
 # Set the working directory to the directory where the project is located
-setwd("your_path_to_project")
+setwd("your_path_to_data")
 print(getwd())
 
 # Create a relative path to the "data" folder in your project directory
@@ -167,33 +167,28 @@ baseline_model_0.2 <- ergm::ergm(net_eurovision ~ edges + mutual,
 
 ergm::mcmc.diagnostics(baseline_model_0.2)
 
-## looks actually good, 
-baseline_model_0.3 <- ergm::ergm(net_eurovision ~ edges + mutual + nodematch("country_language_family"),
-                                 control = ergm::control.ergm(MCMC.burnin = 5000,
-                                                              MCMC.samplesize = 10000,
-                                                              seed = 123457,
-                                                              MCMLE.maxit = 5))  
-(s3 <- summary(baseline_model_0.3))
+baseline_model_0.2_GOF <- ergm::gof(baseline_model_0.2)
 
-ergm::mcmc.diagnostics(baseline_model_0.3)
-
-
-### that doesnt look that good :/ 
-baseline_model_0.3_GOF <- ergm::gof(baseline_model_0.3)
-
-snafun::stat_plot_gof(baseline_model_0.3_GOF)
-
+## Note from the ERGM 3 lab
+## I inserted a burn-in of 1000 and simulated 5000 networks. I used this set up to speed up computation within the tutorial. 
+## You will need to increase these numbers to something like 10k and 40k (or more) when you will use these models for real!
 
 
 ## looks actually good, 
 baseline_model_0.4 <- ergm::ergm(net_eurovision ~ edges + mutual + nodematch("country_government_system"),
-                                 control = ergm::control.ergm(MCMC.burnin = 5000,
-                                                              MCMC.samplesize = 10000,
+                                 control = ergm::control.ergm(MCMC.burnin = 50000,
+                                                              MCMC.samplesize = 100000,
                                                               seed = 123458,
                                                               MCMLE.maxit = 5))  
 (s4 <- summary(baseline_model_0.4))
 
 ergm::mcmc.diagnostics(baseline_model_0.4)
+
+snafun::stat_ef_int(baseline_model_0.4, type = "odds")
+
+snafun::stat_ef_int(baseline_model_0.4, type = "prob")
+
+
 
 
 ### that doesnt look that good :/ 
