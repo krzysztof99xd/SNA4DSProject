@@ -108,15 +108,11 @@ among countries. An illustrative instance was the Scandinavian nations,
 including Denmark, Finland, Iceland, Norway, and Sweden, with noteworthy
 outcomes in the context of the 2021 competition.
 
-YET TO BE CORRECTED
-
-Hence, it is evident that extensive research has already been undertaken
-concerning Eurovision voting patterns in the domain of social networks.
-Studies take into consideration various aspects but there is a lack of
-research when it comes to the newest Eurovision editions. Moreover,
-there is a lack of research when it comes to analyzing the influence of
-the political system of the country as well as the influence of language
-family.
+Therefore, it is apparent that considerable research has been conducted
+on Eurovision voting patterns within the realm of social networks.
+These studies encompass diverse aspects, yet there exists a research gap
+in analyzing the impact of government systems or the influence of shared
+language family on the voting network. 
 
 Countries with the same or similar government system seem to have
 stronger bonds with each other than the ones that have different
@@ -135,13 +131,24 @@ The findings are consistent with the core theoretical argument.
 Single-party regimes, posited to have an advantage in international
 cooperation, are, indeed, more likely to be actively sought as partners.
 
-Studying social networks within the Eurovision context is of paramount
-importance for various reasons. First, it provides invaluable cultural
-insights, as Eurovision serves as a reflection of the diverse cultures
-and values of participating countries. Additionally, examining voting
-patterns illuminates the influence of political and regional alliances
-on the integrity of the competition, offering potential avenues for
-reform.
+Examining voting patterns within the Eurovision Song Contest in relation
+to shared language families is crucial in understanding potential dynamics
+that influence country-to-country preferences. Research on mutual
+intelligibility among closely related European languages suggests that countries
+with linguistic similarities may exhibit higher levels of understanding and
+shared cultural nuances [@gooskens2018mutual]. Understanding the communicative
+ease among countries with the same language family may unveil patterns of
+mutual appreciation and shared cultural references that impact how votes
+are cast in the Eurovision. Such insights can enhance our comprehension
+of voting dynamics and contribute to a more nuanced understanding of the
+Eurovision Song Contest as a cultural and linguistic phenomenon.
+
+to conclude, the Eurovision is not only about singing skills.
+There are various reasons which influence voting patterns
+and their diversity is great. After carefully studying what research has been
+already done regarding Euriovision context and what yet is to be examined, this
+research will focus on examining the influence of language family as well as the
+government system of each country.
 
 ### Research questions and hypothesis
 
