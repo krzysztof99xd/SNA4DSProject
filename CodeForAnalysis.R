@@ -169,14 +169,16 @@ ergm::mcmc.diagnostics(baseline_model_0.2)
 
 baseline_model_0.2_GOF <- ergm::gof(baseline_model_0.2)
 
+snafun::stat_plot_gof(baseline_model_0.2_GOF)
+
 ## Note from the ERGM 3 lab
 ## I inserted a burn-in of 1000 and simulated 5000 networks. I used this set up to speed up computation within the tutorial. 
 ## You will need to increase these numbers to something like 10k and 40k (or more) when you will use these models for real!
 
 class(net_eurovision)
 
-## model works, good MCMC improvement on GOF when it comes edge-wise shared partner
-baseline_model_0.4 <- ergm::ergm(net_eurovision ~ edges + mutual + gwesp(decay=0.25, fixed=FALSE) + nodematch("country_language_family"),
+## model works, good MCMC improvement on GOF when it comes edge-wise shared partner but it spoils geodesic distance and introduces anogthe statisitics which does not work very well 
+baseline_model_0.4 <- ergm::ergm(net_eurovision ~ edges + mutual + gwesp(decay=0.25, fixed=FALSE) + nodematch("country_language_family") + nodematch("country_government_system"),
                                  control = ergm::control.ergm(MCMC.burnin = 5000,
                                                               MCMC.samplesize = 15000,
                                                               seed = 123459,
@@ -199,13 +201,19 @@ snafun::stat_plot_gof(baseline_model_0.4_GOF)
 
 
 ## model works, good MCMC improvement on GOF 
-baseline_model_0.5 <- ergm::ergm(net_eurovision ~ edges + cycle(2) + istar(3) + nodematch("country_language_family") + nodematch("country_government_system"),
+baseline_model_0.5 <- ergm::ergm(net_eurovision ~ edges + 
+                                   mutual + 
+                                   istar(3) + 
+                                   nodematch("country_language_family") + 
+                                   nodematch("country_government_system"),
                                  control = ergm::control.ergm(MCMC.burnin = 5000,
                                                               MCMC.samplesize = 15000,
                                                               seed = 123451,
                                                               MCMLE.maxit = 5,
-                                                              parallel = 2,
+                                                              parallel = 3,
                                                               parallel.type = "PSOCK"))
+summary(net_eurovision ~ odegree(0:5))
+
 (s5 <- summary(baseline_model_0.5))
 
 ergm::mcmc.diagnostics(baseline_model_0.5)
@@ -216,8 +224,9 @@ baseline_model_0.5_GOF <- ergm::gof(baseline_model_0.5)
 
 snafun::stat_plot_gof(baseline_model_0.5_GOF)
 
-## yet working on it
-baseline_model_0.6 <- ergm::ergm(net_eurovision ~ edges + mutual + odegree(3) + gwesp(decay=0.25, fixed=FALSE) + nodematch("country_language_family"),
+
+## idegree improved slightly idegree GOF
+baseline_model_0.6 <- ergm::ergm(net_eurovision ~ edges + odegree(3) + nodematch("country_language_family") + nodematch("country_government_system"),
                                  control = ergm::control.ergm(MCMC.burnin = 5000,
                                                               MCMC.samplesize = 15000,
                                                               seed = 123451,
