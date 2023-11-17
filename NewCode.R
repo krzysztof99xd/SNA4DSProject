@@ -4,7 +4,7 @@ library(readxl)
 library(tinytex)
 
 # Set the working directory to the directory where the project is located
-setwd("your_path_to_project")
+setwd("C:/Users/48504/Desktop/JADSMaster/SNA4DS/SNA4DSProjectGroup12")
 print(getwd())
 
 # Create a relative path to the "data" folder in your project directory
@@ -24,10 +24,6 @@ full_path_to_node_list <- file.path(data_folder, file_name_node_list)
 ## read data from csv file
 eurovision_public_data_node_list <- read_excel(full_path_to_node_list)
 
-# Combine the data folder path and file name to create the full path
-full_path_to_edge_list <- file.path(data_folder, file_name_edge_list)
-
-eurovision_public_data_edge_list <- read_excel(full_path_to_edge_list)
 (NodeList_euro <- unique(c(eurovision_public_data_node_list$Node_country)))
 NodeList_euro <- na.omit(NodeList_euro) # always remove NAs
 class(NodeList_euro)
@@ -109,7 +105,7 @@ if (length(nAttr) == igraph::vcount(eurovisionnet)) {
   # Set node attributes for the graph
   igraph::V(eurovisionnet)$country_language_family <- nAttr2
 } else {
-  print("Length of nAttr does not match the number of nodes in the graph.")
+  print("Length of nAttr2 does not match the number of nodes in the graph.")
 }
 
 # Check if the length of nAttr matches the number of nodes in the graph
@@ -117,10 +113,16 @@ if (length(nAttr) == igraph::vcount(eurovisionnet)) {
   # Set node attributes for the graph
   igraph::V(eurovisionnet)$country_government_system <- nAttr3
 } else {
-  print("Length of nAttr does not match the number of nodes in the graph.")
+  print("Length of nAttr3 does not match the number of nodes in the graph.")
 }
 
 summary(eurovisionnet)
+
+summary(net_eurovision ~ degree(0:35))
+
+summary(net_eurovision ~ gwesp(decay=0.25, fixed=TRUE))
+
+snafun::plot_centralities(eurovisionnet)
 
 ## number of vertices
 snafun::count_vertices(eurovisionnet)
@@ -160,8 +162,6 @@ plot(
   vertex.size = 5
 )
 
-summary(net_eurovision ~ degree(0:36))
-summary(net_eurovision ~ gwesp(decay=0.25, fixed=TRUE))
 
 summary(net_eurovision)
 
