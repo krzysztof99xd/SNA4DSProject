@@ -4,7 +4,7 @@ library(readxl)
 library(tinytex)
 
 # Set the working directory to the directory where the project is located
-setwd("C:/Users/48504/Desktop/JADSMaster/SNA4DS/SNA4DSProjectGroup12")
+setwd("your_path_to_project")
 print(getwd())
 
 # Create a relative path to the "data" folder in your project directory
@@ -36,6 +36,185 @@ incedence_df <- read_excel(full_path_to_bipartite)
 print(incedence_df)
 
 incedence_df <- as.data.frame(incedence_df)
+
+incedence_matrix <- as.matrix(incedence_df)
+print(incedence_matrix)
+
+# Extract receiver names and create a subset without the receiver column
+receivers <- incedence_matrix[, 1]
+print(receivers)
+
+voting_matrix <- incedence_matrix[, -1]  # Remove the first column (receivers)
+
+# Convert string matrix to integers
+voting_matrix_int <- matrix(as.integer(as.matrix(voting_matrix)), nrow = nrow(voting_matrix))
+
+print(voting_matrix_int)
+
+distributors <- colnames(voting_matrix)
+
+print(distributors)
+print(receivers)
+
+# Create an empty graph for the Eurovision network
+eurovision_graph <- igraph::make_empty_graph(n = length(receivers) + length(distributors))
+
+# Create an incidence matrix
+inc_matrix <- matrix(0, nrow = length(receivers), ncol = length(distributors))
+
+for (i in 1:nrow(voting_matrix_int)) {
+  for (j in 1:ncol(voting_matrix_int)) {
+    if (voting_matrix_int[i, j] > 7) {
+      inc_matrix[i, j] <- 1
+    }
+  }
+}
+print(inc_matrix)
+
+# Find the indices of edges based on the incidence matrix
+edges <- which(inc_matrix == 1, arr.ind = TRUE)
+
+receiver_indices <- edges[, 1]
+distributor_indices <- edges[, 2] + length(receivers)
+
+# Add edges to the graph based on indices
+eurovision_graph <- igraph::add_edges(eurovision_graph, cbind(receiver_indices, distributor_indices))
+
+# Create a bipartite graph from the incidence matrix
+eurovision_graph <- igraph::graph_from_incidence_matrix(inc_matrix)
+print(eurovision_graph)
+
+# Project the bipartite graph to get a graph of countries distributing votes
+distribution_graph <- igraph::bipartite_projection(eurovision_graph, which = FALSE)
+print(distribution_graph)
+
+# Add node names for receivers 
+igraph::V(distribution_graph)$name <- receivers
+nAttr0 <- eurovision_public_data_node_list$Node_country
+nAttr <- eurovision_public_data_node_list$country_population
+nAttr2 <- eurovision_public_data_node_list$country_language_family 
+nAttr3 <- eurovision_public_data_node_list$country_government_system
+
+# Get country names from the existing graph
+existing_countries <- igraph::V(distribution_graph)$name
+print(existing_countries)
+
+plot(distribution_graph)
+
+# Filter node attributes based on existing country names in the network
+filtered_nAttr0 <- c(nAttr0[nAttr0 %in% existing_countries])
+
+# Filter node attributes based on existing country names in the network
+filtered_nAttr <- nAttr[nAttr0 %in% existing_countries]
+
+filtered_nAttr2 <- c(nAttr2[nAttr0 %in% existing_countries])
+igraph::V(distribution_graph)$language_family <- filtered_nAttr2
+
+# Filter node attributes based on existing country names in the network
+filtered_nAttr3 <- c(nAttr3[nAttr0 %in% existing_countries])
+igraph::V(distribution_graph)$government_system <- filtered_nAttr3
+
+print(igraph::get.vertex.attribute(distribution_graph))
+
+# Check if the length of nAttr matches the number of nodes in the graph
+if (length(nAttr) == igraph::vcount(distribution_graph)) {
+  # Set node attributes for the graph
+  igraph::V(distribution_graph)$country_population <- nAttr
+} else {
+  print("Length of nAttr does not match the number of nodes in the graph.")
+}
+
+# Check if the length of nAttr matches the number of nodes in the graph
+if (length(nAttr) == igraph::vcount(eurovisionnet)) {
+  # Set node attributes for the graph
+  igraph::V(distribution_graph)$country_language_family <- nAttr2
+} else {
+  print("Length of nAttr2 does not match the number of nodes in the graph.")
+}
+
+# Check if the length of nAttr matches the number of nodes in the graph
+if (length(nAttr) == igraph::vcount(distribution_graph)) {
+  # Set node attributes for the graph
+  igraph::V(distribution_graph)$country_government_system <- nAttr3
+} else {
+  print("Length of nAttr3 does not match the number of nodes in the graph.")
+}
+
+snafun::plot_centralities(distribution_graph)
+
+summary(distribution_graph ~ degree(0:35))
+print(class(distribution_graph))
+
+distribution_network <- snafun::to_network(distribution_graph)
+summary(distribution_network ~ gwesp())
+summary(distribution_network ~ degree(0:10))
+print(snafun::list_vertex_attributes(distribution_graph))
+
+## number of vertices
+snafun::count_vertices(distribution_network)
+## number_of_edges
+snafun::count_edges(distribution_network)
+## density 
+snafun::g_density(distribution_network)
+## reciprocity
+snafun::g_reciprocity(distribution_network)
+## transitivity
+snafun::g_transitivity(distribution_network)
+## mean_distance
+snafun::g_mean_distance(distribution_network)
+## number_of_isolates
+snafun::find_isolates(distribution_network)
+## dyad_census
+snafun::count_dyads(distribution_network)
+## triad_census
+snafun::count_triads(distribution_network)
+
+## when I set gwesp to false, the R session is aborted :(, gwesp(decay=0.2, fixed = TRUE, cutoff=29) it never converges :( 
+baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + 
+                                   gwesp(decay=0.2, fixed = TRUE) +
+                                   kstar(3) + 
+                                   nodematch("language_family") + 
+                                   nodematch("government_system"),
+                                 control = ergm::control.ergm(MCMC.burnin = 5000,
+                                                              MCMC.samplesize = 15000,
+                                                              seed = 123451,
+                                                              MCMLE.maxit = 5,
+                                                              parallel = 3,
+                                                              parallel.type = "PSOCK"))
+
+(s5 <- summary(baseline_model_0.5))
+
+ergm::mcmc.diagnostics(baseline_model_0.5)
+
+
+### that doesnt look that good :/ 
+baseline_model_0.5_GOF <- ergm::gof(baseline_model_0.5)
+
+snafun::stat_plot_gof(baseline_model_0.5_GOF)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Similarly, in your case with Eurovision voting, we might have a bipartite network of countries giving votes and countries receiving votes. 
 ## If our project it onto one set (say, countries giving votes), you'd create a new network among those countries based on their shared connections (i.e., if they have voted for the same countries).
@@ -120,7 +299,7 @@ summary(eurovisionnet)
 
 summary(net_eurovision ~ degree(0:35))
 
-summary(net_eurovision ~ gwesp(decay=0.25, fixed=TRUE))
+summary(net_eurovision ~ gwesp())
 
 snafun::plot_centralities(eurovisionnet)
 
