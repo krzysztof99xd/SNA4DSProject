@@ -27,6 +27,7 @@ eurovision_public_data_node_list <- read_excel(full_path_to_node_list)
 (NodeList_euro <- unique(c(eurovision_public_data_node_list$Node_country)))
 NodeList_euro <- na.omit(NodeList_euro) # always remove NAs
 class(NodeList_euro)
+print(eurovision_public_data_node_list)
 
 # Combine the data folder path and file name to create the full path
 full_path_to_bipartite <- file.path(data_folder, file_name)
@@ -88,12 +89,18 @@ print(eurovision_graph)
 distribution_graph <- igraph::bipartite_projection(eurovision_graph, which = FALSE)
 print(distribution_graph)
 
-# Add node names for receivers 
-igraph::V(distribution_graph)$name <- receivers
-nAttr0 <- eurovision_public_data_node_list$Node_country
-nAttr <- eurovision_public_data_node_list$country_population
-nAttr2 <- eurovision_public_data_node_list$country_language_family 
-nAttr3 <- eurovision_public_data_node_list$country_government_system
+filtered_node_list <- subset(eurovision_public_data_node_list, Node_country %in% receivers)
+
+# Create an index representing the order of countries in the receivers list, this is very important for maintaing the node attributes for the countries
+index_order <- match(filtered_node_list$Node_country, receivers)
+
+# Sort the dataframe based on the index order
+sorted_filtered_node_list <- filtered_node_list[order(index_order), ]
+
+nAttr0 <- filtered_node_list$Node_country
+nAttr <- filtered_node_list$country_population
+nAttr2 <- filtered_node_list$country_language_family 
+nAttr3 <- filtered_node_list$country_government_system
 
 # Get country names from the existing graph
 existing_countries <- igraph::V(distribution_graph)$name
@@ -101,18 +108,11 @@ print(existing_countries)
 
 plot(distribution_graph)
 
-# Filter node attributes based on existing country names in the network
-filtered_nAttr0 <- c(nAttr0[nAttr0 %in% existing_countries])
+# Add node names for receivers 
+igraph::V(distribution_graph)$name <- nAttr0
+igraph::V(distribution_graph)$country_language_family <- nAttr2
+igraph::V(distribution_graph)$country_government_system <- nAttr3
 
-# Filter node attributes based on existing country names in the network
-filtered_nAttr <- nAttr[nAttr0 %in% existing_countries]
-
-filtered_nAttr2 <- c(nAttr2[nAttr0 %in% existing_countries])
-igraph::V(distribution_graph)$language_family <- filtered_nAttr2
-
-# Filter node attributes based on existing country names in the network
-filtered_nAttr3 <- c(nAttr3[nAttr0 %in% existing_countries])
-igraph::V(distribution_graph)$government_system <- filtered_nAttr3
 
 print(igraph::get.vertex.attribute(distribution_graph))
 
@@ -173,8 +173,8 @@ snafun::count_triads(distribution_network)
 baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + 
                                    gwesp(decay=0.2, fixed = TRUE) +
                                    kstar(3) + 
-                                   nodematch("language_family") + 
-                                   nodematch("government_system"),
+                                   nodematch("country_language_family") + 
+                                   nodematch("country_government_system"),
                                  control = ergm::control.ergm(MCMC.burnin = 5000,
                                                               MCMC.samplesize = 15000,
                                                               seed = 123451,
