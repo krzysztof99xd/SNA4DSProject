@@ -147,8 +147,20 @@ snafun::count_dyads(distribution_network)
 ## triad_census
 snafun::count_triads(distribution_network)
 
-## when I set gwesp to false, the R session is aborted :(, gwesp(decay=0.2, fixed = TRUE, cutoff=29) it never converges :( 
-## gwesp(decay=0.02, fixed=TRUE) works relatively well
+## baseline model just with edges 
+baseline_model_0.1 <- egrm::ergm(distribution_network ~ edges)
+(s1<- summary(baseline_model_0.1)) 
+  
+  
+## baseline model with strucutural terms
+baseline_model_0.2 <- egrm::ergm(distribution_network ~ edges + 
+                                   nodematch("country_language_family") + 
+                                   nodematch("country_government_system"))
+(s2<- summary(baseline_model_0.2))
+
+
+## when I set gwesp to false, the R session is aborted :( 
+## gwesp(decay=0.02, fixed=TRUE) works relatively well, lets try to extend from here but lets not limit ourselves to that 
 baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + kstar(2) + gwesp(decay=0.02, fixed=TRUE) +
                                    nodematch("country_language_family") + 
                                    nodematch("country_government_system"),
