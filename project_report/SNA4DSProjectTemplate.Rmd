@@ -151,9 +151,8 @@ led to the following research questions:
 -   ***RQ1: To what extent do countries formulate small communities
     between each other in the Eurovision competition?***
 
--   ***RQ2: To what extent governmental system and language family
-    influence how the countries distribute their votes during the
-    Eurovision competition?***
+-   ***RQ2: What are the drivers for public communities to distribute
+    the votes during the Eurovision competition?***
 
 The aforementioned research questions lead to the following hypothesis
 regarding first research question:
@@ -259,7 +258,6 @@ and discovering research gaps. That led nodes to have the following
 attributes:
 
 -   country_name
--   country_population
 -   country_language_family
 -   country_government_system
 
@@ -440,7 +438,7 @@ still in progress
 # Appendix B
 
 ![Eurovision Public
-Centralities](images/Eurovision Public Centralities.png)
+Centralities](images/Eurovision%20Public%20Centralities.png)
 
 # Appendix C
 

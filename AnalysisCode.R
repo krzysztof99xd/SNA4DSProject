@@ -1,5 +1,3 @@
-sna4tutti::open_sna4tutti_tutorials()
-
 library(readxl)
 library(tinytex)
 
@@ -54,7 +52,7 @@ distributors <- colnames(voting_matrix)
 # Create an empty graph for the Eurovision network
 eurovision_graph <- igraph::make_empty_graph(n = length(receivers) + length(distributors))
 
-# Create an incidence matrix
+# Create an incidence matrix with the dimensions of the length of receivers and distributors
 inc_matrix <- matrix(0, nrow = length(receivers), ncol = length(distributors))
 
 for (i in 1:nrow(voting_matrix_int)) {
@@ -74,8 +72,8 @@ distributor_indices <- edges[, 2] + length(receivers)
 # Add edges to the graph based on indices
 eurovision_graph <- igraph::add_edges(eurovision_graph, cbind(receiver_indices, distributor_indices))
 
-# Create a bipartite graph from the incidence matrix, ## Similarly, in your case with Eurovision voting, we might have a bipartite network of countries giving votes and countries receiving votes. 
-## If our project it onto one set (say, countries giving votes), you'd create a new network among those countries based on their shared connections (i.e., if they have voted for the same countries).
+# Create a bipartite graph from the incidence matrix, ## In our case with Eurovision voting, we have a bipartite network of countries giving votes and countries receiving votes. 
+## If our project it onto one set (say, countries giving votes), you'd create a new network among those countries based on their shared connections (i.e., if they have received votes from the same countries).
 eurovision_graph <- igraph::graph_from_incidence_matrix(inc_matrix)
 print(eurovision_graph)
 
@@ -90,7 +88,7 @@ index_order <- match(filtered_node_list$Node_country, receivers)
 
 # Sort the dataframe based on the index order
 sorted_filtered_node_list <- filtered_node_list[order(index_order), ]
-print(sorted_filtered_node_list)
+
 nAttrNodeCountry <- sorted_filtered_node_list$Node_country
 nAttrCountryPopulation <- sorted_filtered_node_list$country_population
 nAttrCountryLangaugeFamily <- sorted_filtered_node_list$country_language_family 
@@ -98,7 +96,6 @@ nAttrCountryGovernmentSystem <- sorted_filtered_node_list$country_government_sys
 
 # Get country names from the existing graph
 existing_countries <- igraph::V(distribution_graph)$Node_country
-print(existing_countries)
 
 plot(distribution_graph)
 
@@ -106,7 +103,6 @@ plot(distribution_graph)
 igraph::V(distribution_graph)$name <- nAttrNodeCountry
 igraph::V(distribution_graph)$country_language_family <- nAttrCountryLangaugeFamily
 igraph::V(distribution_graph)$country_government_system <- nAttrCountryGovernmentSystem
-
 
 print(igraph::get.vertex.attribute(distribution_graph))
 
@@ -121,7 +117,7 @@ plot(
   vertex.frame.color = "#ffffff",
   vertex.label.cex = 0.6,
   vertex.label.color = "black",
-  vertex.size = 5
+  vertex.size = 10
 )
 
 summary(distribution_network ~ gwesp())
@@ -148,25 +144,28 @@ snafun::count_dyads(distribution_network)
 snafun::count_triads(distribution_network)
 
 ## baseline model just with edges 
-baseline_model_0.1 <- egrm::ergm(distribution_network ~ edges)
+baseline_model_0.1 <- ergm::ergm(distribution_network ~ edges)
 (s1<- summary(baseline_model_0.1)) 
-  
-  
-## baseline model with strucutural terms
-baseline_model_0.2 <- egrm::ergm(distribution_network ~ edges + 
+
+## baseline model with covariate terms
+baseline_model_0.2 <- ergm::ergm(distribution_network ~ edges + 
                                    nodematch("country_language_family") + 
                                    nodematch("country_government_system"))
 (s2<- summary(baseline_model_0.2))
 
 
+
 ## when I set gwesp to false, the R session is aborted :( 
-## gwesp(decay=0.02, fixed=TRUE) works relatively well, lets try to extend from here but lets not limit ourselves to that 
-baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + kstar(2) + gwesp(decay=0.02, fixed=TRUE) +
-                                   nodematch("country_language_family") + 
+## gwesp(decay=0.02, fixed=TRUE) + degree(3) works relatively well, lets try to extend from here but lets not limit ourselves to that 
+# kstar(1) did not really work :/
+# Warning: Model statistics ‘kstar2’ and ‘nodematch.country_language_family’ are linear combinations of some set of preceding statistics at the current stage of the estimation. This may indicate that the model is nonidentifiable
+# degree(3) + kstar(2) + gwesp(decay=0.01, fixed= TRUE) never converges
+baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(decay = 0.001, fixed=TRUE) +
+                                   nodematch("country_language_family") +
                                    nodematch("country_government_system"),
-                                   control = ergm::control.ergm(MCMC.burnin = 5000,
-                                                              MCMC.samplesize = 150000,
-                                                              seed = 123451,
+                                   control = ergm::control.ergm(MCMC.burnin = 10000,
+                                                              MCMC.samplesize = 40000,
+                                                              seed = 223451,
                                                               MCMLE.maxit = 5,
                                                               parallel = 3,
                                                               parallel.type = "PSOCK"))
