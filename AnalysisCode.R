@@ -167,7 +167,7 @@ baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwes
                                                               MCMC.samplesize = 40000,
                                                               seed = 223451,
                                                               MCMLE.maxit = 5,
-                                                              parallel = 3,
+                                                              parallel = 4,
                                                               parallel.type = "PSOCK"))
 
 (s5 <- summary(baseline_model_0.5))

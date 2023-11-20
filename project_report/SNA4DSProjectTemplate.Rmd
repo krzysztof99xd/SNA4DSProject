@@ -1,5 +1,5 @@
 ---
-title: "Social Network Analysis in Eurovision Context"
+title: "Social Network Analysis in the  Eurovision Context"
 author:
 - name: Krzysztof Wiesniakowski
   affiliation: '1'
@@ -10,9 +10,13 @@ author:
   - Conceptualization
   - "Writing - Original Draft Preparation"
   - "Writing - Review & Editing"
-- name: "Ernst-August Doelle"
+- name: "Xavier Paulus"
   affiliation: '1,2'
   role: "Writing - Review & Editing"
+- name: "Chigozie Ifepe"
+- name: "Thierry Brands"
+- name: "Vishal Seghal"
+  role: 'Community detection using walktrap algorithm and erforming CUG test'
 shorttitle: SNA Eurovision
 output:
   word_document: default
@@ -36,7 +40,7 @@ documentclass: apa6
 classoption: man
 affiliation:
 - id: '1'
-  institution: "Wilhelm-Wundt-University"
+  institution: "Tilburg University"
 - id: '2'
   institution: 'Jheronimus Academy of Data Science'
 editor_options:
@@ -108,8 +112,6 @@ among countries. An illustrative instance was the Scandinavian nations,
 including Denmark, Finland, Iceland, Norway, and Sweden, with noteworthy
 outcomes in the context of the 2021 competition.
 
-YET TO BE CORRECTED
-
 Hence, it is evident that extensive research has already been undertaken
 concerning Eurovision voting patterns in the domain of social networks.
 Studies take into consideration various aspects but there is a lack of
@@ -124,16 +126,17 @@ internal political structures. Research done by [@Mattes_Rodríguez_2014]
 indicates that autocracies exhibiting institutional characteristics
 resembling those of democracies --- such as enhanced leader
 accountability, restricted policy flexibility, and increased
-transparency---are more likely to succeed in cooperation. Consequently,
-these autocracies are more prone to collaborate not only with each other
-but also with democracies. The expectation is that single-party and
-military regimes hold an advantage in international cooperation when
-contrasted with personalist systems. The study examines the cooperative
-behavior between pairs of states through analysis of the 10 Million
-International Dyadic Events data from 1990 to 2004 [@king2003automated].
-The findings are consistent with the core theoretical argument.
-Single-party regimes, posited to have an advantage in international
-cooperation, are, indeed, more likely to be actively sought as partners.
+transparency --- are more likely to succeed in cooperation.
+Consequently, these autocracies are more prone to collaborate not only
+with each other but also with democracies. The expectation is that
+single-party and military regimes hold an advantage in international
+cooperation when contrasted with personalist systems. The study examines
+the cooperative behavior between pairs of states through analysis of the
+10 Million International Dyadic Events data from 1990 to 2004
+[@king2003automated]. The findings are consistent with the core
+theoretical argument. Single-party regimes, posited to have an advantage
+in international cooperation, are, indeed, more likely to be actively
+sought as partners.
 
 Studying social networks within the Eurovision context is of paramount
 importance for various reasons. First, it provides invaluable cultural
@@ -148,11 +151,11 @@ reform.
 Analyzing the current state of the art and identifying the research gaps
 led to the following research questions:
 
--   ***RQ1: To what extent do countries formulate small communities
-    between each other in the Eurovision competition?***
+-   ***RQ1: To what extent do countries formulate small public
+    communities between each other in the Eurovision competition?***
 
--   ***RQ2: What are the drivers for public communities to distribute
-    the votes during the Eurovision competition?***
+-   ***RQ2: What factors influence the distribution of votes within
+    public communities during the Eurovision competition?***
 
 The aforementioned research questions lead to the following hypothesis
 regarding first research question:
@@ -167,7 +170,8 @@ The aforementioned research questions lead to the following hypothesis
 regarding second research question:
 
 -   H0: Governmental system and language family do not have an influence
-    on how countries distribute their votes Eurovision competition
+    on how countries distribute their votes during Eurovision
+    competition
 
 -   H1: Governmental system and language family have an effect on how
     countries distribute their votes during Eurovision competition
@@ -195,12 +199,12 @@ exogenous attributes on network structure while considering the complex
 dependencies and configurations within the network itself.
 
 In the rest of the report, we will carefully describe the datasets that
-are going to be used to conduct the research. Data cleaning and if
-necessary data preprocessing are going to be run before any analysis.
-Descriptive analysis is going to be performed to understand the data
-better. The research rationale is going to be discussed to provide the
-reasoning why CUG and ERGM have been chosen as suitable models for
-answering research questions and testing hypotheses.
+are going to be used to conduct the research. Data cleaning and data
+preprocessing are going to be run before any analysis. Descriptive
+analysis is going to be performed to understand the data better. The
+research rationale is going to be discussed to provide the reasoning why
+CUG and ERGM have been chosen as suitable methods for answering research
+questions and testing hypotheses.
 
 ## Methodology
 
@@ -213,57 +217,50 @@ a more comprehensive analysis.
 On the Eurovision website [@Eurovisionworld] the data is presented in a
 table which by switching the tab on the top of the page can be easily
 filtered by Jury or Public votes. Data is presented in a matrix where
-columns are created by countries who were giving the points and rows are
-represented by countries who were receiving scores. Each entry of the
-matrix is represented by the number of points that were given/received.
-Due to the time constraint of this project, for each country only the
-top 3 votes were taken into consideration thus possible edge attributes
-are represented in the set {8,10,12} which corresponds to the top 3
-votes given by the country. This data was produced 13th of May 2023 when
-the final of the tournament took place.
+columns are created by countries that were giving the points and rows
+are represented by countries that were receiving scores. Each entry of
+the matrix is represented by the number of points that were given and
+received. This data was produced 13th of May 2023 when the final of the
+tournament took place.
 
-To enrich the data we also collected information about each country's
-language family [the source to language family], country population
-[@Worldometer], and country political system [the source to governmental
-system]. This data was manually inserted into CSV files which eventually
-allowed to transform it to the network object.
+It is crucial to understand that this is a bipartite network. This type
+of network consists of nodes divided into two separate groups, with
+connections existing exclusively between nodes from different groups,
+not within the same group. This structure is often represented
+graphically as a two-mode network, showcasing relationships between
+distinct sets of entities. In this case one set of nodes are the
+countries that distribute votes and the other countries are the ones
+that receive votes.
 
-As a result, the whole dataset contains 3 CSV files. The first CSV file
+Due to complexity of bipartite networks and the time constraint for this
+project, the network has been projected. Projecting a network involves
+simplifying its structure by focusing on specific connections or
+relationships within the network. In this specific example the network
+has been projected using common sender. That means that an edge is
+created between 2 countries (receivers) when they both receive votes
+from the same country (sender). For each country (sender) only the top 3
+votes were taken into consideration because the top 3 votes in
+Eurovision hold the highest significance due to their impact on the
+final results; these votes often heavily influence scoring and determine
+the leading positions, shaping the overall outcome and perceptions of
+success in the competition.
+
+To enrich the data information about each country's language family
+[@Compendium, @jakubmariancom], country population [@Worldometer], and
+country political system [@Wikipedia_2023_Government] have been
+collected. This data was manually inserted into CSV files.
+
+As a result, the whole dataset contains 2 CSV files. The first CSV file
 contains information about the countries which in this paper are also
-going to be referred to as nodes, population, country language family,
-and country political system. This file is used to create a list of
-nodes which is used to create a network object.
+going to be referred to as nodes, country name, country language family,
+and country political system. This file is used to enrich the
+information about nodes. The second file is the incidence matrix where
+the votes distribution is presented and used to create a network object.
 
-The second CSV file contains information about the votes of jurys from
-the countries. There are 3 columns in this file sender, receiver, and
-score which represent the amount of points given from the sender to
-receiver. This file is used to create an edge list which is used to
-create a first network object.
-
-The third CSV file contains information about the votes from the public
-from the countries. There are 3 columns in this file sender, receiver,
-and score which represent the amount of points given from the sender to
-receiver. This file is used to create an edge list which is used to
-create a second network object.
-
-In this paper, 2 network objects are created and analyzed. The first
-network object is created using Node List which comes from the first csv
-file and an edge list which represents jurys votes and is created from
-the second csv file. The second network object is created using the same
-Node List and an edge list which represents public votes and is created
-from the third csv file.
-
-The selection of node attributes has been done after doing the research
-and discovering research gaps. That led nodes to have the following
-attributes:
-
--   country_name
--   country_language_family
--   country_government_system
-
-Furthermore, 3 CSV files allowed the creation of 2 network objects which
-as a consequence allowed to perform deeper analysis and reveal potential
-differences in voting patterns between jury and public.
+The selection of node attributes has been done after doing the
+literature review and discovering research gaps. That led to have the
+following attributes for the nodes: - country_name -
+country_language_family - country_government_system
 
 ### Potential bias in the datasets
 
@@ -285,41 +282,29 @@ relationships within social networks.
 
 Firstly descriptive analysis needs to be conducted to establish a
 foundational understanding crucial for informed decision-making and
-insightful conclusions. Since both networks show similar descriptive
-statistics they are going to be both described under one paragraph. In
-the paragraph below first network is considered as a network created
-from votes from the jury and the second one as the network created from
-votes from the public.
+insightful conclusions.
 
 From the descriptive analysis for both networks, it can be observed that
-there are 37 vertices and 112 edges. Density is 0.084 and 0.083 for the
-first and second network respectively which is really low and the
-networks can be considered sparse with few connections between nodes in
-total. Reciprocity is equal to 0.125 and 0.053 which indicates that
-12.5% of the edges in the network involve mutual connections in the
-first network and 5.3% in the second network. Transitivity is equal to
-0.209 and 0.208 which shows that there is very low likelihood of "a
-friend of my friend is my friend" phenomenon. The mean distance in both
-network is just slightly between 2.5 and 2.65 which means that on
-average the shortest path is around 2.5 steps long which means that
-nodes are relatively close to each other and the networks are compact.
-There are no isolates present in either network. There are all types of
-triad census present in the first network except *300* and the absence
-of *120U* and *300* in the second one. It indicates a diverse and
-comprehensive set of structural configurations among triplets of nodes
-in both networks.
+there are 37 vertices and 112 edges. Density is 0.14 which is really low
+and the networks can be considered sparse with few connections between
+nodes in total. Reciprocity is equal to 1 which shows that likelihood or
+tendency for two individuals to mutually form connections or
+relationships is actually 100%. Transitivity is equal to 0.4480519 which
+shows that there is relatively low likelihood of "a friend of my friend
+is my friend" phenomenon. The mean distance is Infinite since there are
+7 isolates in this network and it is not possible to reach every node in
+this network. Because this network is undirected there are 4 types of
+triad census present in the network 003, 102, 201 and 300. It does not
+indicate a diverse and comprehensive set of structural configurations
+among triplets of nodes in both networks.
 
--   [Appendix A] shows the plot of the network of Jury votes Eurovision
-    can be found.
--   [Appendix B] shows the plot centralities of Jury votes Eurovision.
+-   [Appendix A] shows the plot of the network of Public votes
+    Eurovision.
+-   [Appendix B] shows the plot centralities of Public votes Eurovision.
     An explanation of the centralities terms can be found in [Appendix
     G].
--   [Appendix C] shows descriptive statistics of the network of Jury
-    votes Eurovision
--   [Appendix D] shows the plot of the network of Jury votes Eurovision
--   [Appendix E] shows the plot centralities of Jury votes Eurovision
--   [Appendix F] shows the descriptive statistics of the network of Jury
-    votes Eurovision
+-   [Appendix C] shows descriptive statistics of the network of Public
+    Votes Eurovision
 
 ### Data analysis (Research Rationale)
 
@@ -369,14 +354,14 @@ detection algorithm is going to be applied.
 
 #### Exponential Random Graph Models \<yet in progress\>
 
-The second research question analyzes to what extent language family or
-governmental political system influences voting patterns during the
-Eurovision contest. These are both exogeneous terms and their effect can
-be measured by ERGM models. This model allows dyadic dependent as well
-as dyadic interdependent terms which allow capturing the structure of
-the network. ERGMs provide a basis for statistical inference, allowing
-assessing the significance of the effects of governmental systems and
-language families on the network.
+Based on the available data the second research question analyzes to
+what extent language family or governmental political system influences
+voting patterns during the Eurovision contest. These are both exogeneous
+terms and their effect can be measured by ERGM models. This model allows
+dyadic dependent as well as dyadic interdependent terms which allow
+capturing the structure of the network. ERGMs provide a basis for
+statistical inference, allowing assessing the significance of the
+effects of governmental systems and language families on the network.
 
 ## Results \<still in progress\>
 
@@ -415,6 +400,7 @@ or absence of edges in other dyads.)
 
 2.  Exploratory models
 
+
 3.  Final model
 
 4.  MCMC diagnostics for the best selected model
@@ -433,12 +419,11 @@ still in progress
 
 # Appendix A
 
-![Eurovision Public Plot](images/EurovisionPulicPlot.png)
+![Eurovision Public Plot](images/ProjectedNetworkPlot.png)
 
 # Appendix B
 
-![Eurovision Public
-Centralities](images/Eurovision%20Public%20Centralities.png)
+![Eurovision Public Centralities](images/PlotCentralities.png)
 
 # Appendix C
 
@@ -446,61 +431,37 @@ Centralities](images/Eurovision%20Public%20Centralities.png)
 ## Eurovision public 
 
 ## $number of vertices
-## [1] 37
+## [1] 26
 ## $number_of_edges
-## [1] 111
+## [1] 48
 ## density 
-## [1] 0.08333333
+## [1] 0.14769
 ## reciprocity
-## [1] 0.1261261
+## [1] 1
 ## transitivity
-## [1] 0.21255
+## [1] 0.4480519
 ## mean_distance
-## [1] 2.511364
+## [1] Inf
 ## number_of_isolates
-## character(0)
+## [1] "Estonia"        "Austria"       
+## [3] "Portugal"       "Serbia"        
+## [5] "Germany"        "United Kingdom"
+## [7] "Spain"   
 ## dyad_census
-## Mutual Asymmetric Null
-##      7         97  562
+## Mutual  Null
+##      7   562
 ## triad_census
-##  003  012 102 021D 021U 021C 111D 111U 030T 030C 201 120D 120U 120C 210 300
-## 5048 1767 107   28  534  101  104    8   48    3   3   11    4    3    1  0
+##  003 012 102 021D 021U 021C 111D 111U 030T 030C 201 120D 120U 120C 210 300 
+## 1710   0 674    0    0    0    0    0    0   0  170    0    0    0   0  46
 ```
 
 # Appendix D
 
-![Eurovision Jury Plot](images/EurovisionJuryPlot.png)
-
 # Appendix E
-
-![Eurovision Jury Centralities](images/EurovisionJuryCentralities.png)
 
 # Appendix F
 
 ``` r
-## Eurovision jury 
-
-## number of vertices
-## [1] 37
-## number_of_edges
-## [1] 111
-## density 
-## [1] 0.08333333
-## reciprocity
-## [1] 0.05405405
-## transitivity
-## [1] 0.2084691
-## mean_distance
-## [1] 2.619632
-## number_of_isolates
-## character(0)
-## dyad_census
-## Mutual Asymmetric Null
-##      3        105  558
-## triad_census
-## snafun::count_triads(eurovisionnet)
-##  003  012 102 021D 021U 021C 111D 111U 030T 030C 201 120D ## 120U 120C 210 300
-##  4847 2094  36   43  449  184   47    6   46    3   0   11    0    3   1   0
 ```
 
 # Appendix G

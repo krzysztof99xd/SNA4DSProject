@@ -9,6 +9,7 @@ Within the Eurovision network there are 2 types of nodes. One type are the count
 Necessary packages to be installed:
 
 install.packages("snafun") necessary for performing cug test
+
 install.packages("readxl") (necessary to read excel files, in case you you want to use csv file, use "readcsv" package)
 
 tinytex::install_tinytex() (necessary to convert from rmd to pdf format)
