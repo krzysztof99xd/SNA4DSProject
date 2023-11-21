@@ -143,17 +143,47 @@ snafun::count_dyads(distribution_network)
 ## triad_census
 snafun::count_triads(distribution_network)
 
+walktrap <- function(x, directed = TRUE) {
+  x <- snafun::fix_cug_input(x, directed = directed)
+  snafun::extract_comm_walktrap(x) |> length() 
+}
+distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
+                                   diag = FALSE, cmode = "dyad.census", reps = 1000)
+print(distribution_coms)
+
+plot(distribution_coms)
+
+#Community visualization 
+walktrap_communities <- igraph::cluster_walktrap(distribution_graph)
+membership <- igraph::membership(walktrap_communities)
+palette <- rainbow(max(membership))
+node_colors <- palette[membership]
+plot(distribution_graph, vertex.color = node_colors)
+
+
 ## baseline model just with edges 
 baseline_model_0.1 <- ergm::ergm(distribution_network ~ edges)
 (s1<- summary(baseline_model_0.1)) 
 
 ## baseline model with covariate terms
 baseline_model_0.2 <- ergm::ergm(distribution_network ~ edges + 
-                                   nodematch("country_language_family") + 
                                    nodematch("country_government_system"))
 (s2<- summary(baseline_model_0.2))
 
 
+## baseline model with covariate terms
+baseline_model_0.3 <- ergm::ergm(distribution_network ~ edges + 
+                                   nodematch("country_language_family"))
+(s3<- summary(baseline_model_0.3))
+
+## baseline model with covariate terms
+baseline_model_0.4 <- ergm::ergm(distribution_network ~ edges + 
+                                   nodematch("country_government_system") +
+                                   nodematch("country_language_family"))
+(s4<- summary(baseline_model_0.4))
+
+
+texreg::screenreg(list(baseline_model_0.1, baseline_model_0.2, baseline_model_0.3, baseline_model_0.4))
 
 ## when I set gwesp to false, the R session is aborted :( 
 ## gwesp(decay=0.02, fixed=TRUE) + degree(3) works relatively well, lets try to extend from here but lets not limit ourselves to that 
@@ -161,8 +191,7 @@ baseline_model_0.2 <- ergm::ergm(distribution_network ~ edges +
 # Warning: Model statistics ‘kstar2’ and ‘nodematch.country_language_family’ are linear combinations of some set of preceding statistics at the current stage of the estimation. This may indicate that the model is nonidentifiable
 # degree(3) + kstar(2) + gwesp(decay=0.01, fixed= TRUE) never converges
 baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(decay = 0.001, fixed=TRUE) +
-                                   nodematch("country_language_family") +
-                                   nodematch("country_government_system"),
+                                   nodematch("country_language_family") + nodematch('country_government_system'),
                                    control = ergm::control.ergm(MCMC.burnin = 10000,
                                                               MCMC.samplesize = 40000,
                                                               seed = 223451,

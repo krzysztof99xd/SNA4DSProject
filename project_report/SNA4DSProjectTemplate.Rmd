@@ -160,21 +160,24 @@ led to the following research questions:
 The aforementioned research questions lead to the following hypothesis
 regarding first research question:
 
--   H0: There is not a significant number of communities within
+-   H0: There is not a significant number of communities within the
     Eurovision competition.
 
--   H1: There is a significant number of communities within Eurovision
-    competition.
+-   H1: There is a significant number of communities within the
+    Eurovision competition.
 
 The aforementioned research questions lead to the following hypothesis
 regarding second research question:
 
--   H0: Governmental system and language family do not have an influence
-    on how countries distribute their votes during Eurovision
-    competition
+-   H0: The governmental system and language family do not have an
+    influence on how countries distribute their votes during the
+    Eurovision competition
 
--   H1: Governmental system and language family have an effect on how
-    countries distribute their votes during Eurovision competition
+-   H1: The governmental system has an effect on how countries
+    distribute their votes during the Eurovision competition,
+
+-   H2: Language family has an effect on how countries distribute their
+    votes during Eurovision competition.
 
 Answering the aforementioned research questions and testing hypotheses
 is going to help us to understand to a certain extent whether there are
@@ -228,16 +231,16 @@ of network consists of nodes divided into two separate groups, with
 connections existing exclusively between nodes from different groups,
 not within the same group. This structure is often represented
 graphically as a two-mode network, showcasing relationships between
-distinct sets of entities. In this case one set of nodes are the
+distinct sets of entities. In this case, one set of nodes are the
 countries that distribute votes and the other countries are the ones
 that receive votes.
 
-Due to complexity of bipartite networks and the time constraint for this
-project, the network has been projected. Projecting a network involves
-simplifying its structure by focusing on specific connections or
-relationships within the network. In this specific example the network
-has been projected using common sender. That means that an edge is
-created between 2 countries (receivers) when they both receive votes
+Due to compl,exity of bipartite networks and the time constraint for
+this project, the network has been projected. Projecting a network
+involves simplifying its structure by focusing on specific connections
+or relationships within the network. In this specific example the
+network has been projected using common sender. That means that an edge
+is created between 2 countries (receivers) when they both receive votes
 from the same country (sender). For each country (sender) only the top 3
 votes were taken into consideration because the top 3 votes in
 Eurovision hold the highest significance due to their impact on the
@@ -255,12 +258,18 @@ contains information about the countries (which in this paper are also
 going to be referred to as nodes) such as country name, country language
 family, and country political system. This file is used to enrich the
 information about nodes. The second file is the incidence matrix where
-the votes distribution is presented and used to create a network object.
+the votes distributed by the public communities is presented and used to
+create a network object.
 
 The selection of node attributes has been done after doing the
 literature review and discovering research gaps. That led to have the
-following attributes for the nodes: - country_name -
-country_language_family - country_government_system
+following attributes for the nodes:
+
+-   country_name
+
+-   country_language_family
+
+-   country_government_system
 
 ### Potential bias in the datasets
 
@@ -278,7 +287,7 @@ of interaction. This initial step is pivotal for understanding,
 interpreting, and drawing meaningful insights from the complex web of
 relationships within social networks.
 
-### Descriptive analysis \<yet in progress\>
+### Descriptive analysis
 
 Firstly descriptive analysis needs to be conducted to establish a
 foundational understanding crucial for informed decision-making and
@@ -293,10 +302,10 @@ relationships is actually 100%. Transitivity is equal to 0.4480519 which
 shows that there is relatively low likelihood of "a friend of my friend
 is my friend" phenomenon. The mean distance is Infinite since there are
 7 isolates in this network and it is not possible to reach every node in
-this network. Because this network is undirected there are 4 types of
-triad census present in the network 003, 102, 201 and 300. It does not
-indicate a diverse and comprehensive set of structural configurations
-among triplets of nodes in both networks.
+this network. Because this network is undirected it is not possible to
+obtain all possible triad census present in the network 003, 102, 201
+and 300. It does not indicate a diverse and comprehensive set of
+structural configurations among triplets of nodes in both networks.
 
 -   [Appendix A] shows the plot of the network of Public votes
     Eurovision.
@@ -311,9 +320,9 @@ among triplets of nodes in both networks.
 It is important to understand why CUG and ERGM tests are suitable for
 this data and how they are going to help to answer the research question
 and what are the potential alternatives for them. As it has been already
-described [Research questions and hypothesis] to answer the first
-research question, the CUG test is going to be conducted, and to answer
-the second research question ERGM model is going to be developed.
+described in [Research questions and hypothesis] section to answer the
+first research question, the CUG test is going to be conducted, and to
+answer the second research question ERGM model is going to be developed.
 
 #### Conditional Uniform Graph using walktrap community detection
 
@@ -337,7 +346,7 @@ likely to be part of the same community based on the tendency of nodes
 to be frequently visited together in random walks.
 
 There are also other possible algorithms to detect communities such as
-fast-greedy, Girvan-Newman and Louvain. However, after analyzing the
+fast-greedy, Girvan-Newman, and Louvain. However, after analyzing the
 network structure, it has been decided that the walktrap community suits
 the best data characteristics.
 
@@ -352,22 +361,28 @@ it is possible to specify which algorithm is going to be used to detect
 communities and as it has been described above walktrap community
 detection algorithm is going to be applied.
 
-#### Exponential Random Graph Models \<yet in progress\>
+#### Exponential Random Graph Models
 
-Establishing a linkage between the focus of Exponential Random Graph Models (ERGMs) and the research query is pivotal. Harmonizing ERGMs with the inquiry ensures the measurement of pertinent network features, validating or refuting hypotheses based on modeled network structures. Based on the available data the second research question analyzes to
-what extent language family or governmental political system influences
-voting patterns during the Eurovision contest. These are both exogeneous
-terms and their effect can be measured by ERGM models. This model allows
+Establishing a linkage between the focus of Exponential Random Graph
+Models (ERGMs) and the research query is pivotal. Aligning ERGMs with
+the research questions helps measure important network traits, checking
+if predicted network structures support or contradict hypotheses. Based
+on the available data the second research question analyzes to what
+extent language family or governmental political system influence voting
+patterns during the Eurovision contest. These are both exogeneous terms
+and their effect can be measured by ERGM models. This model allows
 dyadic dependent as well as dyadic interdependent terms which allow
 capturing the structure of the network. ERGMs provide a basis for
 statistical inference, allowing assessing the significance of the
 effects of governmental systems and language families on the network.
 
-## Results \<still in progress\>
+## Results
 
-(about 2000 words)
+### Conditional Uniform Graph Test
 
-### Model 1 \<still in progress\>
+As it has been already described in the section above CUG test has been
+conducted to answer the first research question and test first
+hypothesis. The code for the CUG test can be found below:
 
 ``` r
 ## CUG test for detecting communities
@@ -376,77 +391,164 @@ walktrap_num_f <- function(x, directed = TRUE) {
   snafun::extract_comm_walktrap(x) |> length()
 }
 eurovision_coms <- sna::cug.test(net_eurovision, FUN = walktrap_num_f, mode = "graph", diag = FALSE, cmode = "dyad.census", reps = 1000)
-
-print(eurovision_coms)
 ```
 
-still in progress
+The histogram and the Univariate Conditional Uniform Graph (CUG) Test
+results [[Appendix F]] relate directly to the research question and
+hypotheses as follows:
 
-### ERGM \<still in progress\>
+CUG tests allows to test the hypotheses for the first research question.
+The CUG test can explain whether features of interest of the observed
+graph, have a high likelihood of being the result of chance. The results
+of CUG tests can therefore aid in the process of finding p-values, that
+can explain whether the results are statistically significant. Thus,
+using the CUG test enables to reject or not reject the null hypothesis.
+
+In the results, the histogram [[Appendix F]] visualizes the distribution
+of the network with the following conditioning: "Dyad.census" and 1000
+repetitions. It can be observed that there is a network of 13 different
+countries in the Eurovision competition. The red line in the plot
+suggests that the observed network has a significantly higher number of
+communities than expected therefore H1 comes into play.
+
+The results show that for randomly generated networks with similar
+attributes, the probability of such a simulated network having an equal
+or greater number of communities than the observed value is effectively
+0. This indicates that the likelihood of encountering the current amount
+of observed communities is low when the null hypothesis would be true.
+The p-value is 0, which implicates a rejection of the null hypothesis.
+
+Considering the first research question (To what extent do countries
+formulate small communities between each other in the Eurovision
+competition?), the findings indicate that in the Eurovision competition
+countries are more likely to connect with other smaller communities
+which creates an alliance.
+
+### ERGM
 
 To answer the second research question, ERGM model has been designed.
 Exponential Random Graph Models (ERGMs) employ network statistics as
-predictors, encapsulating structural properties as well as dyadic dependent terms. The observed network structure serves as the outcome variable, enabling estimation of tie probability based on these features to model network formation or evolution in social network analysis. 
+predictors, encapsulating structural properties as well as dyadic
+dependent terms. The observed network structure serves as the outcome
+variable, enabling estimation of tie probability based on these features
+to model network formation or evolution in social network analysis.
 
-1.  Baseline model (Claudia said it should be just with edges) edges are
-    dyadic independent model (In ERGMs, the "edges" term models the
-    presence or absence of edges between pairs of nodes (dyads) in the
-    network. Dyadic independence implies that the presence or absence of
-    an edge between any pair of nodes is considered independent of the
-    presence or absence of edges in other dyads.)
-    `r     ## Baseline ERGM model (prerequisities: must be a network object)     baseline_model_0.1 <- ergm::ergm(net_eurovision ~ edges)       (s1 <- summary(baseline_model_0.1))`
+After conducting literature review this paper would like to investigate
+which and to what extent exogenous terms influence public voting
+patterns during the Eurovision contest. However, to fully understand it,
+it is also crucial to understand the network charasterics as well,
+therefore, after analyzing the network structure the model takes into
+consideration also dyadic dependent terms. Dyadic-dependent terms
+account for dependencies between specific pairs of nodes, capturing
+interactions beyond what simpler terms, like edge or triangle counts,
+can represent. Including these terms improves the model's ability to
+accurately depict and predict the formation of ties between individual
+nodes based on their specific relationships, enhancing the model's
+explanatory power for real-world network dynamics.
 
-2.  Exploratory models (start introducing structural and dyadic
-    dependent terms)
+All the aforementioned matters were taken into consideration and led to
+the following model to be run and analyzed.
 
-3.  Final model
+``` r
+### ERGM model
+baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + 
+                                   degree(3) + 
+                                   gwesp(decay = 0.001, fixed=TRUE) +
+                                   nodematch("country_language_family") +
+                                   nodematch("country_government_system"),
+                                   control = ergm::control.ergm(MCMC.burnin = 10000,
+                                                              MCMC.samplesize = 40000,
+                                                              seed = 223451,
+                                                              MCMLE.maxit = 5,
+                                                              parallel = 4,
+                                                              parallel.type = "PSOCK"))
 
-    ```{r}
-    baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(decay = 0.001, fixed=TRUE) +
-                                       nodematch("country_language_family") +
-                                       nodematch("country_government_system"),
-                                       control = ergm::control.ergm(MCMC.burnin = 10000,
-                                                                  MCMC.samplesize = 40000,
-                                                                  seed = 223451,
-                                                                  MCMLE.maxit = 5,
-                                                                  parallel = 4,
-                                                                  parallel.type = "PSOCK"))
+(s5 <- summary(baseline_model_0.5))
+```
 
-    (s5 <- summary(baseline_model_0.5))
+The following dyadic dependent terms have been inserted:
 
-    ```
+-   `nodematch("country_language_family")` term checks for homophily
+    between the countries based on their language family
 
-|                                         | Estimate | Prob | Std. Error | Pval |
-|-----------------------------------------|----------|------|------------|------|
-| **edges**                               | Data     | Data | Data       | Data |
-| **degree3**                             | Data     | Data | Data       | Data |
-| **gwesp.fixed.0.001**                   | Data     | Data | Data       | Data |
-| **nodematch.country_language_family**   | Data     | Data | Data       | Data |
-| **nodematch.country_government_system** | Data     | Data | Data       | Data |
+-   `nodematch("country_government_system")` term checks for homophily
+    between the countries based on their country government system
 
-: Summary model
+-   `degree(3)` term allows the model to capture and reproduce the
+    observed distribution of node degrees equal to 3 while accounting
+    for the propensity of nodes to have more or fewer connections than
+    expected by chance.
 
-4.  MCMC diagnostics for the best selected model
+-   `gwesp(decay = 0.001, fixed = TRUE)` term assesses the presence of
+    higher-order dependencies within a network by considering shared
+    connections between nodes. The parameter `decay` has a very low
+    value because the model is sensitive to even small levels of shared
+    connections between nodes due to a relatively small amount of nodes
+    and a lot of isolates.
 
-5.  Goodness of fit (GOF)
+The model described above performed relatively well on the MCMC
+diagnostics. Trace for every term inside the model has a shape which is
+similar to "fuzzy caterpillar" which means that chain mix well
+[[Appendix D]]. Knowing that it is possible to move to analyzing
+Goodness of Fit to see whether the model-generated networks replicate
+the features and patterns present in the observed network. Looking at
+the graphs in the [Appendix F] it can be observed that according to all
+of them model captured most the essential structural characteristics of
+the Eurovision network. Only edge-wise shared partner graph has a small
+deficiency when it comes to capturing the proportion of edges which have
+2 edge-wise shared partners.
 
-6.  Interpret results Interpretation: An increase of 1 in increases the
-    log odds with (log odds) and it makes the odds of the effect taking
-    place times larger. X1 θ1 exp( )θ1- 10 -
+With the aferomentioned knowledge it is possible look at the models
+statistics. After running the model the following coefficients have been
+obtained:
 
-|                                         | Estimate | Prob | Std. Error | Pval |
-|-----------------------------------------|----------|------|------------|------|
-| **edges**                               | Data     | Data | Data       | Data |
-| **degree3**                             | Data     | Data | Data       | Data |
-| **gwesp.fixed.0.001**                   | Data     | Data | Data       | Data |
-| **nodematch.country_language_family**   | Data     | Data | Data       | Data |
-| **nodematch.country_government_system** | Data     | Data | Data       | Data |
+|                                         | Estimate | Std. Error |
+|-----------------------------------------|----------|------------|
+| **edges**                               | -889.456 | 362.676    |
+| **degree3**                             | -0.680   | 0.771      |
+| **gwesp.fixed.0.001**                   | 886.512  | 362.138    |
+| **nodematch.country_language_family**   | -0.078   | 0.608      |
+| **nodematch.country_government_system** | 0.464    | 0.332      |
+
+: Coefficient table
+
+Looking at them we can see that edges, degree3 as well as
+nodematch.country_language_family have negative estimates and the rest
+have positive ones. However, the standard error is extraordinary high
+for edges and gwesp.fixed.0.001 which could indicate that model is
+unstable.
+
+To check how much these variables influence network, it is necessary to
+calculate odds ratios. To do that, coefficients have to be
+exponentiated.
+
+|                                         | Estimate | Prob  | Std. Error | Pval  |
+|---------------|---------------|---------------|---------------|---------------|
+| **edges**                               | -889.456 | 0.000 | 362.676    | 0.014 |
+| **degree3**                             | -0.680   | 0.336 | 0.771      | 0.377 |
+| **gwesp.fixed.0.001**                   | 886.512  | NaN   | 362.138    | 0.014 |
+| **nodematch.country_language_family**   | -0.078   | 0.481 | 0.608      | 0.897 |
+| **nodematch.country_government_system** | 0.464    | 0.614 | 0.332      | 0.613 |
 
 : Odds ration table
 
-With the given model formula the following hypothesis were verified: -
-H1: Governmental system and language family have an effect on how
-countries distribute their votes during Eurovision competition
+However, none of the variables can be evaluated because either p-value
+or standard error is extraordinarily high. Therefore, none of these
+variables influence the observed network.
+
+With the given model formula the following hypothesis could be verified:
+
+-   H2: Governmental system has an effect on how countries distribute
+    their votes during the Eurovision competition
+
+-   H3: Language family has an effect on how countries distribute their
+    votes during the Eurovision competition
+
+As it has been stated none of the variables was found to be significant
+for the network and, therefore, the null hypothesis (H0: The
+governmental system and language family do not have an influence on how
+countries distribute their votes during the Eurovision competition) for
+the second research hypothesis can not be rejected.
 
 ## Conclusion
 
@@ -460,7 +562,7 @@ still in progress
 
 # Appendix B
 
-![Eurovision Public Centralities](images/PlotCentralities.png)
+![Eurovision Public Plot Centralities](images/PlotCentralities.png)
 
 # Appendix C
 
@@ -494,12 +596,26 @@ still in progress
 
 # Appendix D
 
+::: {style="display: flex;"}
+![ProjectedNetworkMCMC1](images/ProjectedNetworkMCMC1-01.png) ![Public
+Eurovision Network MCMC 2](images/ProjectedNetworkMCMC2-01.png)
+:::
+
 # Appendix E
+
+::: {style="display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 20px;"}
+![GOFModelStatistics![GOFDegree](images/ProjectedNetworkGOFDegree.png)](images/ProjectedNetworkModelStatistics.png)
+
+![GOFMinGeodesicDistance](images/ProjectedNetworkGOFMinGeodesicDistance.png)
+![GOFEdgeWiseSharedPartner](images/ProjectedNetworkGOFEdgeWiseSharedPartner.png)
+:::
 
 # Appendix F
 
-``` r
-```
+::: {style="display: flex;"}
+![CUG Test](images/CUG_Test.png) ![CUG Test
+Distribution](images/CUG_Test_Distribution_Plot.png)
+:::
 
 # Appendix G
 
