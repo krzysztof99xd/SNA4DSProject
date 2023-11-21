@@ -179,3 +179,5 @@ ergm::mcmc.diagnostics(baseline_model_0.5)
 baseline_model_0.5_GOF <- ergm::gof(baseline_model_0.5)
 
 snafun::stat_plot_gof(baseline_model_0.5_GOF)
+
+snafun::stat_ef_int(baseline_model_0.5, type = "prob")

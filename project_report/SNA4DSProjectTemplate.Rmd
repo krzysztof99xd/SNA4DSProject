@@ -251,9 +251,9 @@ country political system [@Wikipedia_2023_Government] have been
 collected. This data was manually inserted into CSV files.
 
 As a result, the whole dataset contains 2 CSV files. The first CSV file
-contains information about the countries which in this paper are also
-going to be referred to as nodes, country name, country language family,
-and country political system. This file is used to enrich the
+contains information about the countries (which in this paper are also
+going to be referred to as nodes) such as country name, country language
+family, and country political system. This file is used to enrich the
 information about nodes. The second file is the incidence matrix where
 the votes distribution is presented and used to create a network object.
 
@@ -354,7 +354,7 @@ detection algorithm is going to be applied.
 
 #### Exponential Random Graph Models \<yet in progress\>
 
-Based on the available data the second research question analyzes to
+Establishing a linkage between the focus of Exponential Random Graph Models (ERGMs) and the research query is pivotal. Harmonizing ERGMs with the inquiry ensures the measurement of pertinent network features, validating or refuting hypotheses based on modeled network structures. Based on the available data the second research question analyzes to
 what extent language family or governmental political system influences
 voting patterns during the Eurovision contest. These are both exogeneous
 terms and their effect can be measured by ERGM models. This model allows
@@ -384,32 +384,69 @@ still in progress
 
 ### ERGM \<still in progress\>
 
-edges are dyadic independent model (In ERGMs, the "edges" term models
-the presence or absence of edges between pairs of nodes (dyads) in the
-network. Dyadic independence implies that the presence or absence of an
-edge between any pair of nodes is considered independent of the presence
-or absence of edges in other dyads.)
+To answer the second research question, ERGM model has been designed.
+Exponential Random Graph Models (ERGMs) employ network statistics as
+predictors, encapsulating structural properties as well as dyadic dependent terms. The observed network structure serves as the outcome variable, enabling estimation of tie probability based on these features to model network formation or evolution in social network analysis. 
 
-1.  Baseline model (Claudia said it should be just with edges)
+1.  Baseline model (Claudia said it should be just with edges) edges are
+    dyadic independent model (In ERGMs, the "edges" term models the
+    presence or absence of edges between pairs of nodes (dyads) in the
+    network. Dyadic independence implies that the presence or absence of
+    an edge between any pair of nodes is considered independent of the
+    presence or absence of edges in other dyads.)
+    `r     ## Baseline ERGM model (prerequisities: must be a network object)     baseline_model_0.1 <- ergm::ergm(net_eurovision ~ edges)       (s1 <- summary(baseline_model_0.1))`
 
-    ``` r
-    ## Baseline ERGM model (prerequisities: must be a network object)
-    baseline_model_0.1 <- ergm::ergm(net_eurovision ~ edges)  
-    (s1 <- summary(baseline_model_0.1))
-    ```
-
-2.  Exploratory models
-
+2.  Exploratory models (start introducing structural and dyadic
+    dependent terms)
 
 3.  Final model
+
+    ```{r}
+    baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(decay = 0.001, fixed=TRUE) +
+                                       nodematch("country_language_family") +
+                                       nodematch("country_government_system"),
+                                       control = ergm::control.ergm(MCMC.burnin = 10000,
+                                                                  MCMC.samplesize = 40000,
+                                                                  seed = 223451,
+                                                                  MCMLE.maxit = 5,
+                                                                  parallel = 4,
+                                                                  parallel.type = "PSOCK"))
+
+    (s5 <- summary(baseline_model_0.5))
+
+    ```
+
+|                                         | Estimate | Prob | Std. Error | Pval |
+|-----------------------------------------|----------|------|------------|------|
+| **edges**                               | Data     | Data | Data       | Data |
+| **degree3**                             | Data     | Data | Data       | Data |
+| **gwesp.fixed.0.001**                   | Data     | Data | Data       | Data |
+| **nodematch.country_language_family**   | Data     | Data | Data       | Data |
+| **nodematch.country_government_system** | Data     | Data | Data       | Data |
+
+: Summary model
 
 4.  MCMC diagnostics for the best selected model
 
 5.  Goodness of fit (GOF)
 
-6.  Interpret results
+6.  Interpret results Interpretation: An increase of 1 in increases the
+    log odds with (log odds) and it makes the odds of the effect taking
+    place times larger. X1 θ1 exp( )θ1- 10 -
 
-still in progress
+|                                         | Estimate | Prob | Std. Error | Pval |
+|-----------------------------------------|----------|------|------------|------|
+| **edges**                               | Data     | Data | Data       | Data |
+| **degree3**                             | Data     | Data | Data       | Data |
+| **gwesp.fixed.0.001**                   | Data     | Data | Data       | Data |
+| **nodematch.country_language_family**   | Data     | Data | Data       | Data |
+| **nodematch.country_government_system** | Data     | Data | Data       | Data |
+
+: Odds ration table
+
+With the given model formula the following hypothesis were verified: -
+H1: Governmental system and language family have an effect on how
+countries distribute their votes during Eurovision competition
 
 ## Conclusion
 
