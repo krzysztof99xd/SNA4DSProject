@@ -1,5 +1,7 @@
 library(readxl)
 library(tinytex)
+library(igraph)
+
 
 # Set the working directory to the directory where the project is located
 setwd("your_path_to_project")
@@ -14,7 +16,6 @@ absolute_path_to_data_folder <- normalizePath(data_folder)
 
 file_name <- 'PublicEurovisionBipartite.xlsx'
 file_name_node_list <- 'Node_List_Eurovision.xlsx'
-
 
 # Combine the data folder path and file name to create the full path
 full_path_to_node_list <- file.path(data_folder, file_name_node_list)
@@ -31,22 +32,17 @@ print(eurovision_public_data_node_list)
 full_path_to_bipartite <- file.path(data_folder, file_name)
 
 incedence_df <- read_excel(full_path_to_bipartite)
-
 print(incedence_df)
-
 incedence_df <- as.data.frame(incedence_df)
-
 incedence_matrix <- as.matrix(incedence_df)
 print(incedence_matrix)
 
 # Extract receiver names and create a subset without the receiver column
 receivers <- incedence_matrix[, 1]
-
 voting_matrix <- incedence_matrix[, -1]  # Remove the first column (receivers)
 
 # Convert string matrix to integers
 voting_matrix_int <- matrix(as.integer(as.matrix(voting_matrix)), nrow = nrow(voting_matrix))
-
 distributors <- colnames(voting_matrix)
 
 # Create an empty graph for the Eurovision network
@@ -80,6 +76,7 @@ print(eurovision_graph)
 # Project the bipartite graph to get a graph of countries distributing votes
 distribution_graph <- igraph::bipartite_projection(eurovision_graph, which = FALSE)
 
+#CHANGE THIS TO NODELIST_EURO?? BUT ENSURE NODELIST EURO STILL HAS COLUMN NODE_COUNTRY
 ## Now we need to add Node attributes so we must match them with receivers
 filtered_node_list <- subset(eurovision_public_data_node_list, Node_country %in% receivers)
 
@@ -99,6 +96,7 @@ existing_countries <- igraph::V(distribution_graph)$Node_country
 
 plot(distribution_graph)
 
+
 # Add node names for receivers 
 igraph::V(distribution_graph)$name <- nAttrNodeCountry
 igraph::V(distribution_graph)$country_language_family <- nAttrCountryLangaugeFamily
@@ -108,6 +106,12 @@ print(igraph::get.vertex.attribute(distribution_graph))
 
 snafun::plot_centralities(distribution_graph)
 
+#REMOVE ISOLATES
+isolated_vertices <- which(degree(distribution_graph, mode = "all") == 0)
+distribution_graph <- igraph::delete_vertices(distribution_graph, isolated_vertices)
+V(distribution_graph)$name
+
+#To network
 distribution_network <- snafun::to_network(distribution_graph)
 print(class(distribution_network))
 plot(
@@ -143,70 +147,73 @@ snafun::count_dyads(distribution_network)
 ## triad_census
 snafun::count_triads(distribution_network)
 
-walktrap <- function(x, directed = TRUE) {
-  x <- snafun::fix_cug_input(x, directed = directed)
-  snafun::extract_comm_walktrap(x) |> length() 
-}
-distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
-                                   diag = FALSE, cmode = "dyad.census", reps = 1000)
-print(distribution_coms)
-
-plot(distribution_coms)
-
-#Community visualization 
-walktrap_communities <- igraph::cluster_walktrap(distribution_graph)
-membership <- igraph::membership(walktrap_communities)
-palette <- rainbow(max(membership))
-node_colors <- palette[membership]
-plot(distribution_graph, vertex.color = node_colors)
-
-
 ## baseline model just with edges 
 baseline_model_0.1 <- ergm::ergm(distribution_network ~ edges)
 (s1<- summary(baseline_model_0.1)) 
 
 ## baseline model with covariate terms
 baseline_model_0.2 <- ergm::ergm(distribution_network ~ edges + 
+                                   nodematch("country_language_family") + 
                                    nodematch("country_government_system"))
 (s2<- summary(baseline_model_0.2))
 
 
-## baseline model with covariate terms
-baseline_model_0.3 <- ergm::ergm(distribution_network ~ edges + 
-                                   nodematch("country_language_family"))
-(s3<- summary(baseline_model_0.3))
-
-## baseline model with covariate terms
-baseline_model_0.4 <- ergm::ergm(distribution_network ~ edges + 
-                                   nodematch("country_government_system") +
-                                   nodematch("country_language_family"))
-(s4<- summary(baseline_model_0.4))
-
-
-texreg::screenreg(list(baseline_model_0.1, baseline_model_0.2, baseline_model_0.3, baseline_model_0.4))
 
 ## when I set gwesp to false, the R session is aborted :( 
 ## gwesp(decay=0.02, fixed=TRUE) + degree(3) works relatively well, lets try to extend from here but lets not limit ourselves to that 
 # kstar(1) did not really work :/
 # Warning: Model statistics ‘kstar2’ and ‘nodematch.country_language_family’ are linear combinations of some set of preceding statistics at the current stage of the estimation. This may indicate that the model is nonidentifiable
 # degree(3) + kstar(2) + gwesp(decay=0.01, fixed= TRUE) never converges
-baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(decay = 0.001, fixed=TRUE) +
-                                   nodematch("country_language_family") + nodematch('country_government_system'),
-                                   control = ergm::control.ergm(MCMC.burnin = 10000,
-                                                              MCMC.samplesize = 40000,
-                                                              seed = 223451,
-                                                              MCMLE.maxit = 5,
-                                                              parallel = 4,
+baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3)   + gwesp(decay = 0.25, fixed = TRUE) +
+                                   nodematch("country_language_family") +
+                                   nodematch("country_government_system"),
+                                   control = ergm::control.ergm(MCMC.burnin = 1000,
+                                                              MCMC.samplesize = 7000,
+                                                              seed = 14254,
+                                                              MCMLE.maxit = 10,
+                                                              parallel = 8,
                                                               parallel.type = "PSOCK"))
 
-(s5 <- summary(baseline_model_0.5))
 
 ergm::mcmc.diagnostics(baseline_model_0.5)
 
+(s5 <- summary(baseline_model_0.5))
 
-### that doesnt look that good :/ 
+#GOF Geodesic distance probably indicates some issues with regards to isolates. 
 baseline_model_0.5_GOF <- ergm::gof(baseline_model_0.5)
 
 snafun::stat_plot_gof(baseline_model_0.5_GOF)
-
 snafun::stat_ef_int(baseline_model_0.5, type = "prob")
+snafun::stat_ef_int(baseline_model_0.5, type = "odds")
+
+
+#CUG test for detecting communities. Better significance using directed = TRUE. Why?
+walktrap <- function(x, directed = TRUE) {
+  x <- snafun::fix_cug_input(x, directed = directed)
+  snafun::extract_comm_walktrap(x) |> length() 
+}
+distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
+                                   diag = FALSE, cmode = "dyad.census", reps = 5000)
+print(distribution_coms)
+plot(distribution_coms,
+     main = "CUG Test for Detecting Communities in Eurovision 2023")
+
+#Plot a communities  graph 
+walktrap_communities <- snafun::extract_comm_walktrap(distribution_graph)
+membership <- igraph::membership(walktrap_communities)
+palette <- rainbow(max(membership))
+node_colors <- palette[membership]
+plot(distribution_graph, 
+     vertex.color = node_colors, 
+     layout = igraph::layout_with_kk,
+     main = "Projected Eurovision 2023 Network with Walktrap Communities",   
+     vertex.label.dist = 2.2,  
+)
+legend("topright", 
+       legend = 1:max(membership), 
+       fill = palette, 
+       title = "Community")
+
+
+num_communities <- length(unique(membership))
+cat("Number of communities/clusters:", num_communities, "\n")
