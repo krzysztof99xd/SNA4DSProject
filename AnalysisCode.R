@@ -4,7 +4,7 @@ library(igraph)
 
 
 # Set the working directory to the directory where the project is located
-setwd("your_path_to_project")
+setwd("C:/Users/thier/Downloads/SNA4DSProject-master/SNA4DSProject-master")
 print(getwd())
 
 # Create a relative path to the "data" folder in your project directory
@@ -32,8 +32,11 @@ print(eurovision_public_data_node_list)
 full_path_to_bipartite <- file.path(data_folder, file_name)
 
 incedence_df <- read_excel(full_path_to_bipartite)
+
 print(incedence_df)
+
 incedence_df <- as.data.frame(incedence_df)
+
 incedence_matrix <- as.matrix(incedence_df)
 print(incedence_matrix)
 
@@ -188,32 +191,82 @@ snafun::stat_ef_int(baseline_model_0.5, type = "odds")
 
 
 #CUG test for detecting communities. Better significance using directed = TRUE. Why?
-walktrap <- function(x, directed = TRUE) {
+walktrap <- function(x, directed = FALSE) {
   x <- snafun::fix_cug_input(x, directed = directed)
   snafun::extract_comm_walktrap(x) |> length() 
 }
 distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
                                    diag = FALSE, cmode = "dyad.census", reps = 5000)
 print(distribution_coms)
+print(distribution_coms$repstats)
+
+    
+
+
+
+#Improved Plot of CUG Test.
+plot_cug_test <- function(distribution_coms) {
+  # Extract data to plot
+  data_to_plot <- distribution_coms$rep.stat
+  bar_values <- table(data_to_plot)
+  
+  # Create a bar plot
+  cugplot <- barplot(bar_values,
+                    main = "CUG Test for Detecting Communities in Eurovision 2023",
+                    xlab = "Nr of Communities",
+                    ylab = "Frequency",
+                    col = "skyblue",
+                    space = 0)  
+  
+  # Calculate position of observed value with respect to the bars
+  obs_position <- cugplot[as.numeric(names(bar_values)) == distribution_coms$obs.stat]
+  
+  # Add baseline to plot
+  #tick_positions <- axis(side = 1, at = cugplot, labels = FALSE)  # Get tick positions on the x-axis
+  abline(h = 0)  # You can adjust the color and line type as needed
+  
+  # Add vertical line for observed value
+  abline(v = obs_position, col = "red", lwd = 2)
+  legend("topright", legend = c("Observed Value"), col = "red", lwd = 2)
+  
+  # Include conditioning and reps info
+  extra_description <- paste(
+                             "Conditioning:", distribution_coms$cmode,
+                             "Reps:", distribution_coms$reps)
+  mtext(text = extra_description, side = 3, line = 0.5, cex = 0.8, col = "black")
+}
+
+plot_cug_test(distribution_coms)
+
+
+
+
+#Original plot of CUG Test
 plot(distribution_coms,
      main = "CUG Test for Detecting Communities in Eurovision 2023")
 
-#Plot a communities  graph 
-walktrap_communities <- snafun::extract_comm_walktrap(distribution_graph)
-membership <- igraph::membership(walktrap_communities)
-palette <- rainbow(max(membership))
-node_colors <- palette[membership]
-plot(distribution_graph, 
-     vertex.color = node_colors, 
-     layout = igraph::layout_with_kk,
-     main = "Projected Eurovision 2023 Network with Walktrap Communities",   
-     vertex.label.dist = 2.2,  
-)
-legend("topright", 
-       legend = 1:max(membership), 
-       fill = palette, 
-       title = "Community")
 
 
-num_communities <- length(unique(membership))
-cat("Number of communities/clusters:", num_communities, "\n")
+
+#Plot a communities graph 
+plot_communities <- function(graph, layout = igraph::layout_with_kk) {
+  walktrap_communities <- snafun::extract_comm_walktrap(graph)
+  membership <- igraph::membership(walktrap_communities)
+  palette <- rainbow(max(membership))
+  node_colors <- palette[membership]
+  plot(distribution_graph, 
+       vertex.color = node_colors, 
+       layout = layout,
+       main = "Projected Eurovision 2023 Network with Walktrap Communities",   
+       vertex.label.dist = 2.2,  
+  )
+  legend("topright", 
+         legend = 1:max(membership), 
+         fill = palette, 
+         title = "Community")
+  
+  num_communities <- length(unique(membership))
+  cat("Number of communities/clusters:", num_communities, "\n")
+}
+
+plot_communities(distribution_graph)
