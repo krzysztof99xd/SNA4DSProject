@@ -72,19 +72,19 @@ So, in Eurovision, it's not only about hitting the high notes but also
 about who your buddies are behind the scenes. The competition becomes a
 mix of music and a kind of international friendship dance.
 
-Previous studies analysed the the basis on these friendship patterns
-within the Eurovison voting network. Research has already been conducted
-in the field of social networks regarding voting patterns which as a
+Previous studies analysed the basis of these friendship patterns within
+the Eurovison voting network. Research has already been conducted in the
+field of social networks regarding voting patterns which as a
 consequence leads to creating communities within the Eurovision
 participants. Dekker A. (2007) [@dekker2007eurovision] has already
-conducted the research using Eurovision cast from 2005 where he analysed
-the friendship network using techniques previously developed for valued
-networks (Dekker, 2005) [@dekker2005], which combine network-analysis
-methods with statistical methods. Dekker's analysis on the votes cast in
-the 2005 Eurovision Song Contest revealed that friendship between
-countries is largely determined by geographical proximity, with a
-visible five-bloc structure: Western, Eastern, Nordic, Balkan, and
-Eastern Mediterranean.
+conducted the research using the Eurovision cast from 2005 where he
+analysed the friendship network using techniques previously developed
+for valued networks (Dekker, 2005) [@dekker2005], which combine
+network-analysis methods with statistical methods. Dekker's analysis on
+the votes cast in the 2005 Eurovision Song Contest revealed that
+friendship between countries is largely determined by geographical
+proximity, with a visible five-bloc structure: Western, Eastern, Nordic,
+Balkan, and Eastern Mediterranean.
 
 In 2019, Angelo S.D. et al. [@D_Angelo_Murphy_Alfò_2019] introduced the
 concept of modeling latent spaces in multidimensional networks,
@@ -153,6 +153,14 @@ already done regarding Euriovision context and what yet is to be examined, this
 research will focus on examining the influence of language family as well as the
 government system of each country.
 
+Studying social networks within the Eurovision context is of paramount
+importance for various reasons. First, it provides invaluable cultural
+insights, as Eurovision serves as a reflection of the diverse cultures
+and values of participating countries. Additionally, examining voting
+patterns illuminates the influence of political and regional alliances
+on the integrity of the competition, offering potential avenues for
+reform.
+
 ### Research questions and hypothesis
 
 Analyzing the current state of the art and identifying the research gaps
@@ -161,9 +169,8 @@ led to the following research questions:
 -   ***RQ1: To what extent do countries formulate small communities
     between each other in the Eurovision competition?***
 
--   ***RQ2: To what extent governmental system and language family
-    influence how the countries distribute their votes during the
-    Eurovision competition?***
+-   ***RQ2: What are the drivers for public communities to distribute
+    the votes during the Eurovision competition?***
 
 The aforementioned research questions lead to the following hypothesis
 regarding first research question:
@@ -269,7 +276,6 @@ and discovering research gaps. That led nodes to have the following
 attributes:
 
 -   country_name
--   country_population
 -   country_language_family
 -   country_government_system
 
@@ -445,60 +451,61 @@ still in progress
 
 # Appendix A
 
-![Eurovision Public](images/EurovisionPublicPlot.png)
+![Eurovision Public Plot](images/EurovisionPulicPlot.png)
 
 # Appendix B
 
-![Eurovision Public Plot
-Centralities](images/EurovisionPublicPlotCentralities.png)
+![Eurovision Public
+Centralities](images/Eurovision%20Public%20Centralities.png)
 
 # Appendix C
 
 ``` r
 ## Eurovision public 
+
 ## $number of vertices
 ## [1] 37
 ## $number_of_edges
-## [1] 112
+## [1] 111
 ## density 
-## [1] 0.08408408
+## [1] 0.08333333
 ## reciprocity
-## [1] 0.125
+## [1] 0.1261261
 ## transitivity
-## [1] 0.2097902
+## [1] 0.21255
 ## mean_distance
-## [1] 2.50487
+## [1] 2.511364
 ## number_of_isolates
 ## character(0)
 ## dyad_census
 ## Mutual Asymmetric Null
-##      7         98  561
+##      7         97  562
 ## triad_census
 ##  003  012 102 021D 021U 021C 111D 111U 030T 030C 201 120D 120U 120C 210 300
-## 5026 1776 107   31  541  104  104    8   48    3   3   11    4    3   1   0
+## 5048 1767 107   28  534  101  104    8   48    3   3   11    4    3    1  0
 ```
 
 # Appendix D
 
-![Eurovision Jury Plot](images/EurovisionJuryPlot-01.png)
+![Eurovision Jury Plot](images/EurovisionJuryPlot.png)
 
 # Appendix E
 
-![Eurovision Jury Plot
-Centralities](images/EurovisionJurysPlotCentralities.png)
+![Eurovision Jury Centralities](images/EurovisionJuryCentralities.png)
 
 # Appendix F
 
 ``` r
 ## Eurovision jury 
-## $number of vertices
+
+## number of vertices
 ## [1] 37
-## $number_of_edges
-## [1] 112
+## number_of_edges
+## [1] 111
 ## density 
 ## [1] 0.08333333
 ## reciprocity
-## [1] 0.05357143
+## [1] 0.05405405
 ## transitivity
 ## [1] 0.2084691
 ## mean_distance
@@ -507,10 +514,11 @@ Centralities](images/EurovisionJurysPlotCentralities.png)
 ## character(0)
 ## dyad_census
 ## Mutual Asymmetric Null
-##      7         105  558
+##      3        105  558
 ## triad_census
-##  003  012 102 021D 021U 021C 111D 111U 030T 030C 201 120D 120U 120C 210 300
-## 4847 2070  60   43  449  184   47    6   46    3   0   11    0    3   1   0
+## snafun::count_triads(eurovisionnet)
+##  003  012 102 021D 021U 021C 111D 111U 030T 030C 201 120D ## 120U 120C 210 300
+##  4847 2094  36   43  449  184   47    6   46    3   0   11    0    3   1   0
 ```
 
 # Appendix G
