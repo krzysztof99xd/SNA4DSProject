@@ -147,6 +147,7 @@ walktrap <- function(x, directed = TRUE) {
   x <- snafun::fix_cug_input(x, directed = directed)
   snafun::extract_comm_walktrap(x) |> length() 
 }
+## prerequisity->  network parameter must be a network object, not an igraph
 distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
                                    diag = FALSE, cmode = "dyad.census", reps = 1000)
 print(distribution_coms)
@@ -186,15 +187,18 @@ baseline_model_0.4 <- ergm::ergm(distribution_network ~ edges +
 texreg::screenreg(list(baseline_model_0.1, baseline_model_0.2, baseline_model_0.3, baseline_model_0.4))
 
 ## when I set gwesp to false, the R session is aborted :( 
-## gwesp(decay=0.02, fixed=TRUE) + degree(3) works relatively well, lets try to extend from here but lets not limit ourselves to that 
-# kstar(1) did not really work :/
-# Warning: Model statistics ‘kstar2’ and ‘nodematch.country_language_family’ are linear combinations of some set of preceding statistics at the current stage of the estimation. This may indicate that the model is nonidentifiable
 # degree(3) + kstar(2) + gwesp(decay=0.01, fixed= TRUE) never converges
-baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(decay = 0.001, fixed=TRUE) +
-                                   nodematch("country_language_family") + nodematch('country_government_system'),
-                                   control = ergm::control.ergm(MCMC.burnin = 10000,
-                                                              MCMC.samplesize = 40000,
-                                                              seed = 223451,
+# with decay = 0.0001 the error is 15 so lower 
+# with gwdegree(decay = 0.001, fixed = TRUE) never converges
+# with degree(0) MCMC still look good but GOF does not look ok for model statistics and still huge standard error :/ 
+## Using degree(2:3) does not work :( but edge-wise shared partners looked perfectly
+# gwesp(1, fixed=FALSE) did not work at all 
+baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(1, fixed=FALSE) +
+                                  nodematch('country_government_system') +
+                                  nodematch('country_language_family'),
+                                   control = ergm::control.ergm(MCMC.burnin = 20000,
+                                                              MCMC.samplesize = 60000,
+                                                              seed = 126451,
                                                               MCMLE.maxit = 5,
                                                               parallel = 4,
                                                               parallel.type = "PSOCK"))

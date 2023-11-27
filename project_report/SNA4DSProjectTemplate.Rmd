@@ -523,7 +523,7 @@ calculate odds ratios. To do that, coefficients have to be
 exponentiated.
 
 |                                         | Estimate | Prob  | Std. Error | Pval  |
-|---------------|---------------|---------------|---------------|---------------|
+|-----------------------------------------|----------|-------|------------|-------|
 | **edges**                               | -889.456 | 0.000 | 362.676    | 0.014 |
 | **degree3**                             | -0.680   | 0.336 | 0.771      | 0.377 |
 | **gwesp.fixed.0.001**                   | 886.512  | NaN   | 362.138    | 0.014 |
@@ -551,6 +551,15 @@ countries distribute their votes during the Eurovision competition) for
 the second research hypothesis can not be rejected.
 
 ## Conclusion
+
+Baseline model (Claudia said it should be just with edges) edges are
+dyadic independent model (In ERGMs, the "edges" term models the presence
+or absence of edges between pairs of nodes (dyads) in the network.
+Dyadic independence implies that the presence or absence of an edge
+between any pair of nodes is considered independent of the presence or
+absence of edges in other dyads.) r \## Baseline ERGM model
+(prerequisities: must be a network object) baseline_model_0.1 \<-
+ergm::ergm(net_eurovision \~ edges) (s1 \<- summary(baseline_model_0.1))
 
 still in progress
 
