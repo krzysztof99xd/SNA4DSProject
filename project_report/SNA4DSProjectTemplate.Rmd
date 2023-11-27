@@ -605,7 +605,7 @@ to the sentence as follows:
 
 Moreover, a probability of 0.007 for `edges` term suggests that there is ver low high chance in making new edges. A probability of 0.007 suggests that, according to the ERGM being used, the observed number of edges in the network is very unlikely to occur based on the model's specification. This low probability indicates that the odds of forming an edge in this network are very low.
 
-When it comes to gwesp() term probability of 0.939suggests that the observed network
+When it comes to gwesp() term probability of 0.939 suggests that the observed network
 structure, which includes this tendency for nodes to share partners, is
 highly probable under the ERGM framework. This probability indicates
 that the network's pattern of shared connections among nodes, as
@@ -630,23 +630,13 @@ governmental system and language family do not have an influence on how
 countries distribute their votes during the Eurovision competition) for
 the second research hypothesis can not be rejected.
 
-## Conclusion
-This study aimed to 
+## Conclusion <yet in progress>
+This study aimed to study the Eurovision context in terms of social network analysis based on the official results from 2023. 2 research questions were stated in the beginning of the study, CUG test and ERGM model have been run to answer them and test the stated hypothesis. 
 
-## Future work
-Run the model with kstar(2)?
-Try maybe different projections?
+### Future work
+- There is a possibility to improve ERGM MCMCs and GOF. One of that potential option could be dyadic dependent term kstar(). There is an assumption to that some countries are more popular than the others (have more edges connected to them). The model with that tern has been run but unfortunately the model did not converge during the night. Due to time constraint of this project there was no attempt in making this model converge.
+- Try maybe different projections
 
-Baseline model (Claudia said it should be just with edges) edges are
-dyadic independent model (In ERGMs, the "edges" term models the presence
-or absence of edges between pairs of nodes (dyads) in the network.
-Dyadic independence implies that the presence or absence of an edge
-between any pair of nodes is considered independent of the presence or
-absence of edges in other dyads.) r \## Baseline ERGM model
-(prerequisities: must be a network object) baseline_model_0.1 \<-
-ergm::ergm(net_eurovision \~ edges) (s1 \<- summary(baseline_model_0.1))
-
-still in progress
 
 \newpage
 
