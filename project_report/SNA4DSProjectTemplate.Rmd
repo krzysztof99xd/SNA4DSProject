@@ -68,16 +68,24 @@ Still in progress
 
 ## Introduction
 
-Eurovision, the big singing contest with countries from all over, is not
-just about who sings the best. It resembles a vibrant puzzle where
-diverse nations vie for victory, with winning extending beyond
-exceptional singing. The intriguing phenomenon of countries voting for
-their friends underscores the importance of analyzing Eurovision's
-voting network. It's not about the song alone; it's like a secret voting
-club based on things like being neighbors or having a history together.
-So, in Eurovision, it's not only about hitting the high notes but also
-about who your buddies are behind the scenes. The competition becomes a
-mix of music and a kind of international friendship dance.
+Eurovision, the big singing contest with countries from all over,
+goes beyond simply showcasing the best singers. It's like a lively puzzle
+where diverse nations aim for victory, and winning is more than just singing
+exceptionally well. The interesting part is how countries vote for their
+friends, emphasizing the need to understand Eurovision's voting network.
+It's not just about the song itself; it's akin to a secret voting club based
+on factors like being neighbors or sharing a history. So, in Eurovision,
+success isn't just about hitting the high notes; it's also about the
+friendships behind the scenes. The competition becomes a mix of music and
+an international friendship dance. The victory's melody isn't just in the 
+lyrics but also in the subtle connections woven behind the scenes, transforming
+the competition into a symphony of intertwined relationships.
+
+These international friendships, while adding a unique flavor to Eurovision,
+introduce potential biases in the voting process, raising questions about the
+overall fairness of the competition. Substantial research has already delved
+into the examination of biases within the Eurovision song contest through the
+analysis of past editions. 
 
 Previous studies analysed the basis of these friendship patterns within
 the Eurovison voting network. Research has already been conducted in the
@@ -114,14 +122,27 @@ explored the concept of group reciprocity, uncovering voting clusters
 among countries. An illustrative instance was the Scandinavian nations,
 including Denmark, Finland, Iceland, Norway, and Sweden, with noteworthy
 outcomes in the context of the 2021 competition.
+ 
+Research has demonstrated that the shared characteristics of voting groups
+play a significant role in shaping the outcomes of voting systems, revealing
+insights into the potential biases that may arise. Nevertheless, delving
+further into similar characteristics through additional research has the
+potential to bring even greater value to our understanding of this topic.
+Exploring these common features more comprehensively can contribute to a
+deeper examination of voting bias and its implications.
 
-Hence, it is evident that extensive research has already been undertaken
-concerning Eurovision voting patterns in the domain of social networks.
-Studies take into consideration various aspects but there is a lack of
-research when it comes to the newest Eurovision editions. Moreover,
-there is a lack of research when it comes to analyzing the influence of
-the political system of the country as well as the influence of language
-family.
+Research has consistently demonstrated the significant role of language
+in shaping Eurovision voting behavior [@ginsburgh2008eurovision]. A
+compelling illustration of this influence is the close bond between
+Greece and Cyprus. Greek, the primary language in Greece, is spoken
+by roughly 75% of the Cypriot population, contributing to the evident
+affinity between the two nations in the Eurovision Song Contest. This
+example underscores how shared language serves as a pivotal factor
+influencing voting patterns, reflecting a broader trend across
+Eurovision-participating countries. Delving further into the
+influence of language, particularly shared language families,
+adds depth to the discussion on voting patterns in Eurovision, enriching
+our understanding of the role linguistic ties play in this dynamic competition.
 
 Countries with the same or similar government system seem to have
 stronger bonds with each other than the ones that have different
@@ -129,36 +150,30 @@ internal political structures. Research done by [@Mattes_Rodríguez_2014]
 indicates that autocracies exhibiting institutional characteristics
 resembling those of democracies --- such as enhanced leader
 accountability, restricted policy flexibility, and increased
-transparency --- are more likely to succeed in cooperation.
-Consequently, these autocracies are more prone to collaborate not only
-with each other but also with democracies. The expectation is that
-single-party and military regimes hold an advantage in international
-cooperation when contrasted with personalist systems. The study examines
-the cooperative behavior between pairs of states through analysis of the
-10 Million International Dyadic Events data from 1990 to 2004
-[@king2003automated]. The findings are consistent with the core
-theoretical argument. Single-party regimes, posited to have an advantage
-in international cooperation, are, indeed, more likely to be actively
-sought as partners.
+transparency---are more likely to succeed in cooperation. Consequently,
+these autocracies are more prone to collaborate not only with each other
+but also with democracies. The expectation is that single-party and
+military regimes hold an advantage in international cooperation when
+contrasted with personalist systems. The study examines the cooperative
+behavior between pairs of states through analysis of the 10 Million
+International Dyadic Events data from 1990 to 2004 [@king2003automated].
+The findings are consistent with the core theoretical argument.
+Single-party regimes, posited to have an advantage in international
+cooperation, are, indeed, more likely to be actively sought as partners.`
 
-Studying social networks within the Eurovision context is of paramount
-importance for various reasons. First, it provides invaluable cultural
-insights, as Eurovision serves as a reflection of the diverse cultures
-and values of participating countries. Additionally, examining voting
-patterns illuminates the influence of political and regional alliances
-on the integrity of the competition, offering potential avenues for
-reform.
 
-### Research questions and hypothesis
+Building on the understanding that shared characteristics shape voting outcomes,
+this research delves into the influence of language family and political systems
+on the Eurovision voting network. Before analyzing the impact of these factors,
+an examination of the voting network will establish whether distinct voting
+communities exist. This preliminary analysis will provide the basis for later
+investigating whether language family and the political system significantly 
+contribute to the formation of these voting groups. This leads to the following
+set of research questions that will be answered:
 
-Analyzing the current state of the art and identifying the research gaps
-led to the following research questions:
+-   ***RQ1: To what extent do countries form communities in the Eurovision song contest?***
 
--   ***RQ1: To what extent do countries formulate small public
-    communities between each other in the Eurovision competition?***
-
--   ***RQ2: What factors influence the distribution of votes within
-    public communities during the Eurovision competition?***
+-   ***RQ2: How does language family and the government system influence the distribution of votes within communities of countries during the Eurovision song contest***
 
 The aforementioned research questions lead to the following hypothesis
 regarding first research question:
@@ -183,35 +198,34 @@ regarding second research question:
     votes during Eurovision competition.
 
 Answering the aforementioned research questions and testing hypotheses
-is going to help us to understand to a certain extent whether there are
+is going to help us understand to a certain extent whether there are 
 voting patterns inside Eurovision as well as to understand what may
 cause those phenomena.
 
-To answer the first research question and to validate the first
-hypothesis we are going to run a Conditional Uniform Graph (CUG) test.
-The CUG allows detecting communities within a network firstly by
-generating a null model and randomizing the network while preserving
-certain structural properties, such as node degrees. Then it applies a
-detection algorithm to identify potential groups of nodes in the
-original network. How exactly the CUG model is going to be used and
-which community detection algorithms is chosen in this project is
-described in the [Conditional Uniform Graph using walktrap community
+To answer the first research question and validate the first hypothesis,
+a Conditional Uniform Graph (CUG) test will be conducted. The CUG allows
+detecting communities within a network firstly by generating a null model
+and randomizing the network while preserving certain structural properties,
+such as node degrees. Then, it applies a detection algorithm to identify
+potential groups of nodes in the original network. How exactly the CUG model
+is going to be used and which community detection algorithm is chosen in this
+project is described in the [Conditional Uniform Graph using walktrap community
 detection] section.
 
-To answer the second research question and to validate the second
-hypothesis we are going to run Exponential Random Graph Model (ERGM)
-test. It offers a robust and flexible approach to examine the effects of
-exogenous attributes on network structure while considering the complex
-dependencies and configurations within the network itself.
+To answer the second research question and to validate the second hypothesis,
+an Exponential Random Graph Model (ERGM) is going to be run. It offers
+a robust and flexible approach to examine the effects of exogenous attributes
+on network structure while considering the complex dependencies and
+configurations within the network itself.
 
-In the rest of the report, we will carefully describe the datasets that
-are going to be used to conduct the research. Data cleaning and data
-preprocessing are going to be run before any analysis. Descriptive
-analysis is going to be performed to understand the data better. The
-research rationale is going to be discussed to provide the reasoning why
-CUG and ERGM have been chosen as suitable methods for answering research
-questions and testing hypotheses.
+For this research, only the latest edition of Eurovision (2023) is analyzed.
+Also, the main interest is whether the forming of these communities led to
+a biased winner and therefore would suggest that the Eurovision voting system
+should be revised. Moreover, only the votes cast by the public will be used
+in forming the voting network. This is because public votes are better
+predictors of the finishing position [@ginsburgh2023eurovision].
 
+In the subsequent sections of the report, an explanation of the datasets used will be provided, outlining the steps involved in cleaning and preparing the data prior to any analysis. Furthermore, a descriptive analysis will be presented to enhance comprehension of the data. Additionally, the rationale for selecting the Conditional Uniform Graph (CUG) and Exponential Random Graph Model (ERGM) methods for addressing the research questions and testing hypotheses will be discussed.
 ## Methodology
 
 ### Dataset
