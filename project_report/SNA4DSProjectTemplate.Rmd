@@ -10,13 +10,16 @@ author:
   - Conceptualization
   - "Writing - Original Draft Preparation"
   - "Writing - Review & Editing"
+  - "Writing - ERGM model"
 - name: "Xavier Paulus"
   affiliation: '1,2'
-  role: "Writing - Review & Editing"
+  role: "Writing Introduction and Research Rationale part - Review & Editing"
 - name: "Chigozie Ifepe"
+  role: "Writing - Review & Editing"
 - name: "Thierry Brands"
+  role: "Community detection using walktrap algorithm and performing CUG test"
 - name: "Vishal Seghal"
-  role: 'Community detection using walktrap algorithm and erforming CUG test'
+  role: 'Community detection using walktrap algorithm and performing CUG test'
 shorttitle: SNA Eurovision
 output:
   word_document: default
@@ -315,14 +318,31 @@ structural configurations among triplets of nodes in both networks.
 -   [Appendix C] shows descriptive statistics of the network of Public
     Votes Eurovision
 
+That significant amount of isolates in that network might lead to
+statistical instability or convergence issues in the model estimation
+process. ERentGMs, especially when including dyadic-depend terms, the
+model might struggle with isolated nodes due to their lack of
+connectivity. Therefore, before running the CUG test and ERGM model, it
+has been decided to remove isolates. Removing isolates might lead to a
+loss of information, nevertheless, in this particular projection of the
+network, these nodes represent the countries that have not received any
+top 3 votes, consequently having a minor impact on the top positions.
+Plots, descriptive statistics, and plot centralities can be seen in the
+[Appendix D](#appendix-d), [Appendix E] and [Appendix F].
+
 ### Data analysis (Research Rationale)
 
-It is important to understand why CUG and ERGM tests are suitable for
-this data and how they are going to help to answer the research question
-and what are the potential alternatives for them. As it has been already
-described in [Research questions and hypothesis] section to answer the
-first research question, the CUG test is going to be conducted, and to
-answer the second research question ERGM model is going to be developed.
+It is important to understand why the CUG test and ERGM model are
+suitable for this data and how they are going to help to answer the
+research question as well as what are the potential alternatives for
+them. Removing isolates led to a change in the original data but as it
+has been described in the previous section, the network remained its
+most important information and allowed to have data more suitable for
+running tests and models which as a consequence leads to the higher
+statistical stability. As has been already described in [Research
+questions and hypothesis] section to answer the first research question,
+the CUG test is going to be conducted, and to answer the second research
+question ERGM model is going to be developed.
 
 #### Conditional Uniform Graph using walktrap community detection
 
@@ -380,49 +400,80 @@ effects of governmental systems and language families on the network.
 
 ### Conditional Uniform Graph Test
 
-As it has been already described in the section above CUG test has been
-conducted to answer the first research question and test first
+As it has been already described in the section above, a CUG test has
+been conducted to answer the first research question and test the first
 hypothesis. The code for the CUG test can be found below:
 
 ``` r
 ## CUG test for detecting communities
-walktrap_num_f <- function(x, directed = TRUE) { 
+walktrap <- function(x, directed = FALSE) {
   x <- snafun::fix_cug_input(x, directed = directed)
-  snafun::extract_comm_walktrap(x) |> length()
+  snafun::extract_comm_walktrap(x) |> length() 
 }
-eurovision_coms <- sna::cug.test(net_eurovision, FUN = walktrap_num_f, mode = "graph", diag = FALSE, cmode = "dyad.census", reps = 1000)
+distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
+                                   diag = FALSE, cmode = "dyad.census", reps = 5000)
 ```
 
-The histogram and the Univariate Conditional Uniform Graph (CUG) Test
-results [[Appendix F]] relate directly to the research question and
-hypotheses as follows:
+As shown above, the walktrap algorithm detects communities in networks.
+This walktrap algorithm is used in the CUG test to assess the
+significance. The communities detected by the walktrap algorithm are
+shown in a graph of the network [[ ](#appendix-d)]. This graph displays
+the communities as certain colors, where nodes within the same community
+will have the same color. It is visible that some communities consist of
+5, 4 or 2 countries. Another notable characteristic is that certain
+nodes have a high degree while some have a much lower degree. This is
+also true for the communities themselves. Some communities consist of
+countries with relatively low degrees, for example the community of
+Italy. Other communities consist of mainly high-degree nodes, for
+example the community of Ukraine. The previously discussed
+characteristics imply that certain countries have more connections with
+countries from different communities.
 
-CUG tests allows to test the hypotheses for the first research question.
+Notably, the Univariate Conditional Uniform Graph (CUG) Test can assess
+whether these detected communities are significant. The histogram and
+the CUG Test results [[Appendix I]] relate directly to the research
+question and hypotheses as follows:
+
+CUG tests allow to test the hypotheses for the first research question.
 The CUG test can explain whether features of interest of the observed
 graph, have a high likelihood of being the result of chance. The results
 of CUG tests can therefore aid in the process of finding p-values, that
 can explain whether the results are statistically significant. Thus,
-using the CUG test enables to reject or not reject the null hypothesis.
+using the CUG test enables us to reject or not reject the null
+hypothesis.
 
-In the results, the histogram [[Appendix F]] visualizes the distribution
-of the network with the following conditioning: "Dyad.census" and 1000
-repetitions. It can be observed that there is a network of 13 different
-countries in the Eurovision competition. The red line in the plot
-suggests that the observed network has a significantly higher number of
-communities than expected therefore H1 comes into play.
+In the results, the histogram [[Appendix I]] visualizes the distribution
+of the network with the following conditioning: "Dyad.census" and 5000
+repetitions. It can be observed that there is a network of 19 different
+countries in the Eurovision competition consisting of 6 communities. The
+red line in the plot dsplays the observed amount of communities in the
+network.
 
-The results show that for randomly generated networks with similar
-attributes, the probability of such a simulated network having an equal
-or greater number of communities than the observed value is effectively
-0. This indicates that the likelihood of encountering the current amount
-of observed communities is low when the null hypothesis would be true.
-The p-value is 0, which implicates a rejection of the null hypothesis.
+The bars represent how many communities were present in randomly
+generated networks during the CUG Test. The plot shows that the number
+of communities ranges from 2 to 8, with 3 and 4 being the most frequent.
+The red line intersects the bar representing 6 communities. This
+indicates that a randomly generated network, can have the same amount of
+communities as the observed network. Therefore it is necessary to look
+at the p-value. The results show that for randomly generated networks
+with similar attributes, the probability of such a simulated network
+having an equal or greater number of communities than the observed value
+is approximately 0.08. For a significance level of 0.05, we can conclude
+that the communities are not significant.
+
+This indicates that the likelihood of encountering the current amount of
+observed communities is not low enough when the null hypothesis would be
+true. Therefore we cannot reject the null hypothesis.
 
 Considering the first research question (To what extent do countries
 formulate small communities between each other in the Eurovision
-competition?), the findings indicate that in the Eurovision competition
-countries are more likely to connect with other smaller communities
-which creates an alliance.
+competition?), the findings indicate that in the Eurovision competition,
+the communities that were detected by the walktrap algorithm were not
+significant. Consequently, implications drawn from the detected
+communities are uncertain and thus not applicable. However, it must be
+noted that isolates were removed in the process, as the exclusion of
+isolates influences the community distribution and thus the
+significance.
 
 ### ERGM
 
@@ -451,9 +502,9 @@ the following model to be run and analyzed.
 
 ``` r
 ### ERGM model
-baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + 
+baseline_model_0.5 <- ergm::ergm(distribution_network_without_isolates ~ edges + 
                                    degree(3) + 
-                                   gwesp(decay = 0.001, fixed=TRUE) +
+                                   gwesp(decay = 0.25, fixed=TRUE) +
                                    nodematch("country_language_family") +
                                    nodematch("country_government_system"),
                                    control = ergm::control.ergm(MCMC.burnin = 10000,
@@ -479,24 +530,25 @@ The following dyadic dependent terms have been inserted:
     for the propensity of nodes to have more or fewer connections than
     expected by chance.
 
--   `gwesp(decay = 0.001, fixed = TRUE)` term assesses the presence of
-    higher-order dependencies within a network by considering shared
-    connections between nodes. The parameter `decay` has a very low
-    value because the model is sensitive to even small levels of shared
-    connections between nodes due to a relatively small amount of nodes
-    and a lot of isolates.
+-   `gwesp(decay = 0.25, fixed = TRUE)` This term accounts for how
+    likely nodes are to create connections based on the quantity of
+    mutual connections they share. . The decay parameter in gwesp()
+    determines the rate at which the contribution of shared partners
+    decreases as their distance from the focal node increases. A higher
+    decay value results in a quicker decrease in the contribution of
+    shared partners as they are farther away.
 
 The model described above performed relatively well on the MCMC
-diagnostics. Trace for every term inside the model has a shape which is
+diagnostics. Trace for every term inside the model has a shape that is
 similar to "fuzzy caterpillar" which means that chain mix well
-[[Appendix D]]. Knowing that it is possible to move to analyzing
-Goodness of Fit to see whether the model-generated networks replicate
-the features and patterns present in the observed network. Looking at
-the graphs in the [Appendix F] it can be observed that according to all
-of them model captured most the essential structural characteristics of
-the Eurovision network. Only edge-wise shared partner graph has a small
-deficiency when it comes to capturing the proportion of edges which have
-2 edge-wise shared partners.
+[[Appendix D](#appendix-d)]. Knowing that it is possible to move to
+analyzing Goodness of Fit to see whether the model-generated networks
+replicate the features and patterns present in the observed network.
+Looking at the graphs in the [Appendix F] it can be observed that
+according to all of them model captured most the essential structural
+characteristics of the Eurovision network. Only edge-wise shared partner
+graph has a small deficiency when it comes to capturing the proportion
+of edges which have 2 edge-wise shared partners.
 
 With the aferomentioned knowledge it is possible look at the models
 statistics. After running the model the following coefficients have been
@@ -504,11 +556,11 @@ obtained:
 
 |                                         | Estimate | Std. Error |
 |-----------------------------------------|----------|------------|
-| **edges**                               | -889.456 | 362.676    |
-| **degree3**                             | -0.680   | 0.771      |
-| **gwesp.fixed.0.001**                   | 886.512  | 362.138    |
-| **nodematch.country_language_family**   | -0.078   | 0.608      |
-| **nodematch.country_government_system** | 0.464    | 0.332      |
+| **edges**                               | -5.015   | 1.087      |
+| **degree3**                             | -0.009   | 0.771      |
+| **gwesp.fixed.0.25**                    | 2.741    | 0.834      |
+| **nodematch.country_language_family**   | -0.132   | 0.601      |
+| **nodematch.country_government_system** | 0.391    | 0.291      |
 
 : Coefficient table
 
@@ -523,18 +575,46 @@ calculate odds ratios. To do that, coefficients have to be
 exponentiated.
 
 |                                         | Estimate | Prob  | Std. Error | Pval  |
-|-----------------------------------------|----------|-------|------------|-------|
-| **edges**                               | -889.456 | 0.000 | 362.676    | 0.014 |
-| **degree3**                             | -0.680   | 0.336 | 0.771      | 0.377 |
-| **gwesp.fixed.0.001**                   | 886.512  | NaN   | 362.138    | 0.014 |
-| **nodematch.country_language_family**   | -0.078   | 0.481 | 0.608      | 0.897 |
-| **nodematch.country_government_system** | 0.464    | 0.614 | 0.332      | 0.613 |
+|---------------|---------------|---------------|---------------|---------------|
+| **edges**                               | -5.015   | 0.007 | 1.087      | 0.000 |
+| **degree3**                             | -0.009   | 0.497 | 0.771      | 0.991 |
+| **gwesp.fixed.0.25**                    | 2.741    | 0.939 | 0.834      | 0.001 |
+| **nodematch.country_language_family**   | -0.132   | 0.467 | 0.601      | 0.826 |
+| **nodematch.country_government_system** | 0.391    | 0.597 | 0.291      | 0.179 |
 
-: Odds ration table
+: Probability ratio table
 
-However, none of the variables can be evaluated because either p-value
-or standard error is extraordinarily high. Therefore, none of these
-variables influence the observed network.
+We can see in the table above that there are 2 terms with a very low p-value,
+namely `gwesp.fixed.025` and `edges` and could be considered significant. 
+
+`edges` term considers the tendency for nodes to form edges
+
+`gwesp` term considers the tendency for nodes to form edges based on the number of
+shared partners they have. In this specific model, the decay is set to
+0.25 at the fixed rate.
+
+These results can be analyzed with the following formula: *An increase of
+1 X1 in increases the log odds with θ1 (log odds) and it makes the odds
+of the effect taking place exp(01) times larger.*
+
+Applying this formula to our ERGM model results can be transformed
+to the sentence as follows: 
+- An increase of 1 in the number of edges increases the log odds(-5.015) with and it makes the odds of the effect taking place exp(-5.015) times larger.
+
+- An increase of 1 in geometrically weighted shared partners increases the log odds with 2.731 (log odds)and it makes the odds of the effect taking place exp(2.741) times larger.
+
+Moreover, a probability of 0.007 for `edges` term suggests that there is ver low high chance in making new edges. A probability of 0.007 suggests that, according to the ERGM being used, the observed number of edges in the network is very unlikely to occur based on the model's specification. This low probability indicates that the odds of forming an edge in this network are very low.
+
+When it comes to gwesp() term probability of 0.939suggests that the observed network
+structure, which includes this tendency for nodes to share partners, is
+highly probable under the ERGM framework. This probability indicates
+that the network's pattern of shared connections among nodes, as
+described by the `gwesp()` term, is more likely than alternative
+patterns or structures within the ERGM framework.
+
+Except these this specific dyadic dependent term, the rest of the
+variables have a very high p-value and therefore, its coefficients are
+not going to be considered and exponentiated.
 
 With the given model formula the following hypothesis could be verified:
 
@@ -544,13 +624,18 @@ With the given model formula the following hypothesis could be verified:
 -   H3: Language family has an effect on how countries distribute their
     votes during the Eurovision competition
 
-As it has been stated none of the variables was found to be significant
-for the network and, therefore, the null hypothesis (H0: The
+As it has been stated none of the structural terms was found to be
+significant for the network and, therefore, the null hypothesis (H0: The
 governmental system and language family do not have an influence on how
 countries distribute their votes during the Eurovision competition) for
 the second research hypothesis can not be rejected.
 
 ## Conclusion
+This study aimed to 
+
+## Future work
+Run the model with kstar(2)?
+Try maybe different projections?
 
 Baseline model (Claudia said it should be just with edges) edges are
 dyadic independent model (In ERGMs, the "edges" term models the presence
@@ -603,14 +688,51 @@ still in progress
 ## 1710   0 674    0    0    0    0    0    0   0  170    0    0    0   0  46
 ```
 
-# Appendix D
+# Appendix D {#appendix-d}
+
+![Eurovision Public Plot Without
+Isolates](images/PlotProjectedNetworkNoIsolates.png)
+
+# Appendix E
+
+![Eurovision Public Plot Centralities Without
+Isolates](images/PlotCentralitiesProjectedNetworkNoIsolates.png)
+
+# Appendix F
+
+``` r
+## Eurovision public without Isolates
+
+## $number of vertices
+## [1] 19
+## $number_of_edges
+## [1] 48
+## density 
+## [1] 0.2807018
+## reciprocity
+## [1] 1
+## transitivity
+## [1] 0.4480519
+## mean_distance
+## [1] 2.74269
+## number_of_isolates
+## character(0)  
+## dyad_census
+## Mutual  Null
+##      48   123
+## triad_census
+## 003 012 102 021D 021U 021C 111D 111U 030T 030C 201 120D 120U 120C 210 300
+## 415   0 338    0    0    0    0    0    0    0 170    0    0    0   0  46
+```
+
+# Appendix G
 
 ::: {style="display: flex;"}
 ![ProjectedNetworkMCMC1](images/ProjectedNetworkMCMC1-01.png) ![Public
 Eurovision Network MCMC 2](images/ProjectedNetworkMCMC2-01.png)
 :::
 
-# Appendix E
+# Appendix H
 
 ::: {style="display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 20px;"}
 ![GOFModelStatistics![GOFDegree](images/ProjectedNetworkGOFDegree.png)](images/ProjectedNetworkModelStatistics.png)
@@ -619,14 +741,14 @@ Eurovision Network MCMC 2](images/ProjectedNetworkMCMC2-01.png)
 ![GOFEdgeWiseSharedPartner](images/ProjectedNetworkGOFEdgeWiseSharedPartner.png)
 :::
 
-# Appendix F
+# Appendix I
 
 ::: {style="display: flex;"}
 ![CUG Test](images/CUG_Test.png) ![CUG Test
 Distribution](images/CUG_Test_Distribution_Plot.png)
 :::
 
-# Appendix G
+# Appendix J
 
 ***Betweenness centrality*** of *i* is the proportion of all shortest
 paths in the network that pass through *i*. It shows which nodes have
