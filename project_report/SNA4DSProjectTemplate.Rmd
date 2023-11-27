@@ -380,49 +380,80 @@ effects of governmental systems and language families on the network.
 
 ### Conditional Uniform Graph Test
 
-As it has been already described in the section above CUG test has been
-conducted to answer the first research question and test first
+As it has been already described in the section above, a CUG test has
+been conducted to answer the first research question and test the first
 hypothesis. The code for the CUG test can be found below:
 
 ``` r
 ## CUG test for detecting communities
-walktrap_num_f <- function(x, directed = TRUE) { 
+walktrap <- function(x, directed = FALSE) {
   x <- snafun::fix_cug_input(x, directed = directed)
-  snafun::extract_comm_walktrap(x) |> length()
+  snafun::extract_comm_walktrap(x) |> length() 
 }
-eurovision_coms <- sna::cug.test(net_eurovision, FUN = walktrap_num_f, mode = "graph", diag = FALSE, cmode = "dyad.census", reps = 1000)
+distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
+                                   diag = FALSE, cmode = "dyad.census", reps = 5000)
 ```
 
-The histogram and the Univariate Conditional Uniform Graph (CUG) Test
-results [[Appendix F]] relate directly to the research question and
-hypotheses as follows:
+As shown above, the walktrap algorithm detects communities in networks.
+This walktrap algorithm is used in the CUG test to assess the
+significance. The communities detected by the walktrap algorithm are
+shown in a graph of the network [[Appendix F]]. This graph displays the
+communities as certain colors, where nodes within the same community
+will have the same color. It is visible that some communities consist of
+5, 4 or 2 countries. Another notable characteristic is that certain
+nodes have a high degree while some have a much lower degree. This is
+also true for the communities themselves. Some communities consist of
+countries with relatively low degrees, for example the community of
+Italy. Other communities consist of mainly high-degree nodes, for
+example the community of Ukraine. The previously discussed
+characteristics imply that certain countries have more connections with
+countries from different communities.
 
-CUG tests allows to test the hypotheses for the first research question.
+Notably, the Univariate Conditional Uniform Graph (CUG) Test can assess
+whether these detected communities are significant. The histogram and
+the CUG Test results [[Appendix F]] relate directly to the research
+question and hypotheses as follows:
+
+CUG tests allow to test the hypotheses for the first research question.
 The CUG test can explain whether features of interest of the observed
 graph, have a high likelihood of being the result of chance. The results
 of CUG tests can therefore aid in the process of finding p-values, that
 can explain whether the results are statistically significant. Thus,
-using the CUG test enables to reject or not reject the null hypothesis.
+using the CUG test enables us to reject or not reject the null
+hypothesis.
 
 In the results, the histogram [[Appendix F]] visualizes the distribution
-of the network with the following conditioning: "Dyad.census" and 1000
-repetitions. It can be observed that there is a network of 13 different
-countries in the Eurovision competition. The red line in the plot
-suggests that the observed network has a significantly higher number of
-communities than expected therefore H1 comes into play.
+of the network with the following conditioning: "Dyad.census" and 5000
+repetitions. It can be observed that there is a network of 19 different
+countries in the Eurovision competition consisting of 6 communities. The
+red line in the plot dsplays the observed amount of communities in the
+network.
 
-The results show that for randomly generated networks with similar
-attributes, the probability of such a simulated network having an equal
-or greater number of communities than the observed value is effectively
-0. This indicates that the likelihood of encountering the current amount
-of observed communities is low when the null hypothesis would be true.
-The p-value is 0, which implicates a rejection of the null hypothesis.
+The bars represent how many communities were present in randomly
+generated networks during the CUG Test. The plot shows that the number
+of communities ranges from 2 to 8, with 3 and 4 being the most frequent.
+The red line intersects the bar representing 6 communities. This
+indicates that a randomly generated network, can have the same amount of
+communities as the observed network. Therefore it is necessary to look
+at the p-value. The results show that for randomly generated networks
+with similar attributes, the probability of such a simulated network
+having an equal or greater number of communities than the observed value
+is approximately 0.08. For a significance level of 0.05, we can conclude
+that the communities are not significant.
+
+This indicates that the likelihood of encountering the current amount of
+observed communities is not low enough when the null hypothesis would be
+true. Therefore we cannot reject the null hypothesis.
 
 Considering the first research question (To what extent do countries
 formulate small communities between each other in the Eurovision
-competition?), the findings indicate that in the Eurovision competition
-countries are more likely to connect with other smaller communities
-which creates an alliance.
+competition?), the findings indicate that in the Eurovision competition,
+the communities that were detected by the walktrap algorithm were not
+significant. Consequently, implications drawn from the detected
+communities are uncertain and thus not applicable. However, it must be
+noted that isolates were removed in the process, as the exclusion of
+isolates influences the community distribution and thus the
+significance.
 
 ### ERGM
 
@@ -436,7 +467,7 @@ to model network formation or evolution in social network analysis.
 After conducting literature review this paper would like to investigate
 which and to what extent exogenous terms influence public voting
 patterns during the Eurovision contest. However, to fully understand it,
-it is also crucial to understand the network charasterics as well,
+it is also crucial to understand the network characteristics as well,
 therefore, after analyzing the network structure the model takes into
 consideration also dyadic dependent terms. Dyadic-dependent terms
 account for dependencies between specific pairs of nodes, capturing
@@ -523,7 +554,7 @@ calculate odds ratios. To do that, coefficients have to be
 exponentiated.
 
 |                                         | Estimate | Prob  | Std. Error | Pval  |
-|-----------------------------------------|----------|-------|------------|-------|
+|---------------|---------------|---------------|---------------|---------------|
 | **edges**                               | -889.456 | 0.000 | 362.676    | 0.014 |
 | **degree3**                             | -0.680   | 0.336 | 0.771      | 0.377 |
 | **gwesp.fixed.0.001**                   | 886.512  | NaN   | 362.138    | 0.014 |
@@ -551,6 +582,8 @@ countries distribute their votes during the Eurovision competition) for
 the second research hypothesis can not be rejected.
 
 ## Conclusion
+
+### Discussion
 
 Baseline model (Claudia said it should be just with edges) edges are
 dyadic independent model (In ERGMs, the "edges" term models the presence
