@@ -108,11 +108,26 @@ among countries. An illustrative instance was the Scandinavian nations,
 including Denmark, Finland, Iceland, Norway, and Sweden, with noteworthy
 outcomes in the context of the 2021 competition.
 
-Therefore, it is apparent that considerable research has been conducted
-on Eurovision voting patterns within the realm of social networks.
-These studies encompass diverse aspects, yet there exists a research gap
-in analyzing the impact of government systems or the influence of shared
-language family on the voting network. 
+Research has demonstrated that the shared characteristics of voting groups
+play a significant role in shaping the outcomes of voting systems, revealing
+insights into the potential biases that may arise. Nevertheless, delving
+further into similar characteristics through additional research has the
+potential to bring even greater value to our understanding of this topic.
+Exploring these common features more comprehensively can contribute to a
+deeper examination of voting bias and its implications.
+
+Research has consistently demonstrated the significant role of language
+in shaping Eurovision voting behavior [@ginsburgh2008eurovision]. A
+compelling illustration of this influence is the close bond between
+Greece and Cyprus. Greek, the primary language in Greece, is spoken
+by roughly 75% of the Cypriot population, contributing to the evident
+affinity between the two nations in the Eurovision Song Contest. This
+example underscores how shared language serves as a pivotal factor
+influencing voting patterns, reflecting a broader trend across
+Eurovision-participating countries. Delving further into the
+influence of language, particularly shared language families,
+adds depth to the discussion on voting patterns in Eurovision, enriching
+our understanding of the role linguistic ties play in this dynamic competition.
 
 Countries with the same or similar government system seem to have
 stronger bonds with each other than the ones that have different
@@ -129,19 +144,7 @@ behavior between pairs of states through analysis of the 10 Million
 International Dyadic Events data from 1990 to 2004 [@king2003automated].
 The findings are consistent with the core theoretical argument.
 Single-party regimes, posited to have an advantage in international
-cooperation, are, indeed, more likely to be actively sought as partners.
-
-Examining voting patterns within the Eurovision Song Contest in relation
-to shared language families is crucial in understanding potential dynamics
-that influence country-to-country preferences. Research on mutual
-intelligibility among closely related European languages suggests that countries
-with linguistic similarities may exhibit higher levels of understanding and
-shared cultural nuances [@gooskens2018mutual]. Understanding the communicative
-ease among countries with the same language family may unveil patterns of
-mutual appreciation and shared cultural references that impact how votes
-are cast in the Eurovision. Such insights can enhance our comprehension
-of voting dynamics and contribute to a more nuanced understanding of the
-Eurovision Song Contest as a cultural and linguistic phenomenon.
+cooperation, are, indeed, more likely to be actively sought as partners.`
 
 to conclude, the Eurovision is not only about singing skills.
 There are various reasons which influence voting patterns
