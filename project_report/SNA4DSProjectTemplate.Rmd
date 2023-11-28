@@ -228,7 +228,7 @@ communities led to a biased winner and therefore would suggest that the
 Eurovision voting system should be revised. Moreover, only the votes
 cast by the public will be used in forming the voting network. This is
 because public votes are better predictors of the finishing position
-accoring to [@ginsburgh2023eurovision].
+according to [@ginsburgh2023eurovision].
 
 In the subsequent sections of the report, an explanation of the datasets
 used will be provided, outlining the steps involved in cleaning and
@@ -264,12 +264,12 @@ distinct sets of entities. In this case, one set of nodes are the
 countries that distribute votes and the other countries are the ones
 that receive votes.
 
-Due to compl,exity of bipartite networks and the time constraint for
-this project, the network has been projected. Projecting a network
-involves simplifying its structure by focusing on specific connections
-or relationships within the network. In this specific example the
-network has been projected using common sender. That means that an edge
-is created between 2 countries (receivers) when they both receive votes
+Due to complexity of bipartite networks and the time constraint for this
+project, the network has been projected. Projecting a network involves
+simplifying its structure by focusing on specific connections or
+relationships within the network. In this specific example the network
+has been projected using common sender. That means that an edge is
+created between 2 countries (receivers) when they both receive votes
 from the same country (sender). For each country (sender) only the top 3
 votes were taken into consideration because the top 3 votes in
 Eurovision hold the highest significance due to their impact on the
