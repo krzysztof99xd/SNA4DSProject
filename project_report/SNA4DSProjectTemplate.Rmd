@@ -332,9 +332,10 @@ shows that there is relatively low likelihood of "a friend of my friend
 is my friend" phenomenon. The mean distance is Infinite since there are
 7 isolates in this network and it is not possible to reach every node in
 this network. Because this network is undirected it is not possible to
-obtain all possible triad census present in the network 003, 102, 201
-and 300. It does not indicate a diverse and comprehensive set of
-structural configurations among triplets of nodes in both networks.
+obtain all possible triad census. The ones present in the network are
+003, 102, 201 and 300. It does not indicate a diverse and comprehensive
+set of structural configurations among triplets of nodes in both
+networks.
 
 -   [Appendix A] shows the plot of the network of Public votes
     Eurovision.
@@ -828,3 +829,4 @@ network. Mathematically, it is defined as follows:
 \newpage
 
 # References
+
