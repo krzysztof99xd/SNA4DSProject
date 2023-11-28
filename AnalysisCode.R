@@ -83,7 +83,7 @@ distribution_graph <- igraph::bipartite_projection(eurovision_graph, which = FAL
 ## Now we need to add Node attributes so we must match them with receivers
 filtered_node_list <- subset(eurovision_public_data_node_list, Node_country %in% receivers)
 
-# Create an index representing the order of countries in the receivers list, this is very important for maintaing the node attributes for the countries
+# Create an index representing the order of countries in the receivers list, this is very important for maintaning the node attributes for the countries
 index_order <- match(filtered_node_list$Node_country, receivers)
 
 # Sort the dataframe based on the index order
