@@ -83,7 +83,7 @@ distribution_graph <- igraph::bipartite_projection(eurovision_graph, which = FAL
 ## Now we need to add Node attributes so we must match them with receivers
 filtered_node_list <- subset(eurovision_public_data_node_list, Node_country %in% receivers)
 
-# Create an index representing the order of countries in the receivers list, this is very important for maintaing the node attributes for the countries
+# Create an index representing the order of countries in the receivers list, this is very important for maintaning the node attributes for the countries
 index_order <- match(filtered_node_list$Node_country, receivers)
 
 # Sort the dataframe based on the index order
@@ -106,7 +106,46 @@ igraph::V(distribution_graph)$country_government_system <- nAttrCountryGovernmen
 
 print(igraph::get.vertex.attribute(distribution_graph))
 
-snafun::plot_centralities(distribution_graph)
+#REMOVE ISOLATES
+isolated_vertices <- which(igraph::degree(distribution_graph, mode = "all") == 0)
+distribution_graph_without_isolates <- igraph::delete_vertices(distribution_graph, isolated_vertices)
+igraph::V(distribution_graph)$name
+
+#To network
+distribution_network_without_isolates <- snafun::to_network(distribution_graph_without_isolates)
+print(class(distribution_network_without_isolates))
+
+plot(
+  distribution_graph_without_isolates,
+  edge.arrow.size = 0.01,
+  edge.color = "gray80",
+  vertex.frame.color = "#ffffff",
+  vertex.label.cex = 0.9,
+  vertex.label.color = "black",
+  vertex.size = 10
+)
+
+snafun::plot_centralities(distribution_graph_without_isolates)
+
+
+## number of vertices for the network without isolates
+snafun::count_vertices(distribution_graph_without_isolates)
+## number_of_edges for the network without isolates
+snafun::count_edges(distribution_graph_without_isolates)
+## density  for the network without isolates
+snafun::g_density(distribution_graph_without_isolates)
+## reciprocity for the network without isolates
+snafun::g_reciprocity(distribution_graph_without_isolates)
+## transitivity for the network without isolates
+snafun::g_transitivity(distribution_graph_without_isolates)
+## mean_distance for the network without isolates
+snafun::g_mean_distance(distribution_graph_without_isolates)
+## number_of_isolates for the network without isolates
+snafun::find_isolates(distribution_graph_without_isolates)
+## dyad_census for the network without isolates
+snafun::count_dyads(distribution_graph_without_isolates)
+## triad_census for the network without isolates
+snafun::count_triads(distribution_graph_without_isolates)
 
 distribution_network <- snafun::to_network(distribution_graph)
 print(class(distribution_network))
@@ -193,11 +232,11 @@ texreg::screenreg(list(baseline_model_0.1, baseline_model_0.2, baseline_model_0.
 # with degree(0) MCMC still look good but GOF does not look ok for model statistics and still huge standard error :/ 
 ## Using degree(2:3) does not work :( but edge-wise shared partners looked perfectly
 # gwesp(1, fixed=FALSE) did not work at all 
-baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(1, fixed=FALSE) +
+baseline_model_0.5 <- ergm::ergm(distribution_network_without_isolates ~ edges + degree(3) + gwesp(decay = 0.25, fixed=TRUE) +
                                   nodematch('country_government_system') +
                                   nodematch('country_language_family'),
-                                   control = ergm::control.ergm(MCMC.burnin = 20000,
-                                                              MCMC.samplesize = 60000,
+                                   control = ergm::control.ergm(MCMC.burnin = 10000,
+                                                              MCMC.samplesize = 50000,
                                                               seed = 126451,
                                                               MCMLE.maxit = 5,
                                                               parallel = 4,
