@@ -15,11 +15,10 @@ absolute_path_to_data_folder <- normalizePath(data_folder)
 file_name <- 'PublicEurovisionBipartite.xlsx'
 file_name_node_list <- 'Node_List_Eurovision.xlsx'
 
-
 # Combine the data folder path and file name to create the full path
 full_path_to_node_list <- file.path(data_folder, file_name_node_list)
 
-## read data from csv file
+## read data from csv/excel file
 eurovision_public_data_node_list <- read_excel(full_path_to_node_list)
 
 (NodeList_euro <- unique(c(eurovision_public_data_node_list$Node_country)))
@@ -37,6 +36,7 @@ print(incedence_df)
 incedence_df <- as.data.frame(incedence_df)
 
 incedence_matrix <- as.matrix(incedence_df)
+
 print(incedence_matrix)
 
 # Extract receiver names and create a subset without the receiver column
@@ -51,6 +51,8 @@ distributors <- colnames(voting_matrix)
 
 # Create an empty graph for the Eurovision network
 eurovision_graph <- igraph::make_empty_graph(n = length(receivers) + length(distributors))
+
+## CREATE NETWORK 
 
 # Create an incidence matrix with the dimensions of the length of receivers and distributors
 inc_matrix <- matrix(0, nrow = length(receivers), ncol = length(distributors))
@@ -72,7 +74,8 @@ distributor_indices <- edges[, 2] + length(receivers)
 # Add edges to the graph based on indices
 eurovision_graph <- igraph::add_edges(eurovision_graph, cbind(receiver_indices, distributor_indices))
 
-# Create a bipartite graph from the incidence matrix, ## In our case with Eurovision voting, we have a bipartite network of countries giving votes and countries receiving votes. 
+# Create a bipartite graph from the incidence matrix, 
+## In our case with Eurovision voting, we have a bipartite network of countries giving votes and countries receiving votes. 
 ## If our project it onto one set (say, countries giving votes), you'd create a new network among those countries based on their shared connections (i.e., if they have received votes from the same countries).
 eurovision_graph <- igraph::graph_from_incidence_matrix(inc_matrix)
 print(eurovision_graph)
@@ -83,7 +86,7 @@ distribution_graph <- igraph::bipartite_projection(eurovision_graph, which = FAL
 ## Now we need to add Node attributes so we must match them with receivers
 filtered_node_list <- subset(eurovision_public_data_node_list, Node_country %in% receivers)
 
-# Create an index representing the order of countries in the receivers list, this is very important for maintaning the node attributes for the countries
+# Create an index representing the order of countries in the receivers list, this is very important for maintaining the node attributes for the countries
 index_order <- match(filtered_node_list$Node_country, receivers)
 
 # Sort the dataframe based on the index order
@@ -126,7 +129,6 @@ plot(
 )
 
 snafun::plot_centralities(distribution_graph_without_isolates)
-
 
 ## number of vertices for the network without isolates
 snafun::count_vertices(distribution_graph_without_isolates)
@@ -182,6 +184,7 @@ snafun::count_dyads(distribution_network)
 ## triad_census
 snafun::count_triads(distribution_network)
 
+### CUG TEST for community detection
 walktrap <- function(x, directed = TRUE) {
   x <- snafun::fix_cug_input(x, directed = directed)
   snafun::extract_comm_walktrap(x) |> length() 
@@ -189,6 +192,7 @@ walktrap <- function(x, directed = TRUE) {
 ## prerequisity->  network parameter must be a network object, not an igraph
 distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
                                    diag = FALSE, cmode = "dyad.census", reps = 1000)
+
 print(distribution_coms)
 
 plot(distribution_coms)
@@ -232,10 +236,10 @@ texreg::screenreg(list(baseline_model_0.1, baseline_model_0.2, baseline_model_0.
 # with degree(0) MCMC still look good but GOF does not look ok for model statistics and still huge standard error :/ 
 ## Using degree(2:3) does not work :( but edge-wise shared partners looked perfectly
 # gwesp(1, fixed=FALSE) did not work at all 
-baseline_model_0.5 <- ergm::ergm(distribution_network_without_isolates ~ edges + degree(3) + gwesp(decay = 0.25, fixed=TRUE) +
+baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(2) + gwesp(decay = 0.001, fixed=TRUE) +
                                   nodematch('country_government_system') +
                                   nodematch('country_language_family'),
-                                   control = ergm::control.ergm(MCMC.burnin = 10000,
+                                  control = ergm::control.ergm(MCMC.burnin = 10000,
                                                               MCMC.samplesize = 50000,
                                                               seed = 126451,
                                                               MCMLE.maxit = 5,

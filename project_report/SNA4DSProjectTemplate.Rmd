@@ -108,9 +108,10 @@ The model was put into practice to analyze voting patterns in the
 Eurovision Song Contest, spanning from 1998 to 2015. This analysis
 incorporated cultural and geographical factors. It was discovered that
 the only significant factor in explaining observed voting patterns was
-the presence of a shared border between two countries. Interestingly,
-the similarities among participants during the 1998-2015 period only
-partially correlated with their respective geographical locations.
+the presence of a shared border between the two countries.
+Interestingly, the similarities among participants during the 1998-2015
+period only partially correlated with their respective geographical
+locations.
 
 In 2022 [@Ginsburgh_Moreno-Ternero_2022] suggested that the findings
 from the 2021 edition indicated a higher tendency for reciprocity among
@@ -262,7 +263,8 @@ not within the same group. This structure is often represented
 graphically as a two-mode network, showcasing relationships between
 distinct sets of entities. In this case, one set of nodes are the
 countries that distribute votes and the other countries are the ones
-that receive votes.
+that receive votes. The process of projecting the network, is presented
+in Appendix
 
 Due to complexity of bipartite networks and the time constraint for this
 project, the network has been projected. Projecting a network involves
@@ -430,16 +432,7 @@ effects of governmental systems and language families on the network.
 As it has been already described in the section above, a CUG test has
 been conducted to answer the first research question and test the first
 hypothesis. The code for the CUG test can be found below:
-
-``` r
-## CUG test for detecting communities
-walktrap <- function(x, directed = FALSE) {
-  x <- snafun::fix_cug_input(x, directed = directed)
-  snafun::extract_comm_walktrap(x) |> length() 
-}
-distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
-                                   diag = FALSE, cmode = "dyad.census", reps = 5000)
-```
+<MOVE CUG TEST TO THE APPENDIX>
 
 As shown above, the walktrap algorithm detects communities in networks.
 This walktrap algorithm is used in the CUG test to assess the
@@ -525,24 +518,8 @@ nodes based on their specific relationships, enhancing the model's
 explanatory power for real-world network dynamics.
 
 All the aforementioned matters were taken into consideration and led to
-the following model to be run and analyzed.
-
-``` r
-### ERGM model
-baseline_model_0.5 <- ergm::ergm(distribution_network_without_isolates ~ edges + 
-                                   degree(3) + 
-                                   gwesp(decay = 0.25, fixed=TRUE) +
-                                   nodematch("country_language_family") +
-                                   nodematch("country_government_system"),
-                                   control = ergm::control.ergm(MCMC.burnin = 10000,
-                                                              MCMC.samplesize = 40000,
-                                                              seed = 223451,
-                                                              MCMLE.maxit = 5,
-                                                              parallel = 4,
-                                                              parallel.type = "PSOCK"))
-
-(s5 <- summary(baseline_model_0.5))
-```
+the following model to be run and analyzed. Please find the model in the
+[Appendix GG].
 
 The following dyadic dependent terms have been inserted:
 
@@ -579,17 +556,7 @@ of edges which have 2 edge-wise shared partners.
 
 With the aferomentioned knowledge it is possible look at the models
 statistics. After running the model the following coefficients have been
-obtained:
-
-|                                         | Estimate | Std. Error |
-|-----------------------------------------|----------|------------|
-| **edges**                               | -5.015   | 1.087      |
-| **degree3**                             | -0.009   | 0.771      |
-| **gwesp.fixed.0.25**                    | 2.741    | 0.834      |
-| **nodematch.country_language_family**   | -0.132   | 0.601      |
-| **nodematch.country_government_system** | 0.391    | 0.291      |
-
-: Coefficient table
+obtained. <YET TO BE CORRECTED>
 
 Looking at them it can be observed that edges, degree3 as well as
 nodematch.country_language_family have negative estimates and the rest
@@ -669,27 +636,76 @@ the second research hypothesis can not be rejected.
 ## Conclusion <yet in progress>
 
 This study aimed to study the Eurovision context in terms of social
-network analysis based on the official results from 2023. 2 research
-questions were stated in the beginning of the study, CUG test and ERGM
-model have been run to answer them and test the stated hypothesis.
+network analysis based on the official results from 2023. The literature
+suggests that Eurovision voting is biased when it comes to votes coming
+from public. Moreover, the literature suggests that countries tend to
+cooperate more closely when they share a border as presented by
+[REFRENCE TO THE PAPER], when they share the same language [REFERENCE TO
+THE PAPER], or when there are similarities in the political system
+[REFERENCE TO THE PAPER]. That led to 2 research questions which were
+stated at the beginning of the study, the CUG test and ERGM model were
+run to answer them and test the stated hypothesis.
 
-We did not prove that language family and governmenr system have a a
-significant effect but Xavier mentioned a very good point. He pointed
-one block where they specifically did not vote on Norway becaiuse they
-were directly competing.
+### Discussion
+
+\<Thierry still needs to write about CUG test heres\>
+
+Language family and government system turned out to be not statistically
+significant and as a consequence the second research question can be
+answered that these factors do not have an effect how people vote during
+the Eurovision context. Maybe government system and language family are
+not statistically significant but actually the reason is about tactics.
 
 ### Future work
 
--   There is a possibility to improve ERGM MCMCs and GOF. One of that
-    potential option could be dyadic dependent term kstar(). There is an
-    assumption to that some countries are more popular than the others
-    (have more edges connected to them). The model with that tern has
-    been run but unfortunately the model did not converge during the
-    night. Due to time constraint of this project there was no attempt
-    in making this model converge.
--   Try maybe different projections
+As it has been described in the ERGM model section [REFERENCE TO THAT]
+MCMC diagnostics and GOF look relatively good but undoubtedly the model
+can be further improved to understand the structure of the network even
+better. Several other models have been run during this research. Some of
+them scored either very low or did not converge in the given time frame.
+The list of all the models that have been run and the criteria for when
+to stop the model that did not converge during the given time frame are
+presented in APPENDIX [REFERENCE TO THAT].
+
+In this research project, the network has been projected based on the
+common sender, however, projecting the network differently could reveal
+more information. For example projecting the network while retaining the
+points, one could connect two countries if they share a common receiver
+or sender, and the weight of the edge is the sum or average of the
+points exchanged between them across multiple events.
+
+Projecting the network always leads to losing some information from the
+network. In this particular research we lost the information about how
+much points each othe therefore, running the analysis on bipartite
+network could reveal very interesting results.
+
+-   Claudia mentioned improving visualisation plots!
 
 \newpage
+
+# Appendix AA
+
+![Process of projecting the network](images/NetworkProjection.png)
+
+The graph in the figure above presents the process of projecting the
+network. This is just a sample of data. Three dots on the bottom of each
+set represent that there are more countries in each set.
+
+From this sample of data the following edges have been formed:
+
+\- Finland - Sweden (both countries received votes from Australia,
+Belgium, Netherlands)
+
+\- Finland - Norway (both countries received votes from Poland, Belgium,
+Netherlands)
+
+\- Sweden - Norway (both countries received votes from Belgium)
+
+\- Norway - Ukraine (both countries received votes from Poland)
+
+\- Finland - Ukraine (both countries received votes from Poland)
+
+\- Norway - Ukraine (both countries received votes from Poland)
 
 # Appendix A
 
@@ -766,6 +782,25 @@ Isolates](images/PlotCentralitiesProjectedNetworkNoIsolates.png)
 ## 415   0 338    0    0    0    0    0    0    0 170    0    0    0   0  46
 ```
 
+# Appendix GG
+
+``` r
+### ERGM model
+baseline_model_0.5 <- ergm::ergm(distribution_network_without_isolates ~ edges + 
+                                   degree(3) + 
+                                   gwesp(decay = 0.25, fixed=TRUE) +
+                                   nodematch("country_language_family") +
+                                   nodematch("country_government_system"),
+                                   control = ergm::control.ergm(MCMC.burnin = 10000,
+                                                              MCMC.samplesize = 40000,
+                                                              seed = 223451,
+                                                              MCMLE.maxit = 5,
+                                                              parallel = 4,
+                                                              parallel.type = "PSOCK"))
+
+(s5 <- summary(baseline_model_0.5))
+```
+
 # Appendix G
 
 ::: {style="display: flex;"}
@@ -782,6 +817,18 @@ Isolates](images/PlotCentralitiesProjectedNetworkNoIsolates.png)
 ![GOFMinGeodesicDistance](images/ProjectedNetworkWithoutIsolatesMinGeoDistance.png){width="877"}
 ![GOFEdgeWiseSharedPartner](images/ProjectedNetworkWithoutIsolatesEdgeWiseSharedPartners.png){width="877"}
 :::
+
+# Appendix II
+
+``` r
+## CUG test for detecting communities
+walktrap <- function(x, directed = FALSE) {
+  x <- snafun::fix_cug_input(x, directed = directed)
+  snafun::extract_comm_walktrap(x) |> length() 
+}
+distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
+                                   diag = FALSE, cmode = "dyad.census", reps = 5000)
+```
 
 # Appendix I
 
@@ -829,4 +876,3 @@ network. Mathematically, it is defined as follows:
 \newpage
 
 # References
-
