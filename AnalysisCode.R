@@ -1,6 +1,8 @@
 library(readxl)
 library(tinytex)
 
+## IMPORTING DATA PART
+
 # Set the working directory to the directory where the project is located
 setwd("your_path_to_project")
 print(getwd())
@@ -75,12 +77,10 @@ distributor_indices <- edges[, 2] + length(receivers)
 eurovision_graph <- igraph::add_edges(eurovision_graph, cbind(receiver_indices, distributor_indices))
 
 # Create a bipartite graph from the incidence matrix, 
-## In our case with Eurovision voting, we have a bipartite network of countries giving votes and countries receiving votes. 
-## If our project it onto one set (say, countries giving votes), you'd create a new network among those countries based on their shared connections (i.e., if they have received votes from the same countries).
 eurovision_graph <- igraph::graph_from_incidence_matrix(inc_matrix)
 print(eurovision_graph)
 
-# Project the bipartite graph to get a graph of countries distributing votes
+# Project the bipartite graph to get a graph of countries receiving votes
 distribution_graph <- igraph::bipartite_projection(eurovision_graph, which = FALSE)
 
 ## Now we need to add Node attributes so we must match them with receivers
@@ -102,7 +102,7 @@ existing_countries <- igraph::V(distribution_graph)$Node_country
 
 plot(distribution_graph)
 
-# Add node names for receivers 
+# Add node node attributes 
 igraph::V(distribution_graph)$name <- nAttrNodeCountry
 igraph::V(distribution_graph)$country_language_family <- nAttrCountryLangaugeFamily
 igraph::V(distribution_graph)$country_government_system <- nAttrCountryGovernmentSystem
@@ -127,6 +127,8 @@ plot(
   vertex.label.color = "black",
   vertex.size = 10
 )
+
+## DESCRIPTIVE ANALYSIS PART
 
 snafun::plot_centralities(distribution_graph_without_isolates)
 
@@ -236,7 +238,7 @@ texreg::screenreg(list(baseline_model_0.1, baseline_model_0.2, baseline_model_0.
 # with degree(0) MCMC still look good but GOF does not look ok for model statistics and still huge standard error :/ 
 ## Using degree(2:3) does not work :( but edge-wise shared partners looked perfectly
 # gwesp(1, fixed=FALSE) did not work at all 
-baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(2) + gwesp(decay = 0.001, fixed=TRUE) +
+baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(decay = 0.0001, fixed=TRUE) +
                                   nodematch('country_government_system') +
                                   nodematch('country_language_family'),
                                   control = ergm::control.ergm(MCMC.burnin = 10000,
@@ -245,13 +247,14 @@ baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(2) + gwes
                                                               MCMLE.maxit = 5,
                                                               parallel = 4,
                                                               parallel.type = "PSOCK"))
+## MCMC AND DIAGNOSTICS
 
 (s5 <- summary(baseline_model_0.5))
 
 ergm::mcmc.diagnostics(baseline_model_0.5)
 
 
-### that doesnt look that good :/ 
+### GOF
 baseline_model_0.5_GOF <- ergm::gof(baseline_model_0.5)
 
 snafun::stat_plot_gof(baseline_model_0.5_GOF)
