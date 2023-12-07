@@ -575,7 +575,7 @@ to calculate odds ratios. To do that, coefficients have to be
 exponentiated.
 
 |                                         | Estimate   | Prob  | Std. Error | Pval  |
-|---------------|--------------|---------------|---------------|---------------|
+|-----------------------------------------|------------|-------|------------|-------|
 | **edges**                               | -892.56703 | 0.000 | 364.289    | 0.014 |
 | **degree3**                             | -0.68790   | 0.334 | 0.768      | 0.370 |
 | **gwesp.fixed.0.001**                   | 889.61735  | NaN   | 363.747    | 0.014 |
@@ -666,7 +666,7 @@ model were run to answer them as well as to test the stated hypothesis.
 
 \<Thierry still needs to write about CUG test heres\>
 
-<I do not know where to put code to GitHub :( >
+\<I do not know where to put code to GitHub :( \>
 
 <https://github.com/krzysztof99xd/SNA4DSProject.git>
 
