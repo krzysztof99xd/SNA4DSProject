@@ -109,48 +109,6 @@ igraph::V(distribution_graph)$country_government_system <- nAttrCountryGovernmen
 
 print(igraph::get.vertex.attribute(distribution_graph))
 
-#REMOVE ISOLATES
-isolated_vertices <- which(igraph::degree(distribution_graph, mode = "all") == 0)
-distribution_graph_without_isolates <- igraph::delete_vertices(distribution_graph, isolated_vertices)
-igraph::V(distribution_graph)$name
-
-#To network
-distribution_network_without_isolates <- snafun::to_network(distribution_graph_without_isolates)
-print(class(distribution_network_without_isolates))
-
-plot(
-  distribution_graph_without_isolates,
-  edge.arrow.size = 0.01,
-  edge.color = "gray80",
-  vertex.frame.color = "#ffffff",
-  vertex.label.cex = 0.9,
-  vertex.label.color = "black",
-  vertex.size = 10
-)
-
-## DESCRIPTIVE ANALYSIS PART
-
-snafun::plot_centralities(distribution_graph_without_isolates)
-
-## number of vertices for the network without isolates
-snafun::count_vertices(distribution_graph_without_isolates)
-## number_of_edges for the network without isolates
-snafun::count_edges(distribution_graph_without_isolates)
-## density  for the network without isolates
-snafun::g_density(distribution_graph_without_isolates)
-## reciprocity for the network without isolates
-snafun::g_reciprocity(distribution_graph_without_isolates)
-## transitivity for the network without isolates
-snafun::g_transitivity(distribution_graph_without_isolates)
-## mean_distance for the network without isolates
-snafun::g_mean_distance(distribution_graph_without_isolates)
-## number_of_isolates for the network without isolates
-snafun::find_isolates(distribution_graph_without_isolates)
-## dyad_census for the network without isolates
-snafun::count_dyads(distribution_graph_without_isolates)
-## triad_census for the network without isolates
-snafun::count_triads(distribution_graph_without_isolates)
-
 distribution_network <- snafun::to_network(distribution_graph)
 print(class(distribution_network))
 plot(

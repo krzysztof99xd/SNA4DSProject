@@ -181,9 +181,9 @@ partners.\`
 ### Research questions and hypothesis
 
 Building on the understanding that shared characteristics shape voting
-outcomes, this research delves into the influence of language family and
-political systems on the Eurovision voting network. Before analyzing the
-impact of these factors, an examination of the voting network will
+outcomes, this research delves into the influence of language family,
+and political systems on the Eurovision voting network. Before analyzing
+the impact of these factors, an examination of the voting network will
 establish whether distinct voting communities exist. This preliminary
 analysis will provide the basis for later investigating whether language
 family and the political system significantly contribute to the
@@ -370,13 +370,6 @@ That significant amount of isolates in that network might lead to
 statistical instability or convergence issues in the model estimation
 process. ERGMs, especially when including dyadic-depend terms, the model
 might struggle with isolated nodes due to their lack of connectivity.
-Therefore, before running the CUG test and ERGM model, it has been
-decided to remove isolates. Removing isolates might lead to a loss of
-information, nevertheless, in this particular projection of the network,
-these nodes represent the countries that have not received any top 3
-votes, consequently having a minor impact on the top positions. Plots,
-descriptive statistics, and plot centralities can be seen in the
-[Appendix D](#appendix-d), [Appendix E] and [Appendix F].
 
 ### Data analysis (Research Rationale)
 
@@ -504,10 +497,7 @@ formulate small communities between each other in the Eurovision
 competition?), the findings indicate that in the Eurovision competition,
 the communities that were detected by the walktrap algorithm were not
 significant. Consequently, implications drawn from the detected
-communities are uncertain and thus not applicable. However, it must be
-noted that isolates were removed in the process, as the exclusion of
-isolates influences the community distribution and thus the
-significance.
+communities are uncertain and thus not applicable.
 
 ### ERGM
 
@@ -535,7 +525,8 @@ All the aforementioned matters were taken into consideration and led to
 the following model to be run and analyzed. Please find the model in the
 [Appendix GG].
 
-The following dyadic-dependent terms have been inserted:
+The following dyadic-dependent terms have been inserted \<IS NODEMATCH()
+dyadic dependent\>?
 
 -   `nodematch("country_language_family")` term assesses homophily among
     countries based on their respective language family
@@ -584,7 +575,7 @@ to calculate odds ratios. To do that, coefficients have to be
 exponentiated.
 
 |                                         | Estimate   | Prob  | Std. Error | Pval  |
-|---------------|---------------|---------------|---------------|---------------|
+|---------------|--------------|---------------|---------------|---------------|
 | **edges**                               | -892.56703 | 0.000 | 364.289    | 0.014 |
 | **degree3**                             | -0.68790   | 0.334 | 0.768      | 0.370 |
 | **gwesp.fixed.0.001**                   | 889.61735  | NaN   | 363.747    | 0.014 |
@@ -624,9 +615,9 @@ taking place exp(-5.015) times larger.
     effect taking place exp(2.741) times larger.
 
 Moreover, a probability of 0.007 for `edges` term suggests that there is
-ver low high chance in making new edges. A probability of 0.007 suggests
-that, according to the ERGM being used, the observed number of edges in
-the network is very unlikely to occur based on the model's
+very low high chance in making new edges. A probability of 0.007
+suggests that, according to the ERGM being used, the observed number of
+edges in the network is very unlikely to occur based on the model's
 specification. This low probability indicates that the odds of forming
 an edge in this network are very low.
 
@@ -774,44 +765,7 @@ Netherlands)
 ## 1710   0 674    0    0    0    0    0    0   0  170    0    0    0   0  46
 ```
 
-# Appendix D
-
-![Eurovision Public Plot Without
-Isolates](images/PlotProjectedNetworkNoIsolates.png)
-
 # Appendix E
-
-![Eurovision Public Plot Centralities Without
-Isolates](images/PlotCentralitiesProjectedNetworkNoIsolates.png)
-
-# Appendix F
-
-``` r
-## Eurovision public without Isolates
-
-## $number of vertices
-## [1] 19
-## $number_of_edges
-## [1] 48
-## density 
-## [1] 0.2807018
-## reciprocity
-## [1] 1
-## transitivity
-## [1] 0.4480519
-## mean_distance
-## [1] 2.74269
-## number_of_isolates
-## character(0)  
-## dyad_census
-## Mutual  Null
-##      48   123
-## triad_census
-## 003 012 102 021D 021U 021C 111D 111U 030T 030C 201 120D 120U 120C 210 300
-## 415   0 338    0    0    0    0    0    0    0 170    0    0    0   0  46
-```
-
-# Appendix GG
 
 ``` r
 ### ERGM model
@@ -830,7 +784,7 @@ baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges +
 (s5 <- summary(baseline_model_0.5))
 ```
 
-# Appendix G
+# Appendix F
 
 ::: {style="display: flex;"}
 ![ProjectedNetworkMCMC1](images/ProjectedNetworkMCMC1-01.png){width="876"}
@@ -838,7 +792,7 @@ baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges +
 2](images/ProjectedNetworkMCMC2.png){width="873"}
 :::
 
-# Appendix H
+# Appendix G
 
 ::: {style="display: grid; grid-template-columns: repeat(2, 1fr); grid-gap: 20px;"}
 ![GOFModelStatistics](images/ProjectedNetworkModelStatistics.png)
@@ -848,7 +802,7 @@ baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges +
 ![GOFEdgeWiseSharedPartner](images/ProjectedNetworkGOFEdgeWiseSharedPartner.png){width="877"}
 :::
 
-# Appendix II
+# Appendix H
 
 ``` r
 ## CUG test for detecting communities
@@ -906,4 +860,3 @@ network. Mathematically, it is defined as follows:
 \newpage
 
 # References
-
