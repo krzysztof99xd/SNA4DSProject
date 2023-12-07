@@ -1,6 +1,8 @@
 library(readxl)
 library(tinytex)
 
+## IMPORTING DATA PART
+
 # Set the working directory to the directory where the project is located
 setwd("your_path_to_project")
 print(getwd())
@@ -15,11 +17,10 @@ absolute_path_to_data_folder <- normalizePath(data_folder)
 file_name <- 'PublicEurovisionBipartite.xlsx'
 file_name_node_list <- 'Node_List_Eurovision.xlsx'
 
-
 # Combine the data folder path and file name to create the full path
 full_path_to_node_list <- file.path(data_folder, file_name_node_list)
 
-## read data from csv file
+## read data from csv/excel file
 eurovision_public_data_node_list <- read_excel(full_path_to_node_list)
 
 (NodeList_euro <- unique(c(eurovision_public_data_node_list$Node_country)))
@@ -37,6 +38,7 @@ print(incedence_df)
 incedence_df <- as.data.frame(incedence_df)
 
 incedence_matrix <- as.matrix(incedence_df)
+
 print(incedence_matrix)
 
 # Extract receiver names and create a subset without the receiver column
@@ -51,6 +53,8 @@ distributors <- colnames(voting_matrix)
 
 # Create an empty graph for the Eurovision network
 eurovision_graph <- igraph::make_empty_graph(n = length(receivers) + length(distributors))
+
+## CREATE NETWORK 
 
 # Create an incidence matrix with the dimensions of the length of receivers and distributors
 inc_matrix <- matrix(0, nrow = length(receivers), ncol = length(distributors))
@@ -72,18 +76,17 @@ distributor_indices <- edges[, 2] + length(receivers)
 # Add edges to the graph based on indices
 eurovision_graph <- igraph::add_edges(eurovision_graph, cbind(receiver_indices, distributor_indices))
 
-# Create a bipartite graph from the incidence matrix, ## In our case with Eurovision voting, we have a bipartite network of countries giving votes and countries receiving votes. 
-## If our project it onto one set (say, countries giving votes), you'd create a new network among those countries based on their shared connections (i.e., if they have received votes from the same countries).
+# Create a bipartite graph from the incidence matrix, 
 eurovision_graph <- igraph::graph_from_incidence_matrix(inc_matrix)
 print(eurovision_graph)
 
-# Project the bipartite graph to get a graph of countries distributing votes
+# Project the bipartite graph to get a graph of countries receiving votes
 distribution_graph <- igraph::bipartite_projection(eurovision_graph, which = FALSE)
 
 ## Now we need to add Node attributes so we must match them with receivers
 filtered_node_list <- subset(eurovision_public_data_node_list, Node_country %in% receivers)
 
-# Create an index representing the order of countries in the receivers list, this is very important for maintaning the node attributes for the countries
+# Create an index representing the order of countries in the receivers list, this is very important for maintaining the node attributes for the countries
 index_order <- match(filtered_node_list$Node_country, receivers)
 
 # Sort the dataframe based on the index order
@@ -99,53 +102,12 @@ existing_countries <- igraph::V(distribution_graph)$Node_country
 
 plot(distribution_graph)
 
-# Add node names for receivers 
+# Add node node attributes 
 igraph::V(distribution_graph)$name <- nAttrNodeCountry
 igraph::V(distribution_graph)$country_language_family <- nAttrCountryLangaugeFamily
 igraph::V(distribution_graph)$country_government_system <- nAttrCountryGovernmentSystem
 
 print(igraph::get.vertex.attribute(distribution_graph))
-
-#REMOVE ISOLATES
-isolated_vertices <- which(igraph::degree(distribution_graph, mode = "all") == 0)
-distribution_graph_without_isolates <- igraph::delete_vertices(distribution_graph, isolated_vertices)
-igraph::V(distribution_graph)$name
-
-#To network
-distribution_network_without_isolates <- snafun::to_network(distribution_graph_without_isolates)
-print(class(distribution_network_without_isolates))
-
-plot(
-  distribution_graph_without_isolates,
-  edge.arrow.size = 0.01,
-  edge.color = "gray80",
-  vertex.frame.color = "#ffffff",
-  vertex.label.cex = 0.9,
-  vertex.label.color = "black",
-  vertex.size = 10
-)
-
-snafun::plot_centralities(distribution_graph_without_isolates)
-
-
-## number of vertices for the network without isolates
-snafun::count_vertices(distribution_graph_without_isolates)
-## number_of_edges for the network without isolates
-snafun::count_edges(distribution_graph_without_isolates)
-## density  for the network without isolates
-snafun::g_density(distribution_graph_without_isolates)
-## reciprocity for the network without isolates
-snafun::g_reciprocity(distribution_graph_without_isolates)
-## transitivity for the network without isolates
-snafun::g_transitivity(distribution_graph_without_isolates)
-## mean_distance for the network without isolates
-snafun::g_mean_distance(distribution_graph_without_isolates)
-## number_of_isolates for the network without isolates
-snafun::find_isolates(distribution_graph_without_isolates)
-## dyad_census for the network without isolates
-snafun::count_dyads(distribution_graph_without_isolates)
-## triad_census for the network without isolates
-snafun::count_triads(distribution_graph_without_isolates)
 
 distribution_network <- snafun::to_network(distribution_graph)
 print(class(distribution_network))
@@ -182,6 +144,7 @@ snafun::count_dyads(distribution_network)
 ## triad_census
 snafun::count_triads(distribution_network)
 
+### CUG TEST for community detection
 walktrap <- function(x, directed = TRUE) {
   x <- snafun::fix_cug_input(x, directed = directed)
   snafun::extract_comm_walktrap(x) |> length() 
@@ -189,6 +152,7 @@ walktrap <- function(x, directed = TRUE) {
 ## prerequisity->  network parameter must be a network object, not an igraph
 distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = "graph",
                                    diag = FALSE, cmode = "dyad.census", reps = 1000)
+
 print(distribution_coms)
 
 plot(distribution_coms)
@@ -232,22 +196,23 @@ texreg::screenreg(list(baseline_model_0.1, baseline_model_0.2, baseline_model_0.
 # with degree(0) MCMC still look good but GOF does not look ok for model statistics and still huge standard error :/ 
 ## Using degree(2:3) does not work :( but edge-wise shared partners looked perfectly
 # gwesp(1, fixed=FALSE) did not work at all 
-baseline_model_0.5 <- ergm::ergm(distribution_network_without_isolates ~ edges + degree(3) + gwesp(decay = 0.25, fixed=TRUE) +
+baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(decay = 0.0001, fixed=TRUE) +
                                   nodematch('country_government_system') +
                                   nodematch('country_language_family'),
-                                   control = ergm::control.ergm(MCMC.burnin = 10000,
+                                  control = ergm::control.ergm(MCMC.burnin = 10000,
                                                               MCMC.samplesize = 50000,
                                                               seed = 126451,
                                                               MCMLE.maxit = 5,
                                                               parallel = 4,
                                                               parallel.type = "PSOCK"))
+## MCMC AND DIAGNOSTICS
 
 (s5 <- summary(baseline_model_0.5))
 
 ergm::mcmc.diagnostics(baseline_model_0.5)
 
 
-### that doesnt look that good :/ 
+### GOF
 baseline_model_0.5_GOF <- ergm::gof(baseline_model_0.5)
 
 snafun::stat_plot_gof(baseline_model_0.5_GOF)
