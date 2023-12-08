@@ -352,7 +352,7 @@ network are 003, 102, 201, and 300. It does not indicate a diverse and
 comprehensive set of structural configurations among triplets of nodes
 in both networks.
 
--   [Appendix B]shows the plot of the network of Public votes
+-   [Appendix B] shows the plot of the network of Public votes
     Eurovision.
 -   [Appendix C] shows the plot centralities of Public votes Eurovision.
     An explanation of the centralities terms can be found in [Appendix
@@ -680,12 +680,11 @@ network.
 ### Future work
 
 As it has been described in the [ERGM] section MCMC diagnostics and GOF
-look relatively good but undoubtedly the model can be further improved
-to understand the structure of the network even better. Several other
-models have been run during this research. Some of them scored either
-very low or did not converge in the given time frame. The list of all
-the models that have been run together with model specifications are
-presented in [APPENDIX K].
+look relatively good but undoubtedly the model can be further improved.
+Several other models have been run during this research. Some of them
+scored either very low or did not converge in the given time frame. The
+list of all the models that have been run together with model
+specifications are presented in [APPENDIX K].
 
 In this research project, the network has been projected based on the
 common sender. Nevertheless, projecting the network differently could
