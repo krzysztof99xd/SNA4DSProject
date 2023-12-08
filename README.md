@@ -48,7 +48,7 @@ reevaluation of the determinants driving voting behaviors in the Eurovision song
 emphasizing the need for nuanced exploration of socio-cultural connections and emergent
 communities within the framework of this global event.*
 
-** Necessary packages to be installed: **
+**Necessary packages to be installed:**
 
 install.packages("snafun") (necessary for performing cug test, reading probabilities)
 
