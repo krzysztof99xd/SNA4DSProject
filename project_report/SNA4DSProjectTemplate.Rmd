@@ -1,5 +1,5 @@
 ---
-title: "Social Network Analysis in the  Eurovision Context"
+title: "Songstruck Alliances: Harmonizing Votes and Unveiling Secrets in Eurovision 2023"
 author:
 - name: Krzysztof Wiesniakowski
   affiliation: '1'
@@ -65,35 +65,36 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ## Executive Summary
 
 This study investigates community formation and voting patterns among
-Eurovision countries using 2023 public vote data. The research addresses
-two key inquiries: the extent of communities formed within the contest
-and the primary drivers behind public voting patterns. Analysis reveals
-a notable presence of small communities within the Eurovision context,
-underscoring the intricate social dynamics at play. Contrary to initial
-hypotheses, factors such as country government systems and language
-families do not significantly influence voting behavior. This suggests
-that while smaller communities prevail, traditional socio-political and
-linguistic ties have limited impact on public voting patterns. These
-findings prompt a reevaluation of the determinants driving voting
-behaviors in the Eurovision song contest, emphasizing the need for
-nuanced exploration of socio-cultural connections and emergent
-communities within the framework of this global musical event.
+Eurovision countries using 2023 public vote data. The research follows
+up on the idea that voting patterns occur between similarities between
+countries. Analysis reveals a notable presence of small communities
+within the Eurovision context, underscoring the intricate social
+dynamics at play. Contrary to initial hypotheses, factors such as
+country government systems and language families do not significantly
+influence voting behavior. This suggests that while smaller communities
+prevail, traditional socio-political and linguistic ties have limited
+impact on public voting patterns. These findings prompt a reevaluation
+of the determinants driving voting behaviors in the Eurovision song
+contest, emphasizing the need for nuanced exploration of socio-cultural
+connections and emergent communities within the framework of this global
+event.
 
 ## Introduction
 
-Eurovision, the big singing contest with countries from all over Europe,
-goes beyond simply showcasing the best singers. It's like a lively
-puzzle where diverse nations aim for victory, and winning is more than
-just singing exceptionally well. The interesting part is how countries
-vote for their friends, emphasizing the need to understand Eurovision's
-voting network. It's not just about the song itself; it's akin to a
-secret voting club based on factors like being neighbors or sharing a
-history. So, in Eurovision, success is not just about hitting the high
-notes; it is also about the friendships behind the scenes. The
-competition becomes a mix of music and an international friendship
-dance. The victory's melody is not just in the lyrics but also in the
-subtle connections woven behind the scenes, transforming the competition
-into a symphony of intertwined relationships.
+Eurovision, the renowned singing competition featuring countries from
+across Europe, surpasses a mere display of vocal prowess. It operates as
+a lively puzzle where diverse nations strive for victory, transcending
+the notion of merely singing exceptionally well. The intrigue lies in
+how countries strategically cast their votes, underscoring the necessity
+to comprehend Eurovision's intricate voting network. Beyond the song
+itself, Eurovision resembles a clandestine voting club influenced by
+factors such as geographical proximity and shared history. Thus, success
+in Eurovision extends beyond hitting high notes; it involves the unseen
+friendships backstage. However, the question arises: Is it fair for the
+prestigious glass microphone trophy to be awarded solely based on a
+country's friendships? Does the existence of an international singing
+contest lose its significance if the winner is predetermined by
+alliances with other countries?
 
 These international friendships, while adding a unique flavor to
 Eurovision, introduce potential biases in the voting process, raising
@@ -107,36 +108,36 @@ Previous studies analysed the basis of these friendship patterns within
 the Eurovision voting network. Research has already been conducted in
 the field of social networks regarding voting patterns which as a
 consequence leads to creating communities within the Eurovision
-participants. [@dekker2007eurovision] has already conducted the research
-using the Eurovision cast from 2005 where he analysed the friendship
-network using techniques previously developed for valued networks
-[@dekker2005], which combine network-analysis methods with statistical
-methods. Dekker's analysis of the votes cast in the 2005 Eurovision Song
-Contest revealed that friendship between countries is largely determined
-by geographical proximity, with a visible five-bloc structure: Western,
-Eastern, Nordic, Balkan, and Eastern Mediterranean.
+participants. Research has already been conducted using the Eurovision
+cast from 2005 where he analysed the friendship network using techniques
+previously developed for valued networks , which combine
+network-analysis methods with statistical methods
+[@dekker2007eurovision] , [@dekker2005]. Dekker's analysis of the votes
+cast in the 2005 Eurovision Song Contest revealed that friendship
+between countries is largely determined by geographical proximity, with
+a visible five-bloc structure: Western, Eastern, Nordic, Balkan, and
+Eastern Mediterranean.
 
-In 2019, [@D_Angelo_Murphy_Alfò_2019] introduced the concept of modeling
-latent spaces in multidimensional networks, specifically focusing on its
-application to the exchange of votes within the Eurovision Song Contest.
-The model was put into practice to analyze voting patterns in the
-Eurovision Song Contest, spanning from 1998 to 2015. This analysis
-incorporated cultural and geographical factors. It was discovered that
-the only significant factor in explaining observed voting patterns was
-the presence of a shared border between the two countries.
-Interestingly, the similarities among participants during the 1998-2015
-period only partially correlated with their respective geographical
-locations.
+D'Angelo et al. (2019) introduced the concept of modeling latent spaces
+in multidimensional networks, specifically focusing on its application
+to the exchange of votes within the Eurovision Song Contest. The model
+was put into practice to analyze voting patterns in the Eurovision Song
+Contest, spanning from 1998 to 2015. This analysis incorporated cultural
+and geographical factors. It was discovered that the only significant
+factor in explaining observed voting patterns was the presence of a
+shared border between the two countries. Interestingly, the similarities
+among participants during the 1998-2015 period only partially correlated
+with their respective geographical locations.
 
-In 2022 [@Ginsburgh_Moreno-Ternero_2022] suggested that the findings
-from the 2021 edition indicated a higher tendency for reciprocity among
-geographically proximate nations. Notable examples included Greece and
-Cyprus, Bulgaria and Moldova, Moldova and Russia, Russia and Azerbaijan,
-and Bulgaria and Greece. The analysis also explored the concept of group
-reciprocity, uncovering voting clusters among countries. An illustrative
-instance was the Scandinavian nations, including Denmark, Finland,
-Iceland, Norway, and Sweden, with noteworthy outcomes in the context of
-the 2021 competition.
+Ginsburgh et al. (2022) suggested that the findings from the 2021
+edition indicated a higher tendency for reciprocity among geographically
+proximate nations. Notable examples included Greece and Cyprus, Bulgaria
+and Moldova, Moldova and Russia, Russia and Azerbaijan, and Bulgaria and
+Greece. The analysis also explored the concept of group reciprocity,
+uncovering voting clusters among countries. An illustrative instance was
+the Scandinavian nations, including Denmark, Finland, Iceland, Norway,
+and Sweden, with noteworthy outcomes in the context of the 2021
+competition.
 
 Research has demonstrated that the shared characteristics of voting
 groups play a significant role in shaping the outcomes of voting
@@ -162,21 +163,20 @@ of the role linguistic ties play in this dynamic competition.
 
 Countries with the same or similar government system seem to have
 stronger bonds with each other than the ones that have different
-internal political structures. Research done by [@Mattes_Rodríguez_2014]
-indicates that autocracies exhibiting institutional characteristics
-resembling those of democracies --- such as enhanced leader
-accountability, restricted policy flexibility, and increased
-transparency---are more likely to succeed in cooperation. Consequently,
-these autocracies are more prone to collaborate not only with each other
-but also with democracies. The expectation is that single-party and
-military regimes hold an advantage in international cooperation when
-contrasted with personalist systems. The study examines the cooperative
-behavior between pairs of states through analysis of the 10 Million
-International Dyadic Events data from 1990 to 2004 [@king2003automated].
-The findings are consistent with the core theoretical argument.
-Single-party regimes, posited to have an advantage in international
-cooperation, are, indeed, more likely to be actively sought as
-partners.\`
+internal political structures. Rodriguez et al. (2014) indicated that
+autocracies exhibiting institutional characteristics resembling those of
+democracies --- such as enhanced leader accountability, restricted
+policy flexibility, and increased transparency---are more likely to
+succeed in cooperation. Consequently, these autocracies are more prone
+to collaborate not only with each other but also with democracies. The
+expectation is that single-party and military regimes hold an advantage
+in international cooperation when contrasted with personalist systems.
+The study examines the cooperative behavior between pairs of states
+through analysis of the 10 Million International Dyadic Events data from
+1990 to 2004 [@king2003automated]. The findings are consistent with the
+core theoretical argument. Single-party regimes, posited to have an
+advantage in international cooperation, are, indeed, more likely to be
+actively sought as partners.\`
 
 ### Research questions and hypothesis
 
@@ -208,12 +208,12 @@ regarding the first research question:
 The aforementioned research questions lead to the following hypothesis
 regarding second research question:
 
--   H0: The governmental system and language family do not have an
+-   H0: The government system and language family do not have an
     influence on how countries distribute their votes during the
     Eurovision competition
 
--   H1: The governmental system has an effect on how countries
-    distribute their votes during the Eurovision competition,
+-   H1: The government system has an effect on how countries distribute
+    their votes during the Eurovision competition,
 
 -   H2: Language family has an effect on how countries distribute their
     votes during Eurovision competition.
@@ -223,21 +223,15 @@ is going to help us understand to a certain extent whether there are
 voting patterns inside Eurovision as well as to understand what may
 cause those phenomena.
 
-To answer the first research question and validate the first hypothesis,
-a Conditional Uniform Graph (CUG) test will be conducted. The CUG allows
-detecting communities within a network firstly by generating a null
-model and randomizing the network while preserving certain structural
-properties, such as node degrees. Then, it applies a detection algorithm
-to identify potential groups of nodes in the original network. How
-exactly the CUG model is going to be used and which community detection
-algorithm is chosen in this project is described in the [Conditional
-Uniform Graph using walktrap community detection] section.
-
-To answer the second research question and to validate the second
-hypothesis, there is going to be run an Exponential Random Graph Model
-(ERGM). It offers a robust and flexible approach to examine the effects
-of exogenous attributes on network structure while considering the
-complex dependencies and configurations within the network itself.
+To address the first research question and validate the first
+hypothesis, a Conditional Uniform Graph (CUG) test will be conducted,
+detecting communities within the network by generating a null model and
+randomizing it while preserving structural properties. For the second
+research question and to validate the second hypothesis, an Exponential
+Random Graph Model (ERGM) will be utilized, providing a robust and
+flexible approach to assess the impact of exogenous attributes on
+network structure, considering complex dependencies and configurations
+within the network.
 
 For this research, only the latest edition of Eurovision (2023) is
 analyzed. Also, the main interest is whether the forming of these
@@ -245,7 +239,7 @@ communities led to a biased winner and therefore, one would suggest that
 the Eurovision voting system should be revised. Moreover, only the votes
 cast by the public will be used in forming the voting network. This is
 because public votes are better predictors of the finishing position
-according to [@ginsburgh2023eurovision].
+[@ginsburgh2023eurovision].
 
 In the subsequent sections of the report, an explanation of the datasets
 used will be provided, outlining the steps involved in cleaning and
@@ -293,12 +287,12 @@ highest significance due to their impact on the final results; these
 votes often heavily influence scoring and determine the leading
 positions, shaping the overall outcome and perceptions of success in the
 competition. The process of projecting the network, is presented in
-Appendix \<REFERENCE TO THE APPENDIX\>
+[Appendix A].
 
-To enrich the data information about each country's language family
-[@Compendium, @jakubmariancom], country population [@Worldometer], and
-country political system [@Wikipedia_2023_Government] have been
-collected. This data was manually inserted into CSV files.
+To enrich the data information about each country's language family and
+country political system has been collected ([@Compendium,
+@jakubmariancom], [@Wikipedia_2023_Government]). This data was manually
+inserted into CSV files.
 
 As a result, the whole dataset contains 2 CSV files. The first CSV file
 contains information about the countries (which in this paper are also
@@ -358,28 +352,29 @@ network are 003, 102, 201, and 300. It does not indicate a diverse and
 comprehensive set of structural configurations among triplets of nodes
 in both networks.
 
--   [Appendix A] shows the plot of the network of Public votes
+-   [Appendix B] shows the plot of the network of Public votes
     Eurovision.
--   [Appendix B] shows the plot centralities of Public votes Eurovision.
+-   [Appendix C] shows the plot centralities of Public votes Eurovision.
     An explanation of the centralities terms can be found in [Appendix
-    G].
--   [Appendix C] shows descriptive statistics of the network of Public
-    Votes Eurovision
+    J].
+-   [Appendix D](#appendix-d) shows descriptive statistics of the
+    network of Public Votes Eurovision
 
 That significant amount of isolates in that network might lead to
 statistical instability or convergence issues in the model estimation
-process. ERGMs, especially when including dyadic-depend terms, the model
-might struggle with isolated nodes due to their lack of connectivity.
+process. ERGMs, especially when including dyadic-dependent terms, the
+model might struggle with isolated nodes due to their lack of
+connectivity.
 
 ### Data analysis (Research Rationale)
 
 It is important to understand why the CUG test and ERGM model are
 suitable for this data and how they are going to help to answer the
 research question as well as what are the potential alternatives for
-them. As has been already described in [Introdthe uction] section to
-answer the first research question, the CUG test is going to be
-conducted, and to answer the second research question ERGM model is
-going to be developed.
+them. As has been already described in [Research Questions and
+Hypothesis] section to answer the first research question, the CUG test
+is going to be conducted, and to answer the second research question
+ERGM model is going to be developed.
 
 #### Conditional Uniform Graph using walktrap community detection
 
@@ -415,7 +410,7 @@ while maintaining specific structural characteristics, such as node
 degrees. Subsequently, it employs a detection algorithm to pinpoint
 potential clusters of nodes in the original network. Within this test,
 it is possible to specify which algorithm is going to be used to detect
-communities and as it has been described above walktrap community
+communities and as it has been described above, a walktrap community
 detection algorithm is going to be applied.
 
 #### Exponential Random Graph Models
@@ -429,7 +424,7 @@ drivers that influence voting patterns during the Eurovision contest.
 This model allows dyadic dependent as well as dyadic interdependent
 terms which allow capturing the structure of the network. ERGMs provide
 a basis for statistical inference, allowing assessing the significance
-of the effects of governmental systems and language families on the
+of the effects of government systems and language families on the
 network.
 
 ## Results
@@ -438,14 +433,13 @@ network.
 
 As it has been already described in the section above, a CUG test has
 been conducted to answer the first research question and test the first
-hypothesis. The code for the CUG test can be found Appendix:
-<MOVE CUG TEST TO THE APPENDIX>
+hypothesis.
 
-As shown above, the walktrap algorithm detects communities in networks.
-This walktrap algorithm is used in the CUG test to assess the
+In this CUG test, the walktrap algorithm detects communities in
+networks. The walktrap algorithm is used in the test to assess the
 significance. The communities detected by the walktrap algorithm are
-shown in a graph of the network [[ ](#appendix-d)]. This graph displays
-the communities as certain colors, where nodes within the same community
+shown in a graph of the network [[Appendix L]]. This graph displays the
+communities as certain colors, where nodes within the same community
 will have the same color. It is visible that some communities consist of
 5, 4 or 2 countries. Another notable characteristic is that certain
 nodes have a high degree while some have a much lower degree. This is
@@ -471,33 +465,34 @@ hypothesis.
 
 In the results, the histogram [[Appendix I]] visualizes the distribution
 of the network with the following conditioning: "Dyad.census" and 5000
-repetitions. It can be observed that there is a network of 19 different
-countries in the Eurovision competition consisting of 6 communities. The
-red line in the plot displays the observed amount of communities in the
-network.
-
-The bars represent how many communities were present in randomly
-generated networks during the CUG Test. The plot shows that the number
-of communities ranges from 2 to 8, with 3 and 4 being the most frequent.
-The red line intersects the bar representing 6 communities. This
-indicates that a randomly generated network, can have the same amount of
-communities as the observed network. Therefore it is necessary to look
-at the p-value. The results show that for randomly generated networks
-with similar attributes, the probability of such a simulated network
-having an equal or greater number of communities than the observed value
-is approximately 0.08. For a significance level of 0.05, it can be
-concluded that the communities are not significant.
+repetitions. The bars represent how many communities were present in
+randomly generated networks during the CUG Test. The plot shows that the
+number of communities ranges from 2 to 11, with 4 and 5 being the most
+frequent. The red line does not intersect one of the bars representing
+randomly generated communities. This indicates that a randomly generated
+network, is unlikely to have an equal or greater number of communities
+than the observed network. The results show that for randomly generated
+networks with similar attributes, the probability of such a simulated
+network having an equal or greater number of communities than the
+observed value is approximately 0. Therefore it can be concluded that
+the communities are significant.
 
 This indicates that the likelihood of encountering the current amount of
-observed communities is not low enough when the null hypothesis would be
-true. Therefore the null hypothesis cannot be rejected.
-
+observed communities is low when the null hypothesis would be true. The
+p-value is 0, which implicates a rejection of the null hypothesis.
 Considering the first research question (To what extent do countries
 formulate small communities between each other in the Eurovision
-competition?), the findings indicate that in the Eurovision competition,
-the communities that were detected by the walktrap algorithm were not
-significant. Consequently, implications drawn from the detected
-communities are uncertain and thus not applicable.
+competition?), the findings indicate that in the Eurovision competition
+countries do form communities.
+
+From the network graph [[Appendix L]] it can be observed that there is a
+network of 26 different countries in the Eurovision competition
+consisting of 13 different communities when individual isolates are also
+considered to be single "communities". However, when the condition for a
+community is that it has to contain at least 2 nodes, then the network
+has 6 communities according to the walktrap algorithm. In this research
+the network contains isolates, therefore the amount of observed
+communities that will be used in this research is 13.
 
 ### ERGM
 
@@ -523,10 +518,9 @@ explanatory power for real-world network dynamics.
 
 All the aforementioned matters were taken into consideration and led to
 the following model to be run and analyzed. Please find the model in the
-[Appendix GG].
+[Appendix E].
 
-The following dyadic-dependent terms have been inserted \<IS NODEMATCH()
-dyadic dependent\>?
+The following covariate and dyadic-dependent terms have been inserted:
 
 -   `nodematch("country_language_family")` term assesses homophily among
     countries based on their respective language family
@@ -550,19 +544,18 @@ dyadic dependent\>?
 The model described above performed relatively well on the MCMC
 diagnostics. Trace for every term inside the model has a shape that is
 similar to a "fuzzy caterpillar" which means that the chain mix well
-[[Appendix D](#appendix-d)]. Given this understanding, the next step
-involves examining the Goodness of Fit in order to see whether the
-model-generated networks replicate the features and patterns present in
-the observed network. Looking at the graphs in [Appendix F] it can be
-observed that according to all of them model captured most the essential
-structural characteristics of the Eurovision network. Only the edge-wise
-shared partner graph has a small deficiency when it comes to capturing
-the proportion of edges that have 2 edge-wise shared partners.
+[Appendix F]. Given this understanding, the next step involves examining
+the Goodness of Fit in order to see whether the model-generated networks
+replicate the features and patterns present in the observed network.
+Looking at the graphs in [Appendix G] it can be observed that according
+to all of them model captured most the essential structural
+characteristics of the Eurovision network. Only the edge-wise shared
+partner graph has a small deficiency when it comes to capturing the
+proportion of edges that have 2 edge-wise shared partners.
 
 With the aforementioned knowledge, it is possible to look at the models
 statistics. After running the model the following coefficients have been
 obtained. which are written down in the Probability ratio table.
-<YET TO BE CORRECTED>
 
 Looking at them it can be observed that edges, degree3 as well as
 nodematch.country_government_system have negative estimates and the rest
@@ -575,7 +568,7 @@ to calculate odds ratios. To do that, coefficients have to be
 exponentiated.
 
 |                                         | Estimate   | Prob  | Std. Error | Pval  |
-|-----------------------------------------|------------|-------|------------|-------|
+|---------------|---------------|---------------|---------------|---------------|
 | **edges**                               | -892.56703 | 0.000 | 364.289    | 0.014 |
 | **degree3**                             | -0.68790   | 0.334 | 0.768      | 0.370 |
 | **gwesp.fixed.0.001**                   | 889.61735  | NaN   | 363.747    | 0.014 |
@@ -602,33 +595,28 @@ Nevertheless, the standard errors for these terms are extraordinarily
 high which does not allow to read these results with statistical
 confidence.
 
-\<MOST PROBABLY WE SHOULD DELETE IT BUT I WILL WAIT FOR THE GROUP TO
-DISCUSS IT\>
-
 Applying this formula to our ERGM model results can be transformed to
 the sentence as follows: - An increase of 1 in the number of edges
-increases the log odds(-5.015) with and it makes the odds of the effect
-taking place exp(-5.015) times larger.
+increases the log odds(-892.6) with and it makes the odds of the effect
+taking place exp(-892.6) times larger.
 
 -   An increase of 1 in geometrically weighted shared partners increases
-    the log odds with 2.731 (log odds) and it makes the odds of the
-    effect taking place exp(2.741) times larger.
+    the log odds with 889.6 (log odds) and it makes the odds of the
+    effect taking place exp(889.6) times larger.
 
-Moreover, a probability of 0.007 for `edges` term suggests that there is
-very low high chance in making new edges. A probability of 0.007
+Moreover, a probability of 0.000 for `edges` term suggests that there is
+very low high chance in making new edges. A probability of 0.000
 suggests that, according to the ERGM being used, the observed number of
 edges in the network is very unlikely to occur based on the model's
 specification. This low probability indicates that the odds of forming
 an edge in this network are very low.
 
-When it comes to gwesp() term probability of 0.939 suggests that the
+When it comes to gwesp() term probability of infinity suggests that the
 observed network structure, which includes this tendency for nodes to
-share partners, is highly probable under the ERGM framework. This
+share partners, is always true under the ERGM framework. This
 probability indicates that the network's pattern of shared connections
 among nodes, as described by the `gwesp()` term, is more likely than
 alternative patterns or structures within the ERGM framework.
-
-\<THIS WILL STAY REGARDLESS WHAT WE ARE GOING TO LEAVE\>
 
 Except these this specific dyadic dependent term, the rest of the
 variables have a very high p-value and therefore, their coefficients are
@@ -636,7 +624,7 @@ not going to be considered and exponentiated.
 
 With the given model formula the following hypothesis could be verified:
 
--   H2: Governmental system has an effect on how countries distribute
+-   H2: Government system has an effect on how countries distribute
     their votes during the Eurovision competition
 
 -   H3: Language family has an effect on how countries distribute their
@@ -644,31 +632,41 @@ With the given model formula the following hypothesis could be verified:
 
 As it has been stated none of the structural terms was found to be
 significant for the network and, therefore, the null hypothesis (H0: The
-governmental system and language family do not have an influence on how
+government system and language family do not have an influence on how
 countries distribute their votes during the Eurovision competition) for
 the second research hypothesis can not be rejected.
 
-## Conclusion <yet in progress>
+## Conclusion
 
 This study aimed to study the Eurovision context in terms of social
 network analysis based on the official results from 2023. Literature
-review in the field of previous Eurovision editions
-[@D_Angelo_Murphy_Alfò_2019], [@ginsburgh2008eurovision] suggested that
-distributing votes was biased in the past years. Diving more into the
-literature and discovering research gaps led to the work of
-[@Mattes_Rodríguez_2014] and as a consequence, this paper included in
-the analysis to what extent the similarities in the political system
-could be a cause of voting bias. That led to 2 research questions which
-were stated at the beginning of the study and the CUG test and ERGM
-model were run to answer them as well as to test the stated hypothesis.
+review in the field of previous Eurovision editions suggested that
+distributing votes was biased in the past years
+[@D_Angelo_Murphy_Alfò_2019], [@ginsburgh2008eurovision]. Diving more
+into the literature and discovering research gaps led to the work of
+Rodriguez et al. (2014) and as a consequence, this paper included in the
+analysis to what extent the similarities in the political system could
+be a cause of voting bias. That led to 2 research questions which were
+stated at the beginning of the study and the CUG test and ERGM model
+were run to answer them as well as to test the stated hypothesis.
 
 ### Discussion
 
-\<Thierry still needs to write about CUG test heres\>
+The outcomes of the CUG test suggest that, according to the walktrap
+algorithm, there are 13 observed communities. This quantity of
+communities is significant, which leads to a rejection of the null
+hypothesis. However, it is important to acknowledge that in this case, a
+higher number of communities corresponds to a higher number of isolates.
+In this research, the isolates represent countries that did not receive
+top 3 votes from other countries. This simplification of the voting
+process, might have an impact on the outcome due to oversimplification.
 
-\<I do not know where to put code to GitHub :( \>
-
-<https://github.com/krzysztof99xd/SNA4DSProject.git>
+The approach of solely including top 3 votes, could therefore have
+influenced the number of communities detected by the walktrap algorithm.
+Thus it could also have influenced the statistically significant
+outcome. It is plausible that when considering more votes than top 3,
+the results might be different, leading to larger and fewer communities,
+which could result in the CUG test being nonsignificant.
 
 Language family and government system turned out to be not statistically
 significant and as a consequence, the second research question can be
@@ -676,18 +674,17 @@ answered that these factors do not have an effect how people vote during
 the Eurovision context. Moreover, standard errors for `edges` and
 `gwesp()` term make reading the results not trustworthy since they may
 indicate that the model is unstable. More experiments must be run using
-either different projections or running the analysis on bipartite
+either different projections or running the analysis on a bipartite
 network.
 
 ### Future work
 
-As it has been described in the ERGM model section [REFERENCE TO THAT]
-MCMC diagnostics and GOF look relatively good but undoubtedly the model
-can be further improved to understand the structure of the network even
-better. Several other models have been run during this research. Some of
-them scored either very low or did not converge in the given time frame.
-The list of all the models that have been run together with model
-specifications are presented in APPENDIX [REFERENCE TO THAT].
+As it has been described in the [ERGM] section MCMC diagnostics and GOF
+look relatively good but undoubtedly the model can be further improved.
+Several other models have been run during this research. Some of them
+scored either very low or did not converge in the given time frame. The
+list of all the models that have been run together with model
+specifications are presented in [APPENDIX K].
 
 In this research project, the network has been projected based on the
 common sender. Nevertheless, projecting the network differently could
@@ -710,8 +707,7 @@ since more information will remain inside the network.
 
 The graph in the figure above presents just the sample of the data in
 what way the network has been projected. Three dots on the bottom of
-each set represent that there are more countries in each set. \<YET TO
-BE CHECKED\>
+each set represent that there are more countries in each set.
 
 From this sample of data the following edges have been formed:
 
@@ -729,7 +725,7 @@ Netherlands)
 
 # Appendix B
 
-![Eurovision Public Plot](images/ProjectedNetworkPlot.png)
+![Eurovision Public Plot](images/ProjectedNetworkPlot.jpeg)
 
 # Appendix C
 
@@ -818,7 +814,7 @@ distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = 
 
 ::: {style="display: flex;"}
 ![CUG Test](images/CUG_Test.png) ![CUG Test
-Distribution](images/CUG_Test_Distribution_Plot.png)
+Distribution](images/CUG_Distribution.png)
 :::
 
 # Appendix J
@@ -856,6 +852,52 @@ network. Mathematically, it is defined as follows:
 -   $E(x) = \max_{y} d(x, y)$ where *E(X)* represents the eccentricity
     of node *x*, and *d(x,y)* is the shortest path distance between
     nodes *x* and *y*.
+
+# Appendix K
+
+| Term/Model                             | Model1 | Model2                                                                                                             | Model3                      | Model4                                                                                                                                                                                                                                                                                                                                                                                                         |
+|---------------|---------------|---------------|---------------|---------------|
+| edges                                  | X      | X                                                                                                                  | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| kstar(2)                               |        |                                                                                                                    |                             | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| degree(2)                              |        |                                                                                                                    | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| degree(3)                              |        | X                                                                                                                  | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| isolates                               |        |                                                                                                                    | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| gwesp(decay, fixed)                    |        | X (0.001, True)                                                                                                    | X (0.001, True)             | X (0.001, True)                                                                                                                                                                                                                                                                                                                                                                                                |
+| gwdsp(decay, fixed)                    |        |                                                                                                                    |                             | X (0.001, True)                                                                                                                                                                                                                                                                                                                                                                                                |
+| gwdegree(decay, fixed)                 |        |                                                                                                                    |                             | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| nodematch("country_language_family")   | X      | X                                                                                                                  | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| nodematch("country_government_system") | X      | X                                                                                                                  | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| AIC                                    | 276    | 270.5                                                                                                              | \-                          | \-                                                                                                                                                                                                                                                                                                                                                                                                             |
+| BIC                                    | 287.4  | 289.4                                                                                                              | \-                          | \-                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Converged                              | Yes    | Yes                                                                                                                | No                          | No                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Issue If Not Converged                 | \-     | \-                                                                                                                 | Not converged after 6 hours | Model statistics 'isolates' are not varying. This may indicate that the observed data occupies an extreme point in the sample space or that the estimation has reached a dead-end configuration. Model statistics 'nodematch.country_language_family' are linear combinations of some set of preceding statistics at the current stage of the estimation. This may indicate that the model is nonidentifiable. |
+| Additional Information                 |        | Estimates and Std. Error values are high. Adjusting the decay parameter does not result in more reliable outcomes. |                             |                                                                                                                                                                                                                                                                                                                                                                                                                |
+
+\newpage
+
+| Term/Model                             | Model5                                                                                                                                                                                           | Model6                                                                                                                                                                                           | Model7                                                                                                                                                                                                                                                                                                                                                                                                                  | Model8                    |
+|---------------|---------------|---------------|---------------|---------------|
+| edges                                  | X                                                                                                                                                                                                | X                                                                                                                                                                                                | X                                                                                                                                                                                                                                                                                                                                                                                                                       |                           |
+| kstar(2)                               |                                                                                                                                                                                                  |                                                                                                                                                                                                  |                                                                                                                                                                                                                                                                                                                                                                                                                         | X                         |
+| degree(2)                              |                                                                                                                                                                                                  |                                                                                                                                                                                                  | X                                                                                                                                                                                                                                                                                                                                                                                                                       |                           |
+| degree(3)                              | X                                                                                                                                                                                                | X                                                                                                                                                                                                | X                                                                                                                                                                                                                                                                                                                                                                                                                       | X                         |
+| isolates                               | X                                                                                                                                                                                                | X                                                                                                                                                                                                | X                                                                                                                                                                                                                                                                                                                                                                                                                       |                           |
+| gwesp(decay, fixed)                    | X (0.001, True)                                                                                                                                                                                  | X (0.001, True)                                                                                                                                                                                  | X (0.001, True)                                                                                                                                                                                                                                                                                                                                                                                                         | X (0.001, True)           |
+| gwdsp(decay, fixed)                    |                                                                                                                                                                                                  | X (0.001, True)                                                                                                                                                                                  |                                                                                                                                                                                                                                                                                                                                                                                                                         |                           |
+| gwdegree(decay, fixed)                 |                                                                                                                                                                                                  |                                                                                                                                                                                                  |                                                                                                                                                                                                                                                                                                                                                                                                                         | X                         |
+| nodematch("country_language_family")   | X                                                                                                                                                                                                | X                                                                                                                                                                                                | X                                                                                                                                                                                                                                                                                                                                                                                                                       |                           |
+| nodematch("country_government_system") | X                                                                                                                                                                                                | X                                                                                                                                                                                                |                                                                                                                                                                                                                                                                                                                                                                                                                         |                           |
+| AIC                                    | \-                                                                                                                                                                                               | \-                                                                                                                                                                                               | \-                                                                                                                                                                                                                                                                                                                                                                                                                      | 328.6                     |
+| BIC                                    | \-                                                                                                                                                                                               | \-                                                                                                                                                                                               | \-                                                                                                                                                                                                                                                                                                                                                                                                                      | 347.5                     |
+| Converged                              | No                                                                                                                                                                                               | No                                                                                                                                                                                               | No                                                                                                                                                                                                                                                                                                                                                                                                                      | Yes                       |
+| Issue If Not Converged                 | Model statistics 'isolates' are not varying. This may indicate that the observed data occupies an extreme point in the sample space or that the estimation has reached a dead-end configuration. | Model statistics 'isolates' are not varying. This may indicate that the observed data occupies an extreme point in the sample space or that the estimation has reached a dead-end configuration. | Model statistics 'isolates' are not varying. This may indicate that the observed data occupies an extreme point in the sample space or that the estimation has reached a dead-end configuration. Warning: Model statistics 'nodematch.country_language_family' are linear combinations of some set of preceding statistics at the current stage of the estimation. This may indicate that the model is nonidentifiable. |                           |
+| Additional Information                 |                                                                                                                                                                                                  |                                                                                                                                                                                                  |                                                                                                                                                                                                                                                                                                                                                                                                                         | GOF plots do not fit well |
+
+\newpage
+
+# Appendix L
+
+![Graph of the Eurovision Network](images/NetworkGraph.png)
 
 \newpage
 
