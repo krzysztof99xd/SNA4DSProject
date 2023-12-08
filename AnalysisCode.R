@@ -97,6 +97,7 @@ index_order <- match(filtered_node_list$Node_country, receivers)
 sorted_filtered_node_list <- filtered_node_list[order(index_order), ]
 
 nAttrNodeCountry <- sorted_filtered_node_list$Node_country
+## we left the country population in the code but we are not using it in the analysis 
 nAttrCountryPopulation <- sorted_filtered_node_list$country_population
 nAttrCountryLangaugeFamily <- sorted_filtered_node_list$country_language_family 
 nAttrCountryGovernmentSystem <- sorted_filtered_node_list$country_government_system
