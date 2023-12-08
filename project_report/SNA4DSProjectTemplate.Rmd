@@ -108,36 +108,36 @@ Previous studies analysed the basis of these friendship patterns within
 the Eurovision voting network. Research has already been conducted in
 the field of social networks regarding voting patterns which as a
 consequence leads to creating communities within the Eurovision
-participants. [@dekker2007eurovision] has already conducted the research
-using the Eurovision cast from 2005 where he analysed the friendship
-network using techniques previously developed for valued networks
-[@dekker2005], which combine network-analysis methods with statistical
-methods. Dekker's analysis of the votes cast in the 2005 Eurovision Song
-Contest revealed that friendship between countries is largely determined
-by geographical proximity, with a visible five-bloc structure: Western,
-Eastern, Nordic, Balkan, and Eastern Mediterranean.
+participants. Research has already been conducted using the Eurovision
+cast from 2005 where he analysed the friendship network using techniques
+previously developed for valued networks , which combine
+network-analysis methods with statistical methods
+[@dekker2007eurovision] , [@dekker2005]. Dekker's analysis of the votes
+cast in the 2005 Eurovision Song Contest revealed that friendship
+between countries is largely determined by geographical proximity, with
+a visible five-bloc structure: Western, Eastern, Nordic, Balkan, and
+Eastern Mediterranean.
 
-In 2019, [@D_Angelo_Murphy_Alfò_2019] introduced the concept of modeling
-latent spaces in multidimensional networks, specifically focusing on its
-application to the exchange of votes within the Eurovision Song Contest.
-The model was put into practice to analyze voting patterns in the
-Eurovision Song Contest, spanning from 1998 to 2015. This analysis
-incorporated cultural and geographical factors. It was discovered that
-the only significant factor in explaining observed voting patterns was
-the presence of a shared border between the two countries.
-Interestingly, the similarities among participants during the 1998-2015
-period only partially correlated with their respective geographical
-locations.
+D'Angelo et al. (2019) introduced the concept of modeling latent spaces
+in multidimensional networks, specifically focusing on its application
+to the exchange of votes within the Eurovision Song Contest. The model
+was put into practice to analyze voting patterns in the Eurovision Song
+Contest, spanning from 1998 to 2015. This analysis incorporated cultural
+and geographical factors. It was discovered that the only significant
+factor in explaining observed voting patterns was the presence of a
+shared border between the two countries. Interestingly, the similarities
+among participants during the 1998-2015 period only partially correlated
+with their respective geographical locations.
 
-In 2022 [@Ginsburgh_Moreno-Ternero_2022] suggested that the findings
-from the 2021 edition indicated a higher tendency for reciprocity among
-geographically proximate nations. Notable examples included Greece and
-Cyprus, Bulgaria and Moldova, Moldova and Russia, Russia and Azerbaijan,
-and Bulgaria and Greece. The analysis also explored the concept of group
-reciprocity, uncovering voting clusters among countries. An illustrative
-instance was the Scandinavian nations, including Denmark, Finland,
-Iceland, Norway, and Sweden, with noteworthy outcomes in the context of
-the 2021 competition.
+Ginsburgh et al. (2022) suggested that the findings from the 2021
+edition indicated a higher tendency for reciprocity among geographically
+proximate nations. Notable examples included Greece and Cyprus, Bulgaria
+and Moldova, Moldova and Russia, Russia and Azerbaijan, and Bulgaria and
+Greece. The analysis also explored the concept of group reciprocity,
+uncovering voting clusters among countries. An illustrative instance was
+the Scandinavian nations, including Denmark, Finland, Iceland, Norway,
+and Sweden, with noteworthy outcomes in the context of the 2021
+competition.
 
 Research has demonstrated that the shared characteristics of voting
 groups play a significant role in shaping the outcomes of voting
@@ -163,21 +163,20 @@ of the role linguistic ties play in this dynamic competition.
 
 Countries with the same or similar government system seem to have
 stronger bonds with each other than the ones that have different
-internal political structures. Research done by [@Mattes_Rodríguez_2014]
-indicates that autocracies exhibiting institutional characteristics
-resembling those of democracies --- such as enhanced leader
-accountability, restricted policy flexibility, and increased
-transparency---are more likely to succeed in cooperation. Consequently,
-these autocracies are more prone to collaborate not only with each other
-but also with democracies. The expectation is that single-party and
-military regimes hold an advantage in international cooperation when
-contrasted with personalist systems. The study examines the cooperative
-behavior between pairs of states through analysis of the 10 Million
-International Dyadic Events data from 1990 to 2004 [@king2003automated].
-The findings are consistent with the core theoretical argument.
-Single-party regimes, posited to have an advantage in international
-cooperation, are, indeed, more likely to be actively sought as
-partners.\`
+internal political structures. Rodriguez et al. (2014) indicated that
+autocracies exhibiting institutional characteristics resembling those of
+democracies --- such as enhanced leader accountability, restricted
+policy flexibility, and increased transparency---are more likely to
+succeed in cooperation. Consequently, these autocracies are more prone
+to collaborate not only with each other but also with democracies. The
+expectation is that single-party and military regimes hold an advantage
+in international cooperation when contrasted with personalist systems.
+The study examines the cooperative behavior between pairs of states
+through analysis of the 10 Million International Dyadic Events data from
+1990 to 2004 [@king2003automated]. The findings are consistent with the
+core theoretical argument. Single-party regimes, posited to have an
+advantage in international cooperation, are, indeed, more likely to be
+actively sought as partners.\`
 
 ### Research questions and hypothesis
 
@@ -240,7 +239,7 @@ communities led to a biased winner and therefore, one would suggest that
 the Eurovision voting system should be revised. Moreover, only the votes
 cast by the public will be used in forming the voting network. This is
 because public votes are better predictors of the finishing position
-according to [@ginsburgh2023eurovision].
+[@ginsburgh2023eurovision].
 
 In the subsequent sections of the report, an explanation of the datasets
 used will be provided, outlining the steps involved in cleaning and
@@ -290,10 +289,11 @@ positions, shaping the overall outcome and perceptions of success in the
 competition. The process of projecting the network, is presented in
 [Appendix A].
 
-To enrich the data information about each country's language family
-[@Compendium, @jakubmariancom], country population [@Worldometer], and
-country political system [@Wikipedia_2023_Government] have been
-collected. This data was manually inserted into CSV files.
+To enrich the data information about each country's language family,
+country population, and country political system has been collected
+([@Compendium, @jakubmariancom], [@Worldometer],
+[@Wikipedia_2023_Government]). This data was manually inserted into CSV
+files.
 
 As a result, the whole dataset contains 2 CSV files. The first CSV file
 contains information about the countries (which in this paper are also
@@ -358,8 +358,8 @@ in both networks.
 -   [Appendix C] shows the plot centralities of Public votes Eurovision.
     An explanation of the centralities terms can be found in [Appendix
     J].
--   [Appendix D] shows descriptive statistics of the network of Public
-    Votes Eurovision
+-   [Appendix D](#appendix-d) shows descriptive statistics of the
+    network of Public Votes Eurovision
 
 That significant amount of isolates in that network might lead to
 statistical instability or convergence issues in the model estimation
@@ -568,7 +568,7 @@ to calculate odds ratios. To do that, coefficients have to be
 exponentiated.
 
 |                                         | Estimate   | Prob  | Std. Error | Pval  |
-|-----------------|--------------|--------------|--------------|--------------|
+|---------------|---------------|---------------|---------------|---------------|
 | **edges**                               | -892.56703 | 0.000 | 364.289    | 0.014 |
 | **degree3**                             | -0.68790   | 0.334 | 0.768      | 0.370 |
 | **gwesp.fixed.0.001**                   | 889.61735  | NaN   | 363.747    | 0.014 |
@@ -636,19 +636,19 @@ governmental system and language family do not have an influence on how
 countries distribute their votes during the Eurovision competition) for
 the second research hypothesis can not be rejected.
 
-## Conclusion 
+## Conclusion
 
 This study aimed to study the Eurovision context in terms of social
 network analysis based on the official results from 2023. Literature
-review in the field of previous Eurovision editions
-[@D_Angelo_Murphy_Alfò_2019], [@ginsburgh2008eurovision] suggested that
-distributing votes was biased in the past years. Diving more into the
-literature and discovering research gaps led to the work of
-[@Mattes_Rodríguez_2014] and as a consequence, this paper included in
-the analysis to what extent the similarities in the political system
-could be a cause of voting bias. That led to 2 research questions which
-were stated at the beginning of the study and the CUG test and ERGM
-model were run to answer them as well as to test the stated hypothesis.
+review in the field of previous Eurovision editions suggested that
+distributing votes was biased in the past years
+[@D_Angelo_Murphy_Alfò_2019], [@ginsburgh2008eurovision]. Diving more
+into the literature and discovering research gaps led to the work of
+Rodriguez et al. (2014) and as a consequence, this paper included in the
+analysis to what extent the similarities in the political system could
+be a cause of voting bias. That led to 2 research questions which were
+stated at the beginning of the study and the CUG test and ERGM model
+were run to answer them as well as to test the stated hypothesis.
 
 ### Discussion
 
@@ -727,7 +727,7 @@ Netherlands)
 
 # Appendix B
 
-![Eurovision Public Plot](images/ProjectedNetworkPlot.png)
+![Eurovision Public Plot](images/ProjectedNetworkPlot.jpeg)
 
 # Appendix C
 
