@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 90
----
-
 # Social Network Analysis Project Group 12
 
 This is a project for the Social Network Analysis course at JADS.
