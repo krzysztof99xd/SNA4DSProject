@@ -438,14 +438,13 @@ network.
 
 As it has been already described in the section above, a CUG test has
 been conducted to answer the first research question and test the first
-hypothesis. The code for the CUG test can be found Appendix:
-<MOVE CUG TEST TO THE APPENDIX>
+hypothesis.
 
-As shown above, the walktrap algorithm detects communities in networks.
-This walktrap algorithm is used in the CUG test to assess the
+In this CUG test, the walktrap algorithm detects communities in
+networks. The walktrap algorithm is used in the test to assess the
 significance. The communities detected by the walktrap algorithm are
-shown in a graph of the network [[ ](#appendix-d)]. This graph displays
-the communities as certain colors, where nodes within the same community
+shown in a graph of the network [[Appendix L]]. This graph displays the
+communities as certain colors, where nodes within the same community
 will have the same color. It is visible that some communities consist of
 5, 4 or 2 countries. Another notable characteristic is that certain
 nodes have a high degree while some have a much lower degree. This is
@@ -471,33 +470,34 @@ hypothesis.
 
 In the results, the histogram [[Appendix I]] visualizes the distribution
 of the network with the following conditioning: "Dyad.census" and 5000
-repetitions. It can be observed that there is a network of 19 different
-countries in the Eurovision competition consisting of 6 communities. The
-red line in the plot displays the observed amount of communities in the
-network.
-
-The bars represent how many communities were present in randomly
-generated networks during the CUG Test. The plot shows that the number
-of communities ranges from 2 to 8, with 3 and 4 being the most frequent.
-The red line intersects the bar representing 6 communities. This
-indicates that a randomly generated network, can have the same amount of
-communities as the observed network. Therefore it is necessary to look
-at the p-value. The results show that for randomly generated networks
-with similar attributes, the probability of such a simulated network
-having an equal or greater number of communities than the observed value
-is approximately 0.08. For a significance level of 0.05, it can be
-concluded that the communities are not significant.
+repetitions. The bars represent how many communities were present in
+randomly generated networks during the CUG Test. The plot shows that the
+number of communities ranges from 2 to 11, with 4 and 5 being the most
+frequent. The red line does not intersect one of the bars representing
+randomly generated communities. This indicates that a randomly generated
+network, is unlikely to have an equal or greater number of communities
+than the observed network. The results show that for randomly generated
+networks with similar attributes, the probability of such a simulated
+network having an equal or greater number of communities than the
+observed value is approximately 0. Therefore it can be concluded that
+the communities are significant.
 
 This indicates that the likelihood of encountering the current amount of
-observed communities is not low enough when the null hypothesis would be
-true. Therefore the null hypothesis cannot be rejected.
-
+observed communities is low when the null hypothesis would be true. The
+p-value is 0, which implicates a rejection of the null hypothesis.
 Considering the first research question (To what extent do countries
 formulate small communities between each other in the Eurovision
-competition?), the findings indicate that in the Eurovision competition,
-the communities that were detected by the walktrap algorithm were not
-significant. Consequently, implications drawn from the detected
-communities are uncertain and thus not applicable.
+competition?), the findings indicate that in the Eurovision competition
+countries do form communities.
+
+From the network graph [[Appendix K]] it can be observed that there is a
+network of 26 different countries in the Eurovision competition
+consisting of 13 different communities when individual isolates are also
+considered to be single "communities". However, when the condition for a
+community is that it has to contain at least 2 nodes, then the network
+has 6 communities according to the walktrap algorithm. In this research
+the network contains isolates, therefore the amount of observed
+communities that will be used in this research is 13.
 
 ### ERGM
 
@@ -575,7 +575,7 @@ to calculate odds ratios. To do that, coefficients have to be
 exponentiated.
 
 |                                         | Estimate   | Prob  | Std. Error | Pval  |
-|-----------------------------------------|------------|-------|------------|-------|
+|----------------------|-------------|-------------|-------------|-------------|
 | **edges**                               | -892.56703 | 0.000 | 364.289    | 0.014 |
 | **degree3**                             | -0.68790   | 0.334 | 0.768      | 0.370 |
 | **gwesp.fixed.0.001**                   | 889.61735  | NaN   | 363.747    | 0.014 |
@@ -602,33 +602,28 @@ Nevertheless, the standard errors for these terms are extraordinarily
 high which does not allow to read these results with statistical
 confidence.
 
-\<MOST PROBABLY WE SHOULD DELETE IT BUT I WILL WAIT FOR THE GROUP TO
-DISCUSS IT\>
-
 Applying this formula to our ERGM model results can be transformed to
 the sentence as follows: - An increase of 1 in the number of edges
-increases the log odds(-5.015) with and it makes the odds of the effect
-taking place exp(-5.015) times larger.
+increases the log odds(-892.6) with and it makes the odds of the effect
+taking place exp(-892.6) times larger.
 
 -   An increase of 1 in geometrically weighted shared partners increases
-    the log odds with 2.731 (log odds) and it makes the odds of the
-    effect taking place exp(2.741) times larger.
+    the log odds with 889.6 (log odds) and it makes the odds of the
+    effect taking place exp(889.6) times larger.
 
-Moreover, a probability of 0.007 for `edges` term suggests that there is
-very low high chance in making new edges. A probability of 0.007
+Moreover, a probability of 0.000 for `edges` term suggests that there is
+very low high chance in making new edges. A probability of 0.000
 suggests that, according to the ERGM being used, the observed number of
 edges in the network is very unlikely to occur based on the model's
 specification. This low probability indicates that the odds of forming
 an edge in this network are very low.
 
-When it comes to gwesp() term probability of 0.939 suggests that the
+When it comes to gwesp() term probability of infinity suggests that the
 observed network structure, which includes this tendency for nodes to
-share partners, is highly probable under the ERGM framework. This
+share partners, is always true under the ERGM framework. This
 probability indicates that the network's pattern of shared connections
 among nodes, as described by the `gwesp()` term, is more likely than
 alternative patterns or structures within the ERGM framework.
-
-\<THIS WILL STAY REGARDLESS WHAT WE ARE GOING TO LEAVE\>
 
 Except these this specific dyadic dependent term, the rest of the
 variables have a very high p-value and therefore, their coefficients are
@@ -664,9 +659,22 @@ model were run to answer them as well as to test the stated hypothesis.
 
 ### Discussion
 
-\<Thierry still needs to write about CUG test heres\>
+The outcomes of the CUG test suggest that, according to the walktrap
+algorithm, there are 13 observed communities. This quantity of
+communities is significant, which leads to a rejection of the null
+hypothesis. However, it is important to acknowledge that in this case a
+higher number of communities corrresponds to a higher number of
+isolates. In this research, the isolates represent countries that did
+not receive top 3 votes from other countries. This simplification of the
+voting process, might have an impact on the outcome due to
+oversimplification.
 
-\<I do not know where to put code to GitHub :( \>
+The approach of solely including top 3 votes, could therefore have
+influenced the number of communities detected by the walktrap algorithm.
+Thus it could also have influenced the statistically significant
+outcome. It is plausible that when considering more votes than top 3,
+the results might be different, leading to larger and fewer communities,
+which could result in the CUG test being nonsignificant.
 
 <https://github.com/krzysztof99xd/SNA4DSProject.git>
 
@@ -818,7 +826,7 @@ distribution_coms <- sna::cug.test(distribution_network, FUN = walktrap, mode = 
 
 ::: {style="display: flex;"}
 ![CUG Test](images/CUG_Test.png) ![CUG Test
-Distribution](images/CUG_Test_Distribution_Plot.png)
+Distribution](images/CUG_Distribution.png)
 :::
 
 # Appendix J
@@ -856,6 +864,52 @@ network. Mathematically, it is defined as follows:
 -   $E(x) = \max_{y} d(x, y)$ where *E(X)* represents the eccentricity
     of node *x*, and *d(x,y)* is the shortest path distance between
     nodes *x* and *y*.
+
+# Appendix K
+
+| Term/Model                             | Model1 | Model2                                                                                                             | Model3                      | Model4                                                                                                                                                                                                                                                                                                                                                                                                         |
+|---------------|---------------|---------------|---------------|---------------|
+| edges                                  | X      | X                                                                                                                  | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| kstar(2)                               |        |                                                                                                                    |                             | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| degree(2)                              |        |                                                                                                                    | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| degree(3)                              |        | X                                                                                                                  | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| isolates                               |        |                                                                                                                    | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| gwesp(decay, fixed)                    |        | X (0.001, True)                                                                                                    | X (0.001, True)             | X (0.001, True)                                                                                                                                                                                                                                                                                                                                                                                                |
+| gwdsp(decay, fixed)                    |        |                                                                                                                    |                             | X (0.001, True)                                                                                                                                                                                                                                                                                                                                                                                                |
+| gwdegree(decay, fixed)                 |        |                                                                                                                    |                             | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| nodematch("country_language_family")   | X      | X                                                                                                                  | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| nodematch("country_government_system") | X      | X                                                                                                                  | X                           | X                                                                                                                                                                                                                                                                                                                                                                                                              |
+| AIC                                    | 276    | 270.5                                                                                                              | \-                          | \-                                                                                                                                                                                                                                                                                                                                                                                                             |
+| BIC                                    | 287.4  | 289.4                                                                                                              | \-                          | \-                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Converged                              | Yes    | Yes                                                                                                                | No                          | No                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Issue If Not Converged                 | \-     | \-                                                                                                                 | Not converged after 6 hours | Model statistics 'isolates' are not varying. This may indicate that the observed data occupies an extreme point in the sample space or that the estimation has reached a dead-end configuration. Model statistics 'nodematch.country_language_family' are linear combinations of some set of preceding statistics at the current stage of the estimation. This may indicate that the model is nonidentifiable. |
+| Additional Information                 |        | Estimates and Std. Error values are high. Adjusting the decay parameter does not result in more reliable outcomes. |                             |                                                                                                                                                                                                                                                                                                                                                                                                                |
+
+\newpage
+
+| Term/Model                             | Model5                                                                                                                                                                                             | Model6                                                                                                                                                                                             | Model7                                                                                                                                                                                                                                                                                                                                                                                                                      | Model8                    |
+|---------------|---------------|---------------|---------------|---------------|
+| edges                                  | X                                                                                                                                                                                                  | X                                                                                                                                                                                                  | X                                                                                                                                                                                                                                                                                                                                                                                                                           |                           |
+| kstar(2)                               |                                                                                                                                                                                                    |                                                                                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                             | X                         |
+| degree(2)                              |                                                                                                                                                                                                    |                                                                                                                                                                                                    | X                                                                                                                                                                                                                                                                                                                                                                                                                           |                           |
+| degree(3)                              | X                                                                                                                                                                                                  | X                                                                                                                                                                                                  | X                                                                                                                                                                                                                                                                                                                                                                                                                           | X                         |
+| isolates                               | X                                                                                                                                                                                                  | X                                                                                                                                                                                                  | X                                                                                                                                                                                                                                                                                                                                                                                                                           |                           |
+| gwesp(decay, fixed)                    | X (0.001, True)                                                                                                                                                                                    | X (0.001, True)                                                                                                                                                                                    | X (0.001, True)                                                                                                                                                                                                                                                                                                                                                                                                             | X (0.001, True)           |
+| gwdsp(decay, fixed)                    |                                                                                                                                                                                                    | X (0.001, True)                                                                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                             |                           |
+| gwdegree(decay, fixed)                 |                                                                                                                                                                                                    |                                                                                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                             | X                         |
+| nodematch("country_language_family")   | X                                                                                                                                                                                                  | X                                                                                                                                                                                                  | X                                                                                                                                                                                                                                                                                                                                                                                                                           |                           |
+| nodematch("country_government_system") | X                                                                                                                                                                                                  | X                                                                                                                                                                                                  |                                                                                                                                                                                                                                                                                                                                                                                                                             |                           |
+| AIC                                    | \-                                                                                                                                                                                                 | \-                                                                                                                                                                                                 | \-                                                                                                                                                                                                                                                                                                                                                                                                                          | 328.6                     |
+| BIC                                    | \-                                                                                                                                                                                                 | \-                                                                                                                                                                                                 | \-                                                                                                                                                                                                                                                                                                                                                                                                                          | 347.5                     |
+| Converged                              | No                                                                                                                                                                                                 | No                                                                                                                                                                                                 | No                                                                                                                                                                                                                                                                                                                                                                                                                          | Yes                       |
+| Issue If Not Converged                 | Model statistics \'isolates\' are not varying. This may indicate that the observed data occupies an extreme point in the sample space or that the estimation has reached a dead-end configuration. | Model statistics \'isolates\' are not varying. This may indicate that the observed data occupies an extreme point in the sample space or that the estimation has reached a dead-end configuration. | Model statistics \'isolates\' are not varying. This may indicate that the observed data occupies an extreme point in the sample space or that the estimation has reached a dead-end configuration. Warning: Model statistics \'nodematch.country_language_family\' are linear combinations of some set of preceding statistics at the current stage of the estimation. This may indicate that the model is nonidentifiable. |                           |
+| Additional Information                 |                                                                                                                                                                                                    |                                                                                                                                                                                                    |                                                                                                                                                                                                                                                                                                                                                                                                                             | GOF plots do not fit well |
+
+\newpage
+
+# Appendix L
+
+![Graph of the Eurovision Network](images/NetworkGraph.png)
 
 \newpage
 
