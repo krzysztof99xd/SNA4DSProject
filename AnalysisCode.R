@@ -118,15 +118,70 @@ print(igraph::get.vertex.attribute(distribution_graph))
 
 distribution_network <- snafun::to_network(distribution_graph)
 print(class(distribution_network))
-plot(
-  distribution_graph,
-  edge.arrow.size = 0.01,
-  edge.color = "gray80",
-  vertex.frame.color = "#ffffff",
-  vertex.label.cex = 0.6,
-  vertex.label.color = "black",
-  vertex.size = 10
-)
+# Plot a graph of the network
+plot_graph_of_the_network <- function(graph, layout = igraph::layout_with_kk) {
+  
+  # Identify isolated nodes
+  isolates <- V(graph)$name[degree(graph, mode = "all") == 0]
+  
+  # Define non-isolates
+  non_isolates <- setdiff(V(graph)$name, isolates)
+  
+  # Colors used
+  palette <- c("#9dd1c7", "#9dd1c7")
+  
+  # Isolates will be black, communities > 1 nodes will have other colors 
+  node_colors <- ifelse(V(graph)$name %in% isolates, palette[2], palette[1])
+  
+  # Calculate node sizes based on degree. Scaled logarithmic
+  node_sizes <- log(degree(graph, mode = "all") + 1) * 5  
+  
+  # Isolate size adjusted to prevent them from being too small
+  isolate_sizes <- log(2 + 1) * 5  
+  
+  # Isolate size into node_sizes
+  node_sizes[V(graph)$name %in% isolates] <- isolate_sizes
+  
+  legend_labels <- c("Node Size Indicates Degree")
+  legend_fill <- palette
+  
+  par(bg = "white")  
+  
+  plot(graph, 
+       vertex.color = node_colors, 
+       layout = layout,
+       main = "Projected Eurovision 2023 Network",   
+       vertex.label.dist = 1.8,  
+       vertex.size = node_sizes,  # Use calculated node sizes
+       edge.color = "gray80",  
+       edge.width = 1.2,  
+       margin = c(0.1, 0.1, 0.1, 0.1)  
+  )
+  
+  # Legend for nodes
+  legend("topright", 
+         legend = legend_labels, 
+         fill = legend_fill, 
+         title = "Nodes",
+         cex = 0.8,  
+         text.col = "black"
+  )
+  
+  
+  # Legend for edges 
+  legend("bottomleft",
+         inset = c(0, 0),  # Adjust position of legend
+         legend = "Received votes from common sender",
+         title = "Edges",
+         col = "gray50",  # Edge color in legend
+         lty = 1,  # Line type in legend
+         horiz = TRUE,  # Horizontal legend
+         box.lwd = 1,  # Legend box
+         cex = 0.8
+  )
+  
+}
+plot_graph_of_the_network(distribution_graph)
 
 summary(distribution_network ~ gwesp())
 summary(distribution_network ~ degree(0:10))
