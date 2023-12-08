@@ -45,6 +45,8 @@ incedence_matrix <- as.matrix(incedence_df)
 
 print(incedence_matrix)
 
+## CREATE NETWORK
+
 # Extract receiver names and create a subset without the receiver column
 receivers <- incedence_matrix[, 1]
 
@@ -57,8 +59,6 @@ distributors <- colnames(voting_matrix)
 
 # Create an empty graph for the Eurovision network
 eurovision_graph <- igraph::make_empty_graph(n = length(receivers) + length(distributors))
-
-## CREATE NETWORK 
 
 # Create an incidence matrix with the dimensions of the length of receivers and distributors
 inc_matrix <- matrix(0, nrow = length(receivers), ncol = length(distributors))
@@ -112,6 +112,9 @@ igraph::V(distribution_graph)$country_language_family <- nAttrCountryLangaugeFam
 igraph::V(distribution_graph)$country_government_system <- nAttrCountryGovernmentSystem
 
 print(igraph::get.vertex.attribute(distribution_graph))
+
+
+### PLOTTING PART
 
 distribution_network <- snafun::to_network(distribution_graph)
 print(class(distribution_network))
@@ -212,7 +215,7 @@ options(repr.plot.width=8, repr.plot.height=6)
 plot_cug_test(distribution_coms)
 
 
-## Community visualization 
+## COMMUNITY VISUALISATION 
 
 # Plot a communities graph of the network. Walktrap considers isolates as individual
 # communities, therefore in this research the amount of communities will include isolates.
@@ -287,6 +290,8 @@ plot_communities <- function(graph, layout = igraph::layout_with_kk) {
 
 plot_communities(distribution_graph)
 
+### ERGM MODELS
+
 ## baseline model just with edges 
 baseline_model_0.1 <- ergm::ergm(distribution_network ~ edges)
 (s1<- summary(baseline_model_0.1)) 
@@ -311,14 +316,10 @@ baseline_model_0.4 <- ergm::ergm(distribution_network ~ edges +
 
 texreg::screenreg(list(baseline_model_0.1, baseline_model_0.2, baseline_model_0.3, baseline_model_0.4))
 
-## when I set gwesp to false, the R session is aborted :( 
-# degree(3) + kstar(2) + gwesp(decay=0.01, fixed= TRUE) never converges
-# with decay = 0.0001 the error is 15 so lower 
-# with gwdegree(decay = 0.001, fixed = TRUE) never converges
-# with degree(0) MCMC still look good but GOF does not look ok for model statistics and still huge standard error :/ 
-## Using degree(2:3) does not work :( but edge-wise shared partners looked perfectly
-# gwesp(1, fixed=FALSE) did not work at all 
-baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwesp(decay = 0.0001, fixed=TRUE) +
+baseline_model_0.5 <- ergm::ergm(distribution_network ~ 
+                                  edges + 
+                                  degree(3) + 
+                                  gwesp(decay = 0.0001, fixed=TRUE) +
                                   nodematch('country_government_system') +
                                   nodematch('country_language_family'),
                                   control = ergm::control.ergm(MCMC.burnin = 10000,
@@ -327,7 +328,7 @@ baseline_model_0.5 <- ergm::ergm(distribution_network ~ edges + degree(3) + gwes
                                                               MCMLE.maxit = 5,
                                                               parallel = 4,
                                                               parallel.type = "PSOCK"))
-## MCMC AND DIAGNOSTICS
+## MCMC AND DIAGNOSTICS OF ERGM
 
 (s5 <- summary(baseline_model_0.5))
 
@@ -340,7 +341,3 @@ baseline_model_0.5_GOF <- ergm::gof(baseline_model_0.5)
 snafun::stat_plot_gof(baseline_model_0.5_GOF)
 
 snafun::stat_ef_int(baseline_model_0.5, type = "prob")
-
-
-
-

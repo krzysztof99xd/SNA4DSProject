@@ -1,5 +1,5 @@
 ---
-title: "Social Network Analysis in the  Eurovision Context"
+title: "Songstruck Alliances: Harmonizing Votes and Unveiling Secrets in Eurovision 2023"
 author:
 - name: Krzysztof Wiesniakowski
   affiliation: '1'
@@ -65,35 +65,36 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ## Executive Summary
 
 This study investigates community formation and voting patterns among
-Eurovision countries using 2023 public vote data. The research addresses
-two key inquiries: the extent of communities formed within the contest
-and the primary drivers behind public voting patterns. Analysis reveals
-a notable presence of small communities within the Eurovision context,
-underscoring the intricate social dynamics at play. Contrary to initial
-hypotheses, factors such as country government systems and language
-families do not significantly influence voting behavior. This suggests
-that while smaller communities prevail, traditional socio-political and
-linguistic ties have limited impact on public voting patterns. These
-findings prompt a reevaluation of the determinants driving voting
-behaviors in the Eurovision song contest, emphasizing the need for
-nuanced exploration of socio-cultural connections and emergent
-communities within the framework of this global musical event.
+Eurovision countries using 2023 public vote data. The research follows
+up on the idea that voting patterns occur between similarities between
+countries. Analysis reveals a notable presence of small communities
+within the Eurovision context, underscoring the intricate social
+dynamics at play. Contrary to initial hypotheses, factors such as
+country government systems and language families do not significantly
+influence voting behavior. This suggests that while smaller communities
+prevail, traditional socio-political and linguistic ties have limited
+impact on public voting patterns. These findings prompt a reevaluation
+of the determinants driving voting behaviors in the Eurovision song
+contest, emphasizing the need for nuanced exploration of socio-cultural
+connections and emergent communities within the framework of this global
+event.
 
 ## Introduction
 
-Eurovision, the big singing contest with countries from all over Europe,
-goes beyond simply showcasing the best singers. It's like a lively
-puzzle where diverse nations aim for victory, and winning is more than
-just singing exceptionally well. The interesting part is how countries
-vote for their friends, emphasizing the need to understand Eurovision's
-voting network. It's not just about the song itself; it's akin to a
-secret voting club based on factors like being neighbors or sharing a
-history. So, in Eurovision, success is not just about hitting the high
-notes; it is also about the friendships behind the scenes. The
-competition becomes a mix of music and an international friendship
-dance. The victory's melody is not just in the lyrics but also in the
-subtle connections woven behind the scenes, transforming the competition
-into a symphony of intertwined relationships.
+Eurovision, the renowned singing competition featuring countries from
+across Europe, surpasses a mere display of vocal prowess. It operates as
+a lively puzzle where diverse nations strive for victory, transcending
+the notion of merely singing exceptionally well. The intrigue lies in
+how countries strategically cast their votes, underscoring the necessity
+to comprehend Eurovision's intricate voting network. Beyond the song
+itself, Eurovision resembles a clandestine voting club influenced by
+factors such as geographical proximity and shared history. Thus, success
+in Eurovision extends beyond hitting high notes; it involves the unseen
+friendships backstage. However, the question arises: Is it fair for the
+prestigious glass microphone trophy to be awarded solely based on a
+country's friendships? Does the existence of an international singing
+contest lose its significance if the winner is predetermined by
+alliances with other countries?
 
 These international friendships, while adding a unique flavor to
 Eurovision, introduce potential biases in the voting process, raising
@@ -223,21 +224,15 @@ is going to help us understand to a certain extent whether there are
 voting patterns inside Eurovision as well as to understand what may
 cause those phenomena.
 
-To answer the first research question and validate the first hypothesis,
-a Conditional Uniform Graph (CUG) test will be conducted. The CUG allows
-detecting communities within a network firstly by generating a null
-model and randomizing the network while preserving certain structural
-properties, such as node degrees. Then, it applies a detection algorithm
-to identify potential groups of nodes in the original network. How
-exactly the CUG model is going to be used and which community detection
-algorithm is chosen in this project is described in the [Conditional
-Uniform Graph using walktrap community detection] section.
-
-To answer the second research question and to validate the second
-hypothesis, there is going to be run an Exponential Random Graph Model
-(ERGM). It offers a robust and flexible approach to examine the effects
-of exogenous attributes on network structure while considering the
-complex dependencies and configurations within the network itself.
+To address the first research question and validate the first
+hypothesis, a Conditional Uniform Graph (CUG) test will be conducted,
+detecting communities within the network by generating a null model and
+randomizing it while preserving structural properties. For the second
+research question and to validate the second hypothesis, an Exponential
+Random Graph Model (ERGM) will be utilized, providing a robust and
+flexible approach to assess the impact of exogenous attributes on
+network structure, considering complex dependencies and configurations
+within the network.
 
 For this research, only the latest edition of Eurovision (2023) is
 analyzed. Also, the main interest is whether the forming of these
@@ -293,7 +288,7 @@ highest significance due to their impact on the final results; these
 votes often heavily influence scoring and determine the leading
 positions, shaping the overall outcome and perceptions of success in the
 competition. The process of projecting the network, is presented in
-Appendix \<REFERENCE TO THE APPENDIX\>
+[Appendix A].
 
 To enrich the data information about each country's language family
 [@Compendium, @jakubmariancom], country population [@Worldometer], and
@@ -358,12 +353,12 @@ network are 003, 102, 201, and 300. It does not indicate a diverse and
 comprehensive set of structural configurations among triplets of nodes
 in both networks.
 
--   [Appendix A] shows the plot of the network of Public votes
+-   [Appendix B]shows the plot of the network of Public votes
     Eurovision.
--   [Appendix B] shows the plot centralities of Public votes Eurovision.
+-   [Appendix C] shows the plot centralities of Public votes Eurovision.
     An explanation of the centralities terms can be found in [Appendix
-    G].
--   [Appendix C] shows descriptive statistics of the network of Public
+    J].
+-   [Appendix D] shows descriptive statistics of the network of Public
     Votes Eurovision
 
 That significant amount of isolates in that network might lead to
@@ -376,10 +371,10 @@ might struggle with isolated nodes due to their lack of connectivity.
 It is important to understand why the CUG test and ERGM model are
 suitable for this data and how they are going to help to answer the
 research question as well as what are the potential alternatives for
-them. As has been already described in [Introdthe uction] section to
-answer the first research question, the CUG test is going to be
-conducted, and to answer the second research question ERGM model is
-going to be developed.
+them. As has been already described in [Research Questions and
+Hypothesis] section to answer the first research question, the CUG test
+is going to be conducted, and to answer the second research question
+ERGM model is going to be developed.
 
 #### Conditional Uniform Graph using walktrap community detection
 
@@ -415,7 +410,7 @@ while maintaining specific structural characteristics, such as node
 degrees. Subsequently, it employs a detection algorithm to pinpoint
 potential clusters of nodes in the original network. Within this test,
 it is possible to specify which algorithm is going to be used to detect
-communities and as it has been described above walktrap community
+communities and as it has been described above, a walktrap community
 detection algorithm is going to be applied.
 
 #### Exponential Random Graph Models
@@ -523,10 +518,9 @@ explanatory power for real-world network dynamics.
 
 All the aforementioned matters were taken into consideration and led to
 the following model to be run and analyzed. Please find the model in the
-[Appendix GG].
+[Appendix E].
 
-The following dyadic-dependent terms have been inserted \<IS NODEMATCH()
-dyadic dependent\>?
+The following covariate and dyadic-dependent terms have been inserted:
 
 -   `nodematch("country_language_family")` term assesses homophily among
     countries based on their respective language family
@@ -550,14 +544,14 @@ dyadic dependent\>?
 The model described above performed relatively well on the MCMC
 diagnostics. Trace for every term inside the model has a shape that is
 similar to a "fuzzy caterpillar" which means that the chain mix well
-[Appendix D](#appendix-d). Given this understanding, the next step
-involves examining the Goodness of Fit in order to see whether the
-model-generated networks replicate the features and patterns present in
-the observed network. Looking at the graphs in [Appendix F] it can be
-observed that according to all of them model captured most the essential
-structural characteristics of the Eurovision network. Only the edge-wise
-shared partner graph has a small deficiency when it comes to capturing
-the proportion of edges that have 2 edge-wise shared partners.
+[Appendix F]. Given this understanding, the next step involves examining
+the Goodness of Fit in order to see whether the model-generated networks
+replicate the features and patterns present in the observed network.
+Looking at the graphs in [Appendix G] it can be observed that according
+to all of them model captured most the essential structural
+characteristics of the Eurovision network. Only the edge-wise shared
+partner graph has a small deficiency when it comes to capturing the
+proportion of edges that have 2 edge-wise shared partners.
 
 With the aforementioned knowledge, it is possible to look at the models
 statistics. After running the model the following coefficients have been
@@ -642,7 +636,7 @@ governmental system and language family do not have an influence on how
 countries distribute their votes during the Eurovision competition) for
 the second research hypothesis can not be rejected.
 
-## Conclusion <yet in progress>
+## Conclusion 
 
 This study aimed to study the Eurovision context in terms of social
 network analysis based on the official results from 2023. Literature
