@@ -289,11 +289,10 @@ positions, shaping the overall outcome and perceptions of success in the
 competition. The process of projecting the network, is presented in
 [Appendix A].
 
-To enrich the data information about each country's language family,
-country population, and country political system has been collected
-([@Compendium, @jakubmariancom], [@Worldometer],
-[@Wikipedia_2023_Government]). This data was manually inserted into CSV
-files.
+To enrich the data information about each country's language family and
+country political system has been collected ([@Compendium,
+@jakubmariancom], [@Wikipedia_2023_Government]). This data was manually
+inserted into CSV files.
 
 As a result, the whole dataset contains 2 CSV files. The first CSV file
 contains information about the countries (which in this paper are also
@@ -363,8 +362,9 @@ in both networks.
 
 That significant amount of isolates in that network might lead to
 statistical instability or convergence issues in the model estimation
-process. ERGMs, especially when including dyadic-depend terms, the model
-might struggle with isolated nodes due to their lack of connectivity.
+process. ERGMs, especially when including dyadic-dependent terms, the
+model might struggle with isolated nodes due to their lack of
+connectivity.
 
 ### Data analysis (Research Rationale)
 
@@ -485,7 +485,7 @@ formulate small communities between each other in the Eurovision
 competition?), the findings indicate that in the Eurovision competition
 countries do form communities.
 
-From the network graph [[Appendix K]] it can be observed that there is a
+From the network graph [[Appendix L]] it can be observed that there is a
 network of 26 different countries in the Eurovision competition
 consisting of 13 different communities when individual isolates are also
 considered to be single "communities". However, when the condition for a
