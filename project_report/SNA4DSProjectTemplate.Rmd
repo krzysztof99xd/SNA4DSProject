@@ -656,11 +656,10 @@ The outcomes of the CUG test suggest that, according to the walktrap
 algorithm, there are 13 observed communities. This quantity of
 communities is significant, which leads to a rejection of the null
 hypothesis. However, it is important to acknowledge that in this case, a
-higher number of communities corrresponds to a higher number of
-isolates. In this research, the isolates represent countries that did
-not receive top 3 votes from other countries. This simplification of the
-voting process, might have an impact on the outcome due to
-oversimplification.
+higher number of communities corresponds to a higher number of isolates.
+In this research, the isolates represent countries that did not receive
+top 3 votes from other countries. This simplification of the voting
+process, might have an impact on the outcome due to oversimplification.
 
 The approach of solely including top 3 votes, could therefore have
 influenced the number of communities detected by the walktrap algorithm.
@@ -675,7 +674,7 @@ answered that these factors do not have an effect how people vote during
 the Eurovision context. Moreover, standard errors for `edges` and
 `gwesp()` term make reading the results not trustworthy since they may
 indicate that the model is unstable. More experiments must be run using
-either different projections or running the analysis on bipartite
+either different projections or running the analysis on a bipartite
 network.
 
 ### Future work
