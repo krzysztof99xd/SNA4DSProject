@@ -208,12 +208,12 @@ regarding the first research question:
 The aforementioned research questions lead to the following hypothesis
 regarding second research question:
 
--   H0: The governmental system and language family do not have an
+-   H0: The government system and language family do not have an
     influence on how countries distribute their votes during the
     Eurovision competition
 
--   H1: The governmental system has an effect on how countries
-    distribute their votes during the Eurovision competition,
+-   H1: The government system has an effect on how countries distribute
+    their votes during the Eurovision competition,
 
 -   H2: Language family has an effect on how countries distribute their
     votes during Eurovision competition.
@@ -424,7 +424,7 @@ drivers that influence voting patterns during the Eurovision contest.
 This model allows dyadic dependent as well as dyadic interdependent
 terms which allow capturing the structure of the network. ERGMs provide
 a basis for statistical inference, allowing assessing the significance
-of the effects of governmental systems and language families on the
+of the effects of government systems and language families on the
 network.
 
 ## Results
@@ -624,7 +624,7 @@ not going to be considered and exponentiated.
 
 With the given model formula the following hypothesis could be verified:
 
--   H2: Governmental system has an effect on how countries distribute
+-   H2: Government system has an effect on how countries distribute
     their votes during the Eurovision competition
 
 -   H3: Language family has an effect on how countries distribute their
@@ -632,7 +632,7 @@ With the given model formula the following hypothesis could be verified:
 
 As it has been stated none of the structural terms was found to be
 significant for the network and, therefore, the null hypothesis (H0: The
-governmental system and language family do not have an influence on how
+government system and language family do not have an influence on how
 countries distribute their votes during the Eurovision competition) for
 the second research hypothesis can not be rejected.
 
